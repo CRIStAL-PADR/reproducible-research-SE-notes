@@ -1,0 +1,29 @@
+# Setting up a Software Project
+
+## Understand the Project Structure
+
+Let's imagine you are taking care of a friend's cat that moved in town a couple of weeks ago.
+Your friend lend you his keys and instructs you to just go to the kitchen and fill the bowls with some food and water.
+He tells you also that he left all doors closed so the cat does not go around all over the place.
+Furthermore, you were never invited to your friend's place before, this will be the first time you will see it.
+
+GUILLE: HERE.
+
+The structure we use to organise a software project is key to understand and navigate it.
+
+
+## The Core Sources
+
+## Tests
+
+## The Docs
+
+## Data files
+
+## Project Meta-data
+
+## Example: a Python Project
+
+## Example: a Java/Scala Project
+
+## Example: a Pharo Project

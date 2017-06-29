@@ -1,0 +1,45 @@
+Reproducible Research: a software engineering perspective
+
+  - Manifesto
+		Be explicit
+		Nothing is forever
+
+  - Part 1: Getting your Project up and Running
+		- Setting up a Software Project
+			Understand the project structure
+			src
+			test
+			documentation
+			data files
+			project meta data
+			Example: a Python Project
+			Example: a Java/Scala Project
+			Example: a Pharo Project
+		- The Essential Documentation
+			Describe your project
+				Choose name
+				Describe it
+					What is it? What is it useful for? Why should I use it?
+			Installation
+			How to use it
+			Examples
+		- Designing Library Interfaces
+			Split your code in Functions
+			Minimalistic APIs
+			Maximalistic APIs
+			An Object-Oriented Perspective
+
+  - Part 2: Getting Reproducible
+		Use a Version Control System
+		Use Semantic Versionning
+		Make your project dependencies explicit
+			Backpointer to Document the Installation Process
+		Packaging*
+
+  - Part 3: Embrace Automation
+		Automate dependency loading
+		  e.g., setup.py pour les dependences
+		Automate testing
+		  Create automated tests
+		  Integration continue
+		Automate documentation Generation

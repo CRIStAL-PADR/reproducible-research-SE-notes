@@ -1,0 +1,20 @@
+# Designing Library Interfaces
+
+## Use Functions
+
+### Write Short functions
+- easier to read, understand and maintain
+- use and re-use your own code
+
+### Use as few parameters as you can
+  When possible, use default arguments
+  
+### Use clear names
+  Characters are cheap to type.
+  The time needed to understand a cryptic piece of code is much more expensive.
+
+### Document your functions
+
+## Minimalistic APIs
+## Maximalistic APIs
+## An Object-Oriented Perspective
