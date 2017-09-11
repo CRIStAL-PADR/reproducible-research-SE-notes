@@ -22,6 +22,8 @@ This chapter will describe several tips about how to document your project.
 
 ## Describe your project
 
+The first main reason why a user may run away from your project is because he does not really understand what is it, or why should he use it.
+
 ### Choose a Project Name
 
 The first thing that your project needs is a name.
@@ -85,9 +87,29 @@ Of course this does not mean that you don't have to do a technical documentation
 
 ## Add Installation Instructions
 
+The second main reason why a user may run away from your project is because he does not really understand how to use it.
+
 ### Platform
 
+Explain what technology you use so they can understand if your project really fits with theyr technological stack.
+Lots of people have lots of different needs and experience, so clearly stating what you propose creates a healthy contract.
+
+Explain amongst others:
+- What programming language/s is your system build on: is it python, ruby, java, smalltalk? Or a mixture of python and C?
+- What build system do you use: pip, gems, maven, metacello?.
+- Does your project run on any machine and architecture? 64bits and 32 bits? linux and mac? What about windows?
+
+In general, try to explain any specificities about your project.
+
 ### Dependencies
+
+Describe what are exactly the dependencies of your project.
+A dependency is a library or a service that is external to your project, without which your project could not work.
+Even if the loading of your project is completely automated, a user may want to know what are its dependencies, because he could find that some of them create conflicts with his dependencies or come from sources he does not trust.
+
+The simplest dependency you could imagine are those written in the same language you use. These libraries are usually easily loadable using the package manager of your language.
+
+A separate level of dependency are dependencies written in separate languages. These usually need some more glue code to be used and downloaded, adding some bureaucracy. The most prominent example of these are native libraries writen in C or C++. Sometimes such libraries can be installed using a separate package manager (such as ubuntu and debian's apt). However, some other times these libraries have to be manually compiled and installed into the user system.
 
 ### Build, Compile
 
