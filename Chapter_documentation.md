@@ -15,6 +15,11 @@ You are maybe building a product for your business or a cool startup.
 Or maybe you're designing a library to share to the scientific community.
 Or you're perhaps doing it just for the fun.
 
+Documentation is key for a software project, since it is probably one of the strongest reasons of adoption of a technology.
+Likewise, if your project is not documented, people will probably run scared.
+No documentation could be read in many ways: difficult entry barrier, no support, no updates, too unprofessional...
+This chapter will describe several tips about how to document your project.
+
 ## Describe your project
 
 ### Choose a Project Name
