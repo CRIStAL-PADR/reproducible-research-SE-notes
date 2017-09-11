@@ -68,7 +68,15 @@ And a name that we cannot pronounce, we cannot promote with the parole.
 
 ### Explain What does your Project do
 
-What is it? What is it useful for? Why should I use it?
+People will arrive to your project's main page because they are looking for similar stuff. Or maybe because somebody linked you. And sometimes even for random.
+Most of the people that will arrive to your project's page will have something in common: they do not know your project.
+
+And people now knowing your project will ask the following questions as soon as they arrive to your site: What is it? What is it useful for? Why should I use it?
+Most of the people will abandon your site if they do not find any of these explanations.
+
+Another point of consideration when explaining what your code is about: write for newbies. Most people will be users of your code. And users don't want to understand in detail what happens inside your code, they want to understand what can they use it for. Give examples of usage, tell the user if he's the right person for your code.
+
+Of course this does not mean that you don't have to do a technical documentation of the internals of your project. You need technical documentation, but it is not a friendly way to welcome new users.
 
 ## Add Installation Instructions
 
