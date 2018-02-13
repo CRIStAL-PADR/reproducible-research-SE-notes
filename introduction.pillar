@@ -1,0 +1,44 @@
+!! Introduction
+
+!!! What is this booklet about?
+
+Developing software has become a current task for a lot of scientific activities.
+Creating simulations, testing new statistical methods, and even just applying existing methods to (the increasing amount of) existing data are examples of it.
+An important part of such work in science is to be able to reproduce our results. It is then when "Reproducible Research, a Software Engineering Perspective for Researchers" arrives.
+
+Software engineering has developed over the years many techniques and methodologies to be able to reproduce results.
+However, it is not necessary clear how to apply such techniques in the scientific activities.
+Moreover, not every scientist has a strong background on software development and even less on software engineering.
+
+This booklet provides a really broad overview of existing software engineering (SE) techniques with a strong focus on reproducibility.
+The idea is not to deepen in one or two topics but to present the minimal notions that would allow the reader to advance later on by himself.
+With this idea in mind, this text will put a lot of emphasis on the conceptual background of SE techniques and moreover on the good terminology.
+
+We promise the reader that he will develop enough knowledge to be able to take decisions on his own afterwards.
+
+!!! Who is this booklet for?
+
+This booklet is meant for anybody that is doing some software development and would like to start profesionalizing it a bit.
+This includes researchers of any field, software engineering students, and even amateur developers.
+
+This text does not require strong skills on computer science or development.
+It requires however that the reader is comfortable with programming, and basic computer skills (managing files, surfing the web...).
+Some sections will provide some detailed explanations for the expert readers or those who would like to deepen their knowledge a bit more.
+We will prefix those sections with an exclamation mark !.
+
+!!! An overview of what is coming
+
+This book is organized in several chapters.
+The order of the chapters is not necessarily important.
+Please feel free to jump back and forth between the different chapters following your needs or desires.
+
+In particular, the book contains the following technical chapters:
+
+# "Version Control Systems":  VCSs such as Git, SVN, mercurial are one cornerstones of reproducibility. They allow us to freeze our project at a point in time, recover and compare to old versions and thus not fear changes.
+# "Project Management Tools": Several new software development ecosystems have grown lately (e.g., Github, Gitlab). These ecosystems provide tools such as pull request, issue trackers, releases, that help organizing the work around a project.
+# "Continuous Integration": Continuous integration is a technique that allows to automatize common tasks and have fast feedback on our changes.
+# "Managing External Dependencies": A piece of software is not just the source code you write. Your code uses external libraries. It was compiled with a compiler or runs on top of a virtual machine. It was probably meant to run on a given operating system. Managing all the environment surrounding our software is key in reproducing our results.
+# "Project Documentation": Those projects that are most used are those that are best documented. It is important to know existing documentation tools and how they can enhance our development environment.
+# "Demos and Deployment": Once our systems are reproducible and documented, it is a matter of mastering some bit of technology to deploy them and make interactive demos with them.
+
+The last chapter discusses several workflows that could be used in the development of small-to-medium projects and in research.

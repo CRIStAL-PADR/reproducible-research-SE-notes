@@ -1,4 +1,4 @@
-# The Essential Documentation
+!! Project Documentation
 
 Defining and starting a new software project is a routinary task for a software engineer.
 We carve new ideas all the time into software programs.
@@ -20,18 +20,18 @@ Likewise, if your project is not documented, people will probably run scared.
 No documentation could be read in many ways: difficult entry barrier, no support, no updates, too unprofessional...
 This chapter will describe several tips about how to document your project.
 
-## Describe your project
+!!! Describe your project
 
 The first main reason why a user may run away from your project is because he does not really understand what is it, or why should he use it.
 
-### Choose a Project Name
+!!!! Choose a Project Name
 
 The first thing that your project needs is a name.
 Without a name, you cannot create a first directory in your disk to store your source files.
 Without a name, you cannot tell people how to search for your project.
 A name give your project an identity, a way to refer to it and to differentiate it from other projects.
 
-#### What is a good name?
+!!!!! What is a good name?
 
 Naming is hard.
 Donald Knuth, one of the biggest minds ever in computer science said that choosing a good name is one of the two most difficult tasks in computer programming (for the curious reader, the other one is cache invalidation).
@@ -43,7 +43,7 @@ Some other names, like Python or apache, are good because they relate to an exis
 Some others, like Ubuntu, use cachy words in foreign languages.
 However, there are actually no strict rules to get a good name.
 
-#### Some Ideas
+!!!!! Some Ideas
 
 In general, I use two main approaches to chose a name: acronyms and fantasy names.
 
@@ -64,7 +64,7 @@ Typical metaphorical names are inspired in mythology, books.
 Finally, sometimes you will need to adjust your name to the technology conventions or limitations.
 For example, some tools require special casing: start with uppercase or lowercase, spaces allowed or forbidden, underscores or not, etc.
 
-#### About Bad Names
+!!!!! About Bad Names
 
 As there exist good names, there exist also bad ones.
 Again, there are no strong rules that say if a name is good or bad, but I like to follow some guidelines.
@@ -73,7 +73,7 @@ Long names are harder to remember, to type, to web-search than short names.
 Second, I avoid acronyms with too many consonants because they may turn difficult to pronounce.
 And a name that we cannot pronounce, we cannot promote with the parole.
 
-### Explain What does your Project do
+!!!! Explain What does your Project do
 
 People will arrive to your project's main page because they are looking for similar stuff. Or maybe because somebody linked you. And sometimes even for random.
 Most of the people that will arrive to your project's page will have something in common: they do not know your project.
@@ -85,11 +85,11 @@ Another point of consideration when explaining what your code is about: write fo
 
 Of course this does not mean that you don't have to do a technical documentation of the internals of your project. You need technical documentation, but it is not a friendly way to welcome new users.
 
-## Add Installation Instructions
+!!! Add Installation Instructions
 
 The second main reason why a user may run away from your project is because he does not really understand how to use it.
 
-### Platform
+!!!! Platform
 
 Explain what technology you use so they can understand if your project really fits with theyr technological stack.
 Lots of people have lots of different needs and experience, so clearly stating what you propose creates a healthy contract.
@@ -101,7 +101,7 @@ Explain amongst others:
 
 In general, try to explain any specificities about your project.
 
-### Dependencies
+!!!! Dependencies
 
 Describe what are exactly the dependencies of your project.
 A dependency is a library or a service that is external to your project, without which your project could not work.
@@ -111,14 +111,14 @@ The simplest dependency you could imagine are those written in the same language
 
 A separate level of dependency are dependencies written in separate languages. These usually need some more glue code to be used and downloaded, adding some bureaucracy. The most prominent example of these are native libraries writen in C or C++. Sometimes such libraries can be installed using a separate package manager (such as ubuntu and debian's apt). However, some other times these libraries have to be manually compiled and installed into the user system.
 
-### Build, Compile
+!!!! Build, Compile
 
-### Verify your Installation
+!!!! Verify your Installation
 
-## Explain How to Use Your project
+!!! Explain How to Use Your project
 
-### Document the API
+!!!! Document the API
 
-### Extension Points
+!!!! Extension Points
 
-### Add Examples
+!!!! Add Examples
