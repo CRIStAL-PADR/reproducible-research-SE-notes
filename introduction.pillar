@@ -34,7 +34,8 @@ Please feel free to jump back and forth between the different chapters following
 
 In particular, the book contains the following technical chapters:
 
-# "Version Control Systems":  VCSs such as Git, SVN, mercurial are one cornerstones of reproducibility. They allow us to freeze our project at a point in time, recover and compare to old versions and thus not fear changes.
+# "Version Control with Git":  VCSs such as Git, SVN, mercurial are one cornerstones of reproducibility. They allow us to freeze our project at a point in time, recover and compare to old versions and thus not fear changes. This booklet contains an overview on Git, since it is very popular nowadays. However, most of the concepts are reusable in other systems such as SVN.
+
 # "Project Management Tools": Several new software development ecosystems have grown lately (e.g., Github, Gitlab). These ecosystems provide tools such as pull request, issue trackers, releases, that help organizing the work around a project.
 # "Continuous Integration": Continuous integration is a technique that allows to automatize common tasks and have fast feedback on our changes.
 # "Managing External Dependencies": A piece of software is not just the source code you write. Your code uses external libraries. It was compiled with a compiler or runs on top of a virtual machine. It was probably meant to run on a given operating system. Managing all the environment surrounding our software is key in reproducing our results.
