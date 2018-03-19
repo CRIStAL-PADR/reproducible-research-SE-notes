@@ -1,1 +1,26 @@
 !! Continuous Integration
+
+This is always good practice to test some features of your application e.g. some functions, methods, etc.
+And it is even better practice to guaranty the project will run under a given configuration i.e. a given OS' and associated packages' version.
+
+Imagine you are developing on a Mac machine but wish your application to be run on Linux, too. Besides, your project may rely on many dependencies and some could even require to be compiled beforehand.
+
+Continuous integration will allow to automate these tasks and certify that your project can not only be run on your own machine but also under different configurations i.e. it is portable and your code is reproducible.
+
+Once the configuration is set you can run a bunch of tests on your code and report the results to identify some bugs at different scales.
+
+All this is performed on an remote machine that may be physically far distant from your personal computer.
+You can configure the integration tool to execute this whole list of operations after each commit :)
+
+!!! Continuous Integration tools
+There exists several integration tools, Travis and Jenkis among others.
+
+https://jenkins.io/
+https://travis-ci.com/
+
+!!! Configuration of the integration tool
+
+https://docs.travis-ci.com/user/getting-started/
+./travis.yml
+
+!!!!! Travis to compile your .tex ?
