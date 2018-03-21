@@ -337,6 +337,58 @@ This is the case of tools such as SourceTree (figure *@commit_graph_sourcetree*)
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
-!!! Branches and Tags
+!!! Releasing your code with tags
 
-!!! Merging
+When your project is in a stable state, it is often good to freeze it and put a name to that version.
+That way, other users can load the freezed version using that well-known name, and also be sure that version will not change.
+Freezing a version is particularly useful to reproduce a piece of sofware.
+A freezed version can be reloaded exactly as it is right now but in some point in the future.
+Thus, software that depends on a freezed version can also benefit from its stability.
+
+In git, releasing is done via tags.
+A tag is a label that we put on a particular commit to be able to find it easily later on, so remember to put short, readable names to them.
+One particular consideration about tags is that they are not meant to be modified, so you'll find in git's documentation that you have special operations (that we do not recommend) to do that.
+
+To create a tag, use the command ==git tag== giving as argument a name for the tag and a descriptive message.
+Usual tag names use semantic version conventions, prefixed with a v. For example version 1 would be ==v1.0.0==.
+
+[[[
+$ git tag -a v1.0.0 -m "First stable release"
+]]]
+
+You can afterwards list all your tags using the ==git tag== command without arguments:
+
+[[[
+$ git tag
+v0.1.1-alpha
+v1.0.0
+]]]
+
+Finally, if you want to recover the code that you tagged at some point, you can use the ==checkout== command with the name of your tag.
+
+[[[
+$ git checkout v1.0.0
+Note: checking out 'v1.0.0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental changes and commit them, and you can discard any commits you make in this state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 0c0e5ff... Adding a title
+]]]
+
+When checking out a tag, git tells you that we are in ''detached HEAD'' state.
+And that whatever commit we do in this state, will be lost unless we create a branch.
+What happened here is that the ==checkout== command modified the ""HEAD"" reference to point to the commit pointed by the tag, instead of a branch. Figure *@detached-head* shows the commit graph for this particular case.
+
++Detached HEAD after checking out a tag>figures/dettached_head.pdf|width=50|label=detached-head+
+
+
+
+!!! Creating new history lines with branches
+
+@@todo how to discard local changes
+
+!!! Merging history lines
