@@ -18,7 +18,7 @@ This allows us to not put such kind of useless data in the code, as it is manage
 
 In this chapter we will explore the basics of VCSs with Git and Github. We have chosen Git because of its popularity nowadays and Github because it is one of the most prominent platforms for Git. However, most of the concepts can be easily extrapolated to other VCSs and platforms. This chapter will start with the setup of a repository, how to store changes into it and how to investigate/query them. The second part of the chapter will show some other advanced features such as tagging and branches, including merging.
 
-!!! Setting up the Repository
+!!! Setting up a Repository
 
 A Git repository is like a database storing changes. In the modern world, we use to store the main repository in a remote machine, usually a server hosted in our company/university or in the cloud. We do not use to store our main repository in our machine, because this would mean that losing our machine will mean losing our project.
 
@@ -58,6 +58,84 @@ $ git clone git@github.com:[your_username]/[your_repo_name].git
 ]]]
 
 Once you have cloned the repository, you are ready to go.
+
+@@todo explain what happened and what was created!
+
+!!! Git basics
+
+Before going on with the reproducibility concerns that brought you here to read this chapter and even before continuing with practical git commands, we will dive a bit into git concepts.
+Understanding a bit how git works is useful when doing some more complicated stuff such as merging and branching.
+If you already know what is a git commit, a git reference and how the graph of git objects is managed, you can skip this section.
+
+!!!! Dissecting a git repository
+
+Before starting explaining what is a commit, what is a branch, and so on, let's start easy by understanding the parts that compose our git repository.
+When you create a git repository as we did in the last section, or you clone an old repository that already has some files in it, you will find that there is more than meets the eye. A git repository has usually three core collaborating components: the working copy, the repository, and the remotes. You can see an schematics on figure *@repository_structure*.
+
++Git repository structure>figures/repository-structure.pdf|width=90|label=repository_structure+
+
+What you usually see in your disk when you clone is not actually the git repository but the ""working copy"".
+The working copy is the directory where your files are, where you work and apply modifications.
+It is called a working ""copy"" because what you see is actually a copy of what is in the repository.
+The working copy is a write-able copy: you can freely modify it, break it, add new things or remove things.
+
+Actually, you can do whatever change you want in your working copy, that git will not take it into account, at least not automatically.
+Once your changes are ready, you have to commit them into your repository to store them in your repository.
+A commit will take your changes, freeze them, and store them in the local database.
+Just for the curious ones, the local database (also known as ""the BLOB"" in the git jargon) is stored inside your working copy, in a hidden directory called "".git"".
+
+The commits you create from your changes live only inside your machine by default.
+If you want to share your commits with others, or to import commits from some fellow colleague, you have to interact with a remote repository (also called just remote).
+A remote is a distant git repository that you will synchronize with your local one from time to time (this is where the famous pull and push come into play!).
+
+Of course, this is an utterly simplified scenario.
+You could have a repository without a working copy.
+And your repository may have many remotes to synchronize with.
+But we will get into more complex stuff early on, no need to rush now.
+
+!!!! The git repository as a history-aware transactional database
+
+As we explained before, we usually work on the working copy, modifying our files and directories.
+Once we finished some work, we can freeze it and store it in the repository.
+That's what we call a ""commit"".
+
+From this perspective, a git repository works as a transactional database.
+You are working on the changes of your disk, but they will not be effectively applied until you finish your transaction.
+Finishing your transaction is done, as in the database world, using the ""commit"" command.
+The result of this transaction is to create a new commit object in the git repository.
+This commit object will contain an id (usually a hash such as 7ba52e5) plus all changes we wanted to apply.
+
+Git will store your last changes but also remember the entire history of changes you did.
+It keeps a list of all changes you did so you can do some nice stuff like for example:
+
+- come back in time to recover some old change
+- trace the changes in a file to see who (and why!) did a change
+- analyze your repository and do some archeology, to see how your project evolved
+
+!!!! It's a graph of commits
+
+The history of commits we explained before is not stored in a list form but in a graph form.
+A commit is a node connected to other commits by ""parenthood"".
+A commit is said to be parent of another commit if it is the exact previous version.
+In other words, when we create a new commit, the parent of our new commit is the previous commit.
+A commit is said to be an ancestor of another commit if it preceeds him in history.
+Moreover, a commit can have one or many parents, and many commits can have the same commit as parent.
+
++Graph of commits>figures/commit-graph.pdf|width=50|label=commit_graph+
+
+For instance, take a look at the schema of a typical commit graph represented in figure *@commit_graph*.
+- Commit a4153b1 is the first commit in the graph, with no parents. A commit with no parents represents the first commit in a repository, when no previous history was available.
+- Commit 35ac17f's parent is a4153b1 and commit a4153b1's parent is 7ba52e5.
+- Commit b01aba4's parent is also a4153b1.
+- Commit b8bfed7 has two parents: 7ba52e5 and b01aba4.
+
+You may be asking yourself how can we arrive to such a situation.
+In short, a commit that is parent of many commits is creating an alternative history: it is the result of a "branch" operation.
+Likewise, a commit that has many parents is joining two histories: it is the result of a "merge" operation.
+
+!!!! References in git
+
+@@todo here
 
 !!! Commit (often)
 
