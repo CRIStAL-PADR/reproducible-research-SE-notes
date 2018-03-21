@@ -1,4 +1,4 @@
-!! Version Control with Git (and Github)
+!! Version Control with Git and Github
 
 Version control systems (VCSs) are one of the cornerstones of reproducibility.
 Informally speaking, a VCS works as a database that saves versions of your project.
@@ -51,17 +51,19 @@ Connect yourself to your Github settings (usually https://github.com/settings/pr
 
 !!!! Cloning the Repository
 
-Git, constrastingly to other VCSs, is a distributed VCS. This means that you work not only against the remote repository but also you can work locally. To support that, Git makes a ""local copy"" of the repository in your machine. To create such a copy, the usual Git command is ""clone"". 
+Git, constrastingly to other VCSs, is a distributed VCS. This means that you work not only against the remote repository but also you can work locally. To support that, git makes a ""local copy"" of the repository in your machine. To create such a copy, the usual git command is ""clone"". 
 
 [[[language=bash
 $ git clone git@github.com:[your_username]/[your_repo_name].git
 ]]]
 
-Once you have cloned the repository, you are ready to go.
+When this command finishes, it will create a directory named as your repository (your_repo_name).
+This directory contains the files you will work on, and it is where you will issue your git commands later on.
+You are now ready to go.
 
 @@todo explain what happened and what was created!
 
-!!! Git basics
+!!! Understanding git basics
 
 Before going on with the reproducibility concerns that brought you here to read this chapter and even before continuing with practical git commands, we will dive a bit into git concepts.
 Understanding a bit how git works is useful when doing some more complicated stuff such as merging and branching.
@@ -93,7 +95,7 @@ You could have a repository without a working copy.
 And your repository may have many remotes to synchronize with.
 But we will get into more complex stuff early on, no need to rush now.
 
-!!!! The git repository as a history-aware transactional database
+!!!! A history-aware transactional database?
 
 As we explained before, we usually work on the working copy, modifying our files and directories.
 Once we finished some work, we can freeze it and store it in the repository.
@@ -112,7 +114,7 @@ It keeps a list of all changes you did so you can do some nice stuff like for ex
 - trace the changes in a file to see who (and why!) did a change
 - analyze your repository and do some archeology, to see how your project evolved
 
-!!!! It's a graph of commits
+!!!! It's a just graph of commits
 
 The history of commits we explained before is not stored in a list form but in a graph form.
 A commit is a node connected to other commits by ""parenthood"".
@@ -130,12 +132,27 @@ For instance, take a look at the schema of a typical commit graph represented in
 - Commit b8bfed7 has two parents: 7ba52e5 and b01aba4.
 
 You may be asking yourself how can we arrive to such a situation.
-In short, a commit that is parent of many commits is creating an alternative history: it is the result of a "branch" operation.
+In short, a commit that is parent of many commits is creating an alternative history line: it is the result of a "branch" operation.
 Likewise, a commit that has many parents is joining two histories: it is the result of a "merge" operation.
 
-!!!! References in git
+!!!! Naming commits with references
 
-@@todo here
+You probably noticed that referring to commits by their id is ackward.
+Commit ids are generated automatically as hashes that avoid duplications as much as possible.
+However, they are not handy to work on a dayly basis since they are hard to remember and type.
+
+To solve this, git provides a second kind of objects: git references.
+A git reference is like a label that you put on a commit, to be able to identify that commit by a much much simpler name afterwards.
+For example, you can name a commit as ""release 1.0"" or you can name it as ""current development commit"".
+
++Git references>figures/references.pdf|width=80|label=references+
+
+As we show in figure *@references*, there are two main kind of references in git:
+- ""tags"": tags are fixed labels that once created are not meant to be removed or moved. They are useful for doing releases: people will expect that a release does not change, otherwise they cannot depend on it.
+- ""branches"": branches are transferable labels that can be moved from commit to commit. They are used to maintain the different history lines of your project.
+
+Another special reference, called ""HEAD"" is internally used by git to know what is our current working branch.
+While it would look like an implementation detail, knowing that ""HEAD"" is there can save you many headaches as we will see later.
 
 !!! Commit (often)
 
