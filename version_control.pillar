@@ -38,8 +38,8 @@ An SSH key works as a lock: a key is actually a pair of a public and a private k
 
 To create a SSH key, in *nix systems you can simply type in your terminal
 
-[[[language=bash
-ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
+[[[
+$ ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
 ]]]
 
 Follow the instructions in your terminal such as setting the location for your key pair (usually it is $HOME/.ssh) and the passphrase (a kind of password). Finally, you'll end up with your public/private pair on the selected location. It is now time to upload it to Github.
@@ -53,7 +53,7 @@ Connect yourself to your Github settings (usually https://github.com/settings/pr
 
 Git, constrastingly to other VCSs, is a distributed VCS. This means that you work not only against the remote repository but also you can work locally. To support that, git makes a ""local copy"" of the repository in your machine. To create such a copy, the usual git command is ""clone"". 
 
-[[[language=bash
+[[[
 $ git clone git@github.com:[your_username]/[your_repo_name].git
 ]]]
 
@@ -154,9 +154,188 @@ As we show in figure *@references*, there are two main kind of references in git
 Another special reference, called ""HEAD"" is internally used by git to know what is our current working branch.
 While it would look like an implementation detail, knowing that ""HEAD"" is there can save you many headaches as we will see later.
 
-!!! Commit (often)
+Now that you have built some strong conceptual git muscles, we can continue in the next sections with some practical git.
+Do not hesitate to come back to these sections to refresh some of the basics.
+As with any sport or discipline, understanding and practicing the basics is really important, since everything else is based on them.
+
+!!! Commit! Save your work!
+
+Let's imagine I was working on my project for a couple of hours.
+As a result, I have two new files with some contents on it: a README.md file with some explanations and a python file with some code in it.
+
+[[[
+$ ls
+project.py README.md
+]]]
+
+One of the things that we can do first is to check what git knows about these files:
+
+[[[
+$ git status
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	README.md
+	project.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+]]]
+
+Git tells us that we are doing an initial commits, and that there are two files (README.md and project.py) that he doesn't know yet, they are untracked.
+Then he says us that he is not tracking any file and that we need to do a __git add__ to track them.
+
+To make it simple, you can see this whole __tracking__ story as going to the supermarket.
+If you want to buy something from the supermarket, you have take whatever you want first and put it in your bag.
+Then, you go to the cashier, you pay and take your things home.
+Now imagine that passing through the cashier to pay is equivalent to do a commit command.
+This means that first you need to add stuff to your bag!
+
+Adding stuff to your bag (or tracking files) is done through the add command.
+Only what is added/tracked will be committed.
+Let's proceed to track those files and see what is the status of our repository afterwards.
+
+[[[
+$ git add README.md
+$ git add project.py
+$ git status
+On branch master
+
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   README.md
+	new file:   project.py
+]]]
+
+Now git says that our two new files will be committed.
+Let's also notice that it says that we are on a branch called master.
+Let's now proceed to commit to save our changes in the repository.
+We can do that by using the commit command with the __m__ option to specify a message:
+
+[[[
+$ git commit -m "first version"
+[master (root-commit) 37adf4e] first version
+ 2 files changed, 4 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+ create mode 100644 project.py
+]]]
+
+What the commit command is doing behind is to create a new node in our history graph.
+Moreover, it will update the master branch label to point to this new commit.
+The commit graph in this case will look as in figure *@commit_graph_1*.
+
++History graph after our first commit>figures/commit_graph_1.pdf|width=60|label=commit_graph_1+
+
+If we see the status of our repository after the commit we will also see that it changed.
+There is nothing to commit:
+
+[[[
+$ git status
+On branch master
+nothing to commit, working directory clean
+]]]
+
+If we repeat the process, i.e. we apply a change to one of our files, add and commit our commit graph will change again.
+A new commit with a new commit id will be created having as parent our previous commit.
+The master branch label will be updated and point to this new commit.
+The commit graph in this case will look as in figure *@commit_graph_2*
+Notice how our old commit is still there, but he's accessible as the parent of our new commit.
+
+[[[
+$ git add README.md
+$ git commit -m "Adding a title"
+[master 0c0e5ff] Adding a title
+ 1 file changed, 1 insertion(+)
+]]]
+
++History graph after our second commit>figures/commit_graph_2.pdf|width=65|label=commit_graph_2+
 
 !!! Exploring the History
+
+!!!! The ==git log== command
+The commit graphs we have shown so far are not evident at all while when we use the ==git status== command.
+There is however a way to ask git about them using the ==git log== command.
+
+[[[
+$ git log
+commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
+Author: Guille Polito <guillermopolito@gmail.com>
+Date:   Wed Mar 21 15:37:32 2018 +0100
+
+    Adding a title
+
+commit 37adf4eaa945cbd7460991f88bff5aa902db06ce
+Author: Guille Polito <guillermopolito@gmail.com>
+Date:   Wed Mar 21 14:02:43 2018 +0100
+
+    first version
+]]]
+
+==git log== prints the list of commits in order of parenthood.
+The one if the top if the most recent commit, our last commit.
+The one below is its parent, and so on.
+As you can see, each commit has an id, the author name, the timestamp and its message.
+
+We can also ask git what are the changes introduced in a particular commit using the command ==git show==.
+
+[[[
+$ git show 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
+commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
+Author: Guille Polito <guillermopolito@gmail.com>
+Date:   Wed Mar 21 15:37:32 2018 +0100
+
+    Adding a title
+
+diff --git a/README.md b/README.md
+index e69de29..cad05f1 100644
+--- a/README.md
++++ b/README.md
+@@ -0,0 +1 @@
++! a title
+\ No newline at end of file
+]]]
+
+That will give us the commit description as in ==git log== plus a (not so readable) diff of the modified files showing the inserted, modified and deleted lines.
+More advanced graphical tools are able to read this description and show a more user-friendly diff.
+
+!!!! Seeing the history graph
+
+Git's log provides a more graphish view on the terminal using some cute ascii art.
+This view can be accesses through the ==git log --graph --oneline --all== command.
+Here is an example of this view for a more complex project.
+In this view, stars represent the commits with their ids and commit messags, and lines represent the parenthood relationships.
+
+[[[
+$ git log --graph --oneline --all
+* 4eb8446 Documenting
+* e5a3e2e Add tests
+* 680a79a Some other
+| *   ed4854f Merge pull request #1137
+| |\
+| | * 9e30e37 Some feature
+| * |   ba7f65c Merge pull request #1138
+| |\ \
+| | * | 31a40c4 Some Enhancement
+| | |/
+| * |   2d4698d Merge pull request #1139
+| |\ \
+| | * | 20c0ff4 Some fix
+| | |/
+| * |   ae3ec45 Merge pull request #1136
+]]]
+
+However, we are not always in the mood of using the terminal, or of wanting to decode what was done in ascii art.
+There are tools that are more suitable to explore the history of a project, usually providing some nice graphical capabilities.
+This is the case of tools such as SourceTree (figure *@commit_graph_sourcetree*) or github's network view (figure *@commit_graph_github_network*).
+
++Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
++Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
 !!! Branches and Tags
 
