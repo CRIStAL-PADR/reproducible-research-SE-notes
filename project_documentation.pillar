@@ -1,8 +1,8 @@
 !! Project Documentation
 
-Defining and starting a new software project is a routinary task for a software engineer.
+Defining and starting a new software project is a routine task for a software engineer.
 We carve new ideas all the time into software programs.
-And we organise these software programs following well-defined structures.
+And we organize these software programs following well-defined structures.
 
 Of course, we know the technology and how projects should be structured for them.
 And if we do not know the technology, we know the exact keywords to look for in a web search.
@@ -10,10 +10,10 @@ And if we do not know the technology, we know the exact keywords to look for in 
 This is not the case for those people not experienced with software engineering practices.
 The lack of terminology, the lack of contacts, the lack of experience are a high entry barrier for newcomers.
 
-You're starting a software project.
+You are starting a software project.
 You are maybe building a product for your business or a cool startup.
-Or maybe you're designing a library to share to the scientific community.
-Or you're perhaps doing it just for the fun.
+Or maybe you are designing a library to share to the scientific community.
+Or you are perhaps doing it just for the fun.
 
 Documentation is key for a software project, since it is probably one of the strongest reasons of adoption of a technology.
 Likewise, if your project is not documented, people will probably run scared.
@@ -38,9 +38,9 @@ Donald Knuth, one of the biggest minds ever in computer science said that choosi
 Indeed, choosing a good name requires understanding the nature of what we are naming.
 
 Good names do not always take the same form but they have something in common: in one way or another they are easy to remember.
-Some names, like Google, are easy to remember because they are cachy.
+Some names, like Google, are easy to remember because they are catchy.
 Some other names, like Python or apache, are good because they relate to an existing idea or concept.
-Some others, like Ubuntu, use cachy words in foreign languages.
+Some others, like Ubuntu, use catchy words in foreign languages.
 However, there are actually no strict rules to get a good name.
 
 !!!!! Some Ideas
@@ -57,8 +57,8 @@ We call fantasy names those names that are not necessarily forged like the acron
 Instead, a fantasy name is taken or inspired from existing concepts.
 Some examples of this are the Apache Spark platform, or the Oracle SQL database.
 
-Fantasy names can have also have a metaphore.
-Good metaphores relate easily to the project and, if we know it, it helps in remembering it.
+Fantasy names can have also have a metaphor.
+Good metaphors relate easily to the project and, if we know it, it helps in remembering it.
 Typical metaphorical names are inspired in mythology, books.
 
 Finally, sometimes you will need to adjust your name to the technology conventions or limitations.
@@ -81,7 +81,11 @@ Most of the people that will arrive to your project's page will have something i
 And people now knowing your project will ask the following questions as soon as they arrive to your site: What is it? What is it useful for? Why should I use it?
 Most of the people will abandon your site if they do not find any of these explanations.
 
-Another point of consideration when explaining what your code is about: write for newbies. Most people will be users of your code. And users don't want to understand in detail what happens inside your code, they want to understand what can they use it for. Give examples of usage, tell the user if he's the right person for your code.
+The README file is the first entry point to your GitHub project, that's why it must be crystal clear: write for newbies.
+
+Most people will be users of your code. 
+Their main concern is to know what your code is about, not the detail of what happens inside, they want to understand what can they use it for.
+Give examples of usage, tell the user if he's the right person for your code.
 
 Of course this does not mean that you don't have to do a technical documentation of the internals of your project. You need technical documentation, but it is not a friendly way to welcome new users.
 
@@ -91,7 +95,7 @@ The second main reason why a user may run away from your project is because he d
 
 !!!! Platform
 
-Explain what technology you use so they can understand if your project really fits with theyr technological stack.
+Explain what technology you use so they can understand if your project really fits with their technological stack.
 Lots of people have lots of different needs and experience, so clearly stating what you propose creates a healthy contract.
 
 Explain amongst others:
@@ -109,7 +113,7 @@ Even if the loading of your project is completely automated, a user may want to 
 
 The simplest dependency you could imagine are those written in the same language you use. These libraries are usually easily loadable using the package manager of your language.
 
-A separate level of dependency are dependencies written in separate languages. These usually need some more glue code to be used and downloaded, adding some bureaucracy. The most prominent example of these are native libraries writen in C or C++. Sometimes such libraries can be installed using a separate package manager (such as ubuntu and debian's apt). However, some other times these libraries have to be manually compiled and installed into the user system.
+A separate level of dependency are dependencies written in separate languages. These usually need some more glue code to be used and downloaded, adding some bureaucracy. The most prominent example of these are native libraries written in C or C++. Sometimes such libraries can be installed using a separate package manager (such as ubuntu and debian's apt). However, some other times these libraries have to be manually compiled and installed into the user system.
 
 !!!! Build, Compile
 
