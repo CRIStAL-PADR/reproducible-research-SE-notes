@@ -38,7 +38,7 @@ An SSH key works as a lock: a key is actually a pair of a public and a private k
 
 To create a SSH key, in *nix systems you can simply type in your terminal
 
-[[[
+[[[language=bash
 $ ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
 ]]]
 
@@ -53,7 +53,7 @@ Connect yourself to your Github settings (usually https://github.com/settings/pr
 
 Git, constrastingly to other VCSs, is a distributed VCS. This means that you work not only against the remote repository but also you can work locally. To support that, git makes a ""local copy"" of the repository in your machine. To create such a copy, the usual git command is ""clone"". 
 
-[[[
+[[[language=bash
 $ git clone git@github.com:[your_username]/[your_repo_name].git
 ]]]
 
@@ -163,14 +163,14 @@ As with any sport or discipline, understanding and practicing the basics is real
 Let's imagine I was working on my project for a couple of hours.
 As a result, I have two new files with some contents on it: a README.md file with some explanations and a python file with some code in it.
 
-[[[
+[[[language=bash
 $ ls
 project.py README.md
 ]]]
 
 One of the things that we can do first is to check what git knows about these files:
 
-[[[
+[[[language=bash
 $ git status
 On branch master
 
@@ -198,7 +198,7 @@ Adding stuff to your bag (or tracking files) is done through the add command.
 Only what is added/tracked will be committed.
 Let's proceed to track those files and see what is the status of our repository afterwards.
 
-[[[
+[[[language=bash
 $ git add README.md
 $ git add project.py
 $ git status
@@ -218,7 +218,7 @@ Let's also notice that it says that we are on a branch called master.
 Let's now proceed to commit to save our changes in the repository.
 We can do that by using the commit command with the __m__ option to specify a message:
 
-[[[
+[[[language=bash
 $ git commit -m "first version"
 [master (root-commit) 37adf4e] first version
  2 files changed, 4 insertions(+), 0 deletions(-)
@@ -235,7 +235,7 @@ The commit graph in this case will look as in figure *@commit_graph_1*.
 If we see the status of our repository after the commit we will also see that it changed.
 There is nothing to commit:
 
-[[[
+[[[language=bash
 $ git status
 On branch master
 nothing to commit, working directory clean
@@ -247,7 +247,7 @@ The master branch label will be updated and point to this new commit.
 The commit graph in this case will look as in figure *@commit_graph_2*
 Notice how our old commit is still there, but he's accessible as the parent of our new commit.
 
-[[[
+[[[language=bash
 $ git add README.md
 $ git commit -m "Adding a title"
 [master 0c0e5ff] Adding a title
@@ -262,7 +262,7 @@ $ git commit -m "Adding a title"
 The commit graphs we have shown so far are not evident at all while when we use the ==git status== command.
 There is however a way to ask git about them using the ==git log== command.
 
-[[[
+[[[language=bash
 $ git log
 commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
 Author: Guille Polito <guillermopolito@gmail.com>
@@ -284,7 +284,7 @@ As you can see, each commit has an id, the author name, the timestamp and its me
 
 We can also ask git what are the changes introduced in a particular commit using the command ==git show==.
 
-[[[
+[[[language=bash
 $ git show 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
 commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
 Author: Guille Polito <guillermopolito@gmail.com>
@@ -311,7 +311,7 @@ This view can be accesses through the ==git log --graph --oneline --all== comman
 Here is an example of this view for a more complex project.
 In this view, stars represent the commits with their ids and commit messags, and lines represent the parenthood relationships.
 
-[[[
+[[[language=bash
 $ git log --graph --oneline --all
 * 4eb8446 Documenting
 * e5a3e2e Add tests
@@ -352,13 +352,13 @@ One particular consideration about tags is that they are not meant to be modifie
 To create a tag, use the command ==git tag== giving as argument a name for the tag and a descriptive message.
 Usual tag names use semantic version conventions, prefixed with a v. For example version 1 would be ==v1.0.0==.
 
-[[[
+[[[language=bash
 $ git tag -a v1.0.0 -m "First stable release"
 ]]]
 
 You can afterwards list all your tags using the ==git tag== command without arguments:
 
-[[[
+[[[language=bash
 $ git tag
 v0.1.1-alpha
 v1.0.0
@@ -366,7 +366,7 @@ v1.0.0
 
 Finally, if you want to recover the code that you tagged at some point, you can use the ==checkout== command with the name of your tag.
 
-[[[
+[[[language=bash
 $ git checkout v1.0.0
 Note: checking out 'v1.0.0'.
 
