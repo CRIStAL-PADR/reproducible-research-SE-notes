@@ -256,6 +256,21 @@ $ git commit -m "Adding a title"
 
 +History graph after our second commit>figures/commit_graph_2.pdf|width=65|label=commit_graph_2+
 
+!!!! Discarding your changes
+
+It arrives the time for every woman/men to make mistakes and want to discard them.
+Doing so may be dangerous, since once discarded you will not able to recover your changes.
+It is however possible to instruct git to do so.
+For it, there are two git commants that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
+__git reset__ and __git clean__
+
+[[[language=bash
+$ git reset --hard
+$ git clean -df
+]]]
+
+The reason for needing two commands instead of one relies on the fact that git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in git's documentation.
+
 !!! Exploring the History
 
 !!!! The ==git log== command
@@ -385,10 +400,138 @@ What happened here is that the ==checkout== command modified the ""HEAD"" refere
 
 +Detached HEAD after checking out a tag>figures/dettached_head.pdf|width=50|label=detached-head+
 
+!!!! Getting out of Detached HEAD
 
+Detached head means no other than "HEAD is not pointing to a branch".
+Being in a detached HEAD state is not bad in itself, but it may provoke loss of changes.
+As a matter of fact, any commit that is not properly referenced by another commit or by another git reference (tag, branch) may be garbage collected.
+
+Git will not forbid you to commit in this state, but any new commit you create will only reachable if you remember the commit hash.
+To get out of dettached HEAD, the easiest solution is to checkout a branch, as we will see in the next section.
+Checking out a branch will set HEAD to point to a branch instead of a commit, saving you some HEADaches.
 
 !!! Creating new history lines with branches
 
-@@todo how to discard local changes
+Branches in git represent different histories.
+As in one of science fiction time-travel theories, git branching is equivalent to take one moment in time have several alternative time-lines from there.
+Figure *@Branches* illustrates the idea.
+
++History lines can be branched from a commit>figures/branches.pdf|width=50|label=Branches+
+
+By default, a git repository will include a single branch, called __master__. Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
+You can ask git for the branches in the repository using the command __git branch -v__.
+
+[[[language=bash
+$ git branch -v
+* master  0c0e5ff Adding a title
+]]]
+
+This command shows all branches in the repository, one per line.
+Then, for each branch it shows what commit it points, and the comment on that commit.
+
+!!!! Creating a new branch
+
+To create a new branch, we can use the command __git branch__ giving as argument the new branch name.
+This will create a new branch from our current commit, the one that can be resolved from HEAD.
+Figure *@new_branch* shows what happens in the graph view.
+
+[[[language=bash
+$ git branch development
+]]]
+
++A new branch points by default to the same commit as the current branch>figures/new_branch.pdf|width=50|label=new_branch+
+
+However, as we see in the graph view, creating a new branch does not modify HEAD.
+Indeed, our current branch/commit did not move.
+We will observe the same in the command line, if we ask the list of branches.
+The branch master is marked with a star, indicating it is the actual branch.
+And both branches point to the same commit.
+
+[[[language=bash
+$ git branch -v
+* master      0c0e5ff Adding a title
+  development 0c0e5ff Adding a title
+]]]
+
+To start working on our new branch, we just need to use the same ==checkout== command we used for tags.
+
+[[[language=bash
+$ git checkout development
+Switched to branch 'development'
+]]]
+
+Or alternatively, we could have created our branch using the ==checkout -b== command, which performs a ==git branch== and a ==git checkout== one after the other.
+Useful since these operations are usually done together most of the time.
+
+[[[language=bash
+# Instead of branch and then checkout
+$ git checkout -b development
+Switched to branch 'development'
+]]]
+
+Then, doing some work and creating a commit will only modify our current branch and leave ==master== as it was before.
+
+[[[language=bash
+$ touch somefile
+$ git add somefile
+$ git commit -m "added somefile"
+[development b894b84] added somefile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 somefile
+$ git branch -v
+   master      0c0e5ff Adding a title
+ * development b894b84 added somefile
+]]]
+
+!!!! Diverging history
+
+Now that we have done some work in a branch, we can make our branches diverge.
+We only need to checkout another branch, existing or new, and start working from there.
+
+[[[language=bash
+$ git checkout master
+Switched to branch 'master'
+$ touch someotherfile
+$ git add someotherfile
+$ git commit -m "added someotherfile"
+[master dc4a3e7] added someotherfile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 someotherfile
+$ git branch -v
+ * master      dc4a3e7 added someotherfile
+   development b894b84 added somefile
+]]]
+
+This change will create two diffent history lines, as shown in Figure *@Branches2*.
+One history line represented by the _master_ branch, and another history line represented by the _development_ branch.
+
++Divergent history>figures/branches.pdf|width=50|label=Branches2+
 
 !!! Merging history lines
+
+The most complicated part of git is not branching or commiting, but merging.
+In our time-travel, time-line metaphores we said that branching is equivalent to open new time-lines.
+Merging is the equivalent to join them into a single history.
+
+The concept behind merging is not difficult.
+Using the same idea of graph of commits that we used before, a merge can be represented as a commit that has several parents, thus joining several histories.
+Figure *@merge* illustrates such a merge commit.
+
++Merging the history with a merge commit>figures/merge.pdf|width=50|label=merge+
+
+However, as you see also in the picture, a merge commit will be referenced by one of the branches but not both.
+In other words, a merge operation means that a first branch will be merged into a second one.
+Thus the first one will remain intact.
+To perform a merge we need to checkout the branch that will host the changes, and then use the ==merge== command with a branch name as argument. The following example shows how we can merge the development branch into the master branch.
+
+[[[language=bash
+$ git checkout master
+ ...
+$ git merge development
+[Merge made by the 'recursive' strategy.
+ ...
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ ...]
+]]]
+
+!!!! Managing Conflicts
