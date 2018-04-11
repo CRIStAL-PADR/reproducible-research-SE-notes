@@ -3,40 +3,40 @@
 Version control systems (VCSs) are one of the cornerstones of reproducibility.
 Informally speaking, a VCS works as a database that saves versions of your project.
 That is, it will store all changes you will do (as soon as you instruct it to do so).
-Thus, the main feature of a VCS is that they allow us to freeze our project at any point in time, and then query and recover old versions as they were.
+Thus, the main feature of a VCS is that it allows us to freeze our project at any point in time, and then query and recover old versions as they were.
 These features will improve our day-to-day work with two more direct benefits: they remove fear to change and allow us to clean up unused and old code.
 
 Unexperienced developers fear changing some parts of their project.
 This happens mainly when developers cannot guarantee that the changed code is right or will work properly.
-The absense or the complexity of testing feeds this fear even more.
-However, when using a VCS making mistakes are not painful anymore.
+The absence or the complexity of testing feeds this fear even more.
+However, when using a VCS, making mistakes is not painful anymore.
 We can come back to any saved version and ignore or discard potentially wrong versions.
 
 Finally, a VCS does not only store our versions but other useful meta-data.
-For example, among others it saves the timestamp of the change, its author, and some useful comments.
-This allows us to not put such kind of useless data in the code, as it is managed by the VCS automatically.
+For example, it saves the timestamp of any change, its author, and some useful comments.
+This avoids adding this kind of identifying data in the code, leaving the code more readable and single-purpose, while we let the VCS automatically manage and label changes.
 
-In this chapter we will explore the basics of VCSs with Git and Github. We have chosen Git because of its popularity nowadays and Github because it is one of the most prominent platforms for Git. However, most of the concepts can be easily extrapolated to other VCSs and platforms. This chapter will start with the setup of a repository, how to store changes into it and how to investigate/query them. The second part of the chapter will show some other advanced features such as tagging and branches, including merging.
+In this chapter we will explore the basics of VCSs with Git and Github. We have chosen Git because of its popularity nowadays, and Github because it is one of the most prominent platforms for Git. However, most of the concepts can be easily applied to other VCSs and platforms. This chapter will start with the setup of a repository, how to store changes into it and how to investigate/query them. The second part of the chapter will show some other advanced features such as tagging and branches, including merging.
 
 !!! Setting up a Repository
 
-A Git repository is like a database storing changes. In the modern world, we use to store the main repository in a remote machine, usually a server hosted in our company/university or in the cloud. We do not use to store our main repository in our machine, because this would mean that losing our machine will mean losing our project.
+A Git repository is like a database storing changes. In the modern world, good practice is to store the main repository in a remote machine, usually a server hosted in our company/university or in the cloud. We avoid storing our main repository only in our machine, as losing our machine would then result in losing our project. As we shall see, a remotely-stored Git repository advantageously replaces manual backups.
 
-This chapter will assume you have git already installed in your machine, and that you're using a *nix operating system. An appendix at the end will give some details on different setups and installation procedures. 
+This chapter will assume you have Git already installed in your machine, and that you're using a *nix operating system. An appendix at the end will give some details on different setups and installation procedures.
 
-The easiest way to start a repository is to create it directly online. If you have a github account, get yourself to the "New Repository" action (usually within the menu using the "+" symbol) and you will see the form in *@new_repo_github*. Follow the form and create your repository
+The easiest way to start a repository is to create it directly online. If you have a Github account, get yourself to the "New Repository" action (usually within the menu using the "+" symbol) and you will see the form in *@new_repo_github*. Follow the form and create your repository
 
 +Creating a New Repository in Github>figures/new-repository-github.png|label=new_repo_github+
 
 !!!! Creating an SSH key
 
-To be able to use your repository, remotely, you need to setup the github credentials.
+To be able to use your repository, remotely, you need to setup the Github credentials.
 Otherwise, github will reject any operation against your repository.
 Such a setup requires the creation and uploading of SSH keys.
 
 An SSH key works as a lock: a key is actually a pair of a public and a private key. The private key is meant to reside in your machine and not be published at all. A public key is meant to be shared with others to prove your identity. Whenever you want to prove your identity, SSH will exchange messages encrypted with your public key, and see if you are able to decrypt it using your private key.
 
-To create a SSH key, in *nix systems you can simply type in your terminal
+To create an SSH key, in *nix systems you can simply type in your terminal
 
 [[[
 $ ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
@@ -44,14 +44,14 @@ $ ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
 
 Follow the instructions in your terminal such as setting the location for your key pair (usually it is $HOME/.ssh) and the passphrase (a kind of password). Finally, you'll end up with your public/private pair on the selected location. It is now time to upload it to Github.
 
-Connect yourself to your Github settings (usually https://github.com/settings/profile) and go to the "SSH and GPG keys" menu. Import there the contents of your public key file. You should be now able to use your repository. 
+Connect yourself to your Github settings (usually https://github.com/settings/profile) and go to the "SSH and GPG keys" menu. Import there the contents of your public key file. You should be now able to use your repository.
 
 
 @@note Alternatively, you can follow the *instructions on github>https://help.github.com/articles/connecting-to-github-with-ssh/*.
 
 !!!! Cloning the Repository
 
-Git, constrastingly to other VCSs, is a distributed VCS. This means that you work not only against the remote repository but also you can work locally. To support that, git makes a ""local copy"" of the repository in your machine. To create such a copy, the usual git command is ""clone"". 
+Git, constrastingly to other VCSs, is a distributed VCS. This means that you work not only against the remote repository but also you can work locally. To support that, git makes a ""local copy"" of the repository in your machine. To create such a copy, the usual git command is ""clone"".
 
 [[[
 $ git clone git@github.com:[your_username]/[your_repo_name].git
