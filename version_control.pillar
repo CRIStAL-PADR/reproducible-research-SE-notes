@@ -72,7 +72,7 @@ If you already know what is a git commit, a git reference and how the graph of g
 !!!! Dissecting a Git Repository
 
 Before starting explaining what is a commit, what is a branch, and so on, let's start easy by understanding the parts that compose our Git repository.
-When you create a Git repository as we did in the last section, or you clone an old repository that already has some files in it, you will find that there is more than meets the eye. A Git repository has usually three core collaborating components: the working copy, the repository, and the remotes. You can see an schematics on figure *@repository_structure*.
+When you create a Git repository as we did in the last section, or you clone an old repository that already has some files in it, you will find that there is more than meets the eye. A Git repository has usually three core collaborating components: the working copy, the repository, and the remotes. You can see an schematics on Figure *@repository_structure*.
 
 +Git repository structure>figures/repository-structure.pdf|width=90|label=repository_structure+
 
@@ -120,12 +120,12 @@ The history of commits we explained before is not stored in a list form but in a
 A commit is a node connected to other commits by ""parenthood"".
 A commit is said to be parent of another commit if it is the exact previous version.
 In other words, when we create a new commit, the parent of our new commit is the previous commit.
-A commit is said to be an ancestor of another commit if it preceeds him in history.
+A commit is said to be an ancestor of another commit if it preceeds it in history.
 Moreover, a commit can have one or many parents, and many commits can have the same commit as parent.
 
 +Graph of commits>figures/commit-graph.pdf|width=50|label=commit_graph+
 
-For instance, take a look at the schema of a typical commit graph represented in figure *@commit_graph*.
+For instance, take a look at the schema of a typical commit graph represented in Figure *@commit_graph*.
 - Commit a4153b1 is the first commit in the graph, with no parents. A commit with no parents represents the first commit in a repository, when no previous history was available.
 - Commit 35ac17f's parent is a4153b1 and commit a4153b1's parent is 7ba52e5.
 - Commit b01aba4's parent is also a4153b1.
@@ -147,7 +147,7 @@ For example, you can name a commit as ""release 1.0"" or you can name it as ""cu
 
 +Git references>figures/references.pdf|width=80|label=references+
 
-As we show in figure *@references*, there are two main kind of references in Git:
+As we show in Figure *@references*, there are two main kind of references in Git:
 - ""tags"": tags are fixed labels that once created are not meant to be removed or moved. They are useful for doing releases: people will expect that a release does not change, otherwise they cannot depend on it.
 - ""branches"": branches are transferable labels that can be moved from commit to commit. They are used to maintain the different history lines of your project.
 
@@ -228,7 +228,7 @@ $ git commit -m "first version"
 
 What the commit command is doing behind is to create a new node in our history graph.
 Moreover, it will update the master branch label to point to this new commit.
-The commit graph in this case will look as in figure *@commit_graph_1*.
+The commit graph in this case will look as in Figure *@commit_graph_1*.
 
 +History graph after our first commit>figures/commit_graph_1.pdf|width=60|label=commit_graph_1+
 
@@ -244,7 +244,7 @@ nothing to commit, working directory clean
 If we repeat the process, i.e. we apply a change to one of our files, add and commit our commit graph will change again.
 A new commit with a new commit id will be created having as parent our previous commit.
 The master branch label will be updated and point to this new commit.
-The commit graph in this case will look as in figure *@commit_graph_2*
+The commit graph in this case will look as in Figure *@commit_graph_2*
 Notice how our old commit is still there, but he's accessible as the parent of our new commit.
 
 [[[language=bash
@@ -347,7 +347,7 @@ $ git log --graph --oneline --all
 
 However, we are not always in the mood of using the terminal, or of wanting to decode what was done in ascii art.
 There are tools that are more suitable to explore the history of a project, usually providing some nice graphical capabilities.
-This is the case of tools such as SourceTree (figure *@commit_graph_sourcetree*) or Github's network view (figure *@commit_graph_github_network*).
+This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*) or Github's network view (Figure *@commit_graph_github_network*).
 
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
