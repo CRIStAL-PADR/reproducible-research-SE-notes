@@ -293,7 +293,7 @@ Date:   Wed Mar 21 14:02:43 2018 +0100
 ]]]
 
 ==git log== prints the list of commits in order of parenthood.
-The one if the top if the most recent commit, our last commit.
+The one on the top is the most recent commit, our last commit.
 The one below is its parent, and so on.
 As you can see, each commit has an id, the author name, the timestamp and its message.
 
