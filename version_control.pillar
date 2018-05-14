@@ -186,7 +186,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 ]]]
 
 Git tells us that we are doing an initial commits, and that there are two files (README.md and project.py) that he doesn't know yet, they are untracked.
-Then he says us that he is not tracking any file and that we need to do a __git add__ to track them.
+Then it tells us that he is not tracking any file and that we need to do a __git add__ to track them.
 
 To make it simple, you can see this whole __tracking__ story as going to the supermarket.
 If you want to buy something from the supermarket, you have take whatever you want first and put it in your bag.
