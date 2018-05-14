@@ -362,7 +362,7 @@ Thus, software that depends on a frozen version can also benefit from its stabil
 
 In Git, releasing is done via tags.
 A tag is a label that we put on a particular commit to be able to find it easily later on, so remember to put short, readable names to them.
-One particular consideration about tags is that they are not meant to be modified, so you'll find in Git's documentation that you have special operations (that we do not recommend) to do that.
+One particular consideration about tags is that they are not meant to be modified, although you will find in Git's documentation that you have special operations (that we do not recommend) to do that.
 
 To create a tag, use the command ==git tag== giving as argument a name for the tag and a descriptive message.
 Usual tag names use semantic version conventions, prefixed with a v. For example version 1 would be ==v1.0.0==.
