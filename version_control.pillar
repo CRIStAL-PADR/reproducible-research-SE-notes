@@ -137,7 +137,7 @@ Likewise, a commit that has many parents is joining two histories: it is the res
 
 !!!! Naming commits with references
 
-You probably noticed that referring to commits by their id is ackward.
+You probably noticed that referring to commits by their id is awkward.
 Commit ids are generated automatically as hashes that avoid duplications as much as possible.
 However, they are not handy to work on a daily basis since they are hard to remember and type.
 
