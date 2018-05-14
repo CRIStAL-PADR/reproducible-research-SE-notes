@@ -10,7 +10,7 @@ Unexperienced developers fear changing some parts of their project.
 This happens mainly when developers cannot guarantee that the changed code is right or will work properly.
 The absence or the complexity of testing feeds this fear even more.
 However, when using a VCS, making mistakes is not painful anymore.
-We can come back to any saved version and ignore or discard potentially wrong versions.
+We can come back to any saved version fand ignore or discard potentially wrong versions.
 
 Finally, a VCS does not only store our versions but other useful meta-data.
 For example, it saves the timestamp of any change, its author, and some useful comments.
@@ -147,7 +147,7 @@ For example, you can name a commit as ""release 1.0"" or you can name it as ""cu
 
 +Git references>figures/references.pdf|width=80|label=references+
 
-As we show in Figure *@references*, there are two main kind of references in Git:
+As we show in Figure *@references*, there are two main kinds of references in Git:
 - ""tags"": tags are fixed labels that once created are not meant to be removed or moved. They are useful for doing releases: people will expect that a release does not change, otherwise they cannot depend on it.
 - ""branches"": branches are transferable labels that can be moved from commit to commit. They are used to maintain the different history lines of your project.
 
