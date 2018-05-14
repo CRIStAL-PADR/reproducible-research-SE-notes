@@ -139,7 +139,7 @@ Likewise, a commit that has many parents is joining two histories: it is the res
 
 You probably noticed that referring to commits by their id is ackward.
 Commit ids are generated automatically as hashes that avoid duplications as much as possible.
-However, they are not handy to work on a dayly basis since they are hard to remember and type.
+However, they are not handy to work on a daily basis since they are hard to remember and type.
 
 To solve this, Git provides a second kind of objects: Git references.
 A Git reference is like a label that you put on a commit, to be able to identify that commit by a much much simpler name afterwards.
