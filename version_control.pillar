@@ -261,7 +261,7 @@ $ git commit -m "Adding a title"
 It arrives the time for every woman/men to make mistakes and want to discard them.
 Doing so may be dangerous, since once discarded you will not able to recover your changes.
 It is however possible to instruct Git to do so.
-For it, there are two Git commants that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
+For it, there are two Git comments that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
 __git reset__ and __git clean__
 
 [[[language=bash
