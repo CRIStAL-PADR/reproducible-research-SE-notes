@@ -1,0 +1,11 @@
+!! Workflows for researchers
+
+In this section, we detail example workflows for researchers.
+
+!!! Writing a scientific paper
+
+In that case, your repository contains at least the source text of the paper, and typically also includes figures.
+
+!!! Packaging scientific code
+
+!!! Putting it all together: a reproducible paper
