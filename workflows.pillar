@@ -4,7 +4,11 @@ In this section, we detail example workflows for researchers.
 
 !!! Writing a scientific paper
 
-In that case, your repository contains at least the source text of the paper, and typically also includes figures.
+In that case, your repository contains at least the source text of the paper, and typically also includes figures. As always, it is advised not to include final products such as pdfs in your repository, only source material that allows any user to produce the outputs himself.
+
+You can use GitHub versions to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version.
+You can also link a version of the paper with other material: code, a submission on another platform like ArXiv, a demo.
+Since papers and supplementary material now tend to spend some time online and undergo changes before a final version is printed or permanently stored by journals, it becomes important to label each version of the paper and its material correctly, so that the community can refer to specific versions when commenting on your research.
 
 !!! Packaging scientific code
 
