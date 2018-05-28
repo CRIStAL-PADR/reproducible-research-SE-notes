@@ -22,6 +22,8 @@ In this chapter we will explore the basics of VCSs with Git and Github. We have 
 
 A Git repository is like a database storing changes. In the modern world, good practice is to store the main repository in a remote machine, usually a server hosted in our company/university or in the cloud. We avoid storing our main repository only in our machine, as losing our machine would then result in losing our project. As we shall see, a remotely-stored Git repository advantageously replaces manual backups.
 
+@@todo Explain what a repository could be to a researcher: a paper, the code for a paper, both. We could use the same running examples throughout the book when we instantiate workflows, versions, etc. Maybe we can have a special format in the book for these "notes for the researchers".
+
 This chapter will assume you have Git already installed in your machine, and that you're using a *nix operating system. An appendix at the end will give some details on different setups and installation procedures.
 
 The easiest way to start a repository is to create it directly online. If you have a Github account, get yourself to the "New Repository" action (usually within the menu using the "+" symbol) and you will see the form in *@new_repo_github*. Follow the form and create your repository
