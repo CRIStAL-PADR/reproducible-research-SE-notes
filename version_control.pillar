@@ -67,9 +67,9 @@ You are now ready to go.
 
 !!! Understanding Git Basics
 
-Before going on with the reproducibility concerns that brought you here to read this chapter and even before continuing with practical git commands, we will dive a bit into git concepts.
-Understanding a bit how git works is useful when doing some more complicated stuff such as merging and branching.
-If you already know what is a git commit, a git reference and how the graph of git objects is managed, you can skip this section.
+Before going on with the reproducibility concerns that brought you here to read this chapter and even before continuing with practical Git commands, we will dive a bit into Git concepts.
+Understanding a bit how Git works is useful when doing some more complicated stuff such as merging and branching.
+If you already know what is a Git commit, a Git reference and how the graph of Git objects is managed, you can skip this section.
 
 !!!! Dissecting a Git Repository
 
