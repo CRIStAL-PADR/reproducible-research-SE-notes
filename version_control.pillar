@@ -187,14 +187,14 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ]]]
 
-Git tells us that we are doing an initial commits, and that there are two files (README.md and project.txt) that he doesn't know yet, they are untracked.
-Then it tells us that he is not tracking any file and that we need to do a __git add__ to track them.
+Git tells us that we are doing an initial commits, and that there are two files (project.txt) that it doesn't know yet, they are untracked.
+Then it tells us that it is not tracking any file and that we need to do a __git add__ to track them.
 
 To make it simple, you can see this whole __tracking__ story as going to the supermarket.
-If you want to buy something from the supermarket, you have take whatever you want first and put it in your bag.
+If you want to buy something from the supermarket, you have take whatever you want first and put it in your basket.
 Then, you go to the cashier, you pay and take your things home.
 Now imagine that passing through the cashier to pay is equivalent to do a commit command.
-This means that first you need to add stuff to your bag!
+This means that first you need to add stuff to your c!
 
 Adding stuff to your bag (or tracking files) is done through the add command.
 Only what is added/tracked will be committed.
@@ -324,9 +324,9 @@ More advanced graphical tools are able to read this description and show a more 
 !!!! Seeing the history graph
 
 Git's log provides a more graphish view on the terminal using some cute ascii art.
-This view can be accesses through the ==git log --graph --oneline --all== command.
+This view can be accesses through the ==git log \-\-graph \-\-oneline \-\-all== command.
 Here is an example of this view for a more complex project.
-In this view, stars represent the commits with their ids and commit messags, and lines represent the parenthood relationships.
+In this view, stars represent the commits with their ids and commit messages, and lines represent the parenthood relationships.
 
 [[[language=bash
 $ git log --graph --oneline --all
@@ -397,7 +397,7 @@ HEAD is now at 0c0e5ff... Adding a title
 ]]]
 
 When checking out a tag, Git tells you that we are in ''detached HEAD'' state.
-And that whatever commit we do in this state, will be lost unless we create a branch.
+And that whatever commit we do in this state will be lost unless we create a branch.
 What happened here is that the ==checkout== command modified the ""HEAD"" reference to point to the commit pointed by the tag, instead of a branch. Figure *@detached-head* shows the commit graph for this particular case.
 
 +Detached HEAD after checking out a tag>figures/dettached_head.pdf|width=50|label=detached-head+
@@ -416,7 +416,7 @@ Checking out a branch will set HEAD to point to a branch instead of a commit, sa
 
 Branches in Git represent different histories.
 As in one of science fiction time-travel theories, Git branching is equivalent to take one moment in time have several alternative time-lines from there.
-Figure *@Branches* illustrates the idea.
+Figure *@Branches* illustrates the idea, showing that you can have two different futures from commit _0c0e5ff_.
 
 +History lines can be branched from a commit>figures/branches.pdf|width=50|label=Branches+
 
@@ -505,7 +505,7 @@ $ git branch -v
 ]]]
 
 This change will create two diffent history lines, as shown in Figure *@Branches2*.
-One history line represented by the _master_ branch, and another history line represented by the _development_ branch.
+One history line represented by the ==master== branch, and another history line represented by the ==development== branch.
 
 +Divergent history>figures/branches.pdf|width=50|label=Branches2+
 
