@@ -167,7 +167,7 @@ As a result, I have two new files with some contents on it: a README.md file wit
 
 [[[language=bash
 $ ls
-project.py README.md
+project.txt README.md
 ]]]
 
 One of the things that we can do first is to check what Git knows about these files:
@@ -182,12 +182,12 @@ Untracked files:
   (use "git add <file>..." to include in what will be committed)
 
 	README.md
-	project.py
+	project.txt
 
 nothing added to commit but untracked files present (use "git add" to track)
 ]]]
 
-Git tells us that we are doing an initial commits, and that there are two files (README.md and project.py) that he doesn't know yet, they are untracked.
+Git tells us that we are doing an initial commits, and that there are two files (README.md and project.txt) that he doesn't know yet, they are untracked.
 Then it tells us that he is not tracking any file and that we need to do a __git add__ to track them.
 
 To make it simple, you can see this whole __tracking__ story as going to the supermarket.
@@ -202,7 +202,7 @@ Let's proceed to track those files and see what is the status of our repository 
 
 [[[language=bash
 $ git add README.md
-$ git add project.py
+$ git add project.txt
 $ git status
 On branch master
 
@@ -212,7 +212,7 @@ Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 
 	new file:   README.md
-	new file:   project.py
+	new file:   project.txt
 ]]]
 
 Now Git says that our two new files will be committed.
@@ -225,7 +225,7 @@ $ git commit -m "first version"
 [master (root-commit) 37adf4e] first version
  2 files changed, 4 insertions(+), 0 deletions(-)
  create mode 100644 README.md
- create mode 100644 project.py
+ create mode 100644 project.txt
 ]]]
 
 What the commit command is doing behind is to create a new node in our history graph.
