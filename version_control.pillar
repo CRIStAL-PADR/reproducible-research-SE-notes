@@ -524,7 +524,8 @@ Figure *@merge* illustrates such a merge commit.
 However, as you see also in the picture, a merge commit will be referenced by one of the branches but not both.
 In other words, a merge operation means that a first branch will be merged into a second one.
 Thus the first one will remain intact.
-To perform a merge we need to checkout the branch that will host the changes, and then use the ==merge== command with a branch name as argument. The following example shows how we can merge the development branch into the master branch.
+To perform a merge we need to checkout the branch that will host the changes, and then use the ==merge== command with a branch name as argument.
+The following example shows how we can merge the development branch into the master branch.
 
 [[[language=bash
 $ git checkout master
@@ -537,3 +538,90 @@ $ git merge development
 ]]]
 
 !!!! Managing Conflicts
+
+When merging different history lines, things can go wrong if both history lines modified the same file or ressource.
+Such a problem is also called a __conflict__.
+
+To understand the issue, let's generate a conflict on purpose.
+We can create two branches called ==future-1== and ==future-2== adding each the same file but with different contents:
+
+[[[language=bash
+$ git checkout -b future-1
+$ echo "I'm in future-1" > conflicting.txt
+$ git add conflicting.txt
+$ git commit -m "Maybe will cause a conflict"
+
+# Let's go back to master and redo the same in another branch
+$ git checkout master
+
+$ git checkout -b future-2
+$ echo "I'm in future-2" > conflicting.txt
+$ git add conflicting.txt
+$ git commit -m "I'm sure it will cause a conflict!"
+]]]
+
+And then trigger a conflict when trying to merge:
+
+[[[language=bash
+# We are in future-2 so we will try to merge future-1
+$ git merge future-1
+Auto-merging conflicting.txt
+CONFLICT (add/add): Merge conflict in conflicting.txt
+Automatic merge failed; fix conflicts and then commit the result.
+]]]
+
+We see that as soon as we merge, Git tries to automatically merge the file __conflicting.txt__.
+It detects however a merge conflict that does not allow it to continue.
+If we check Git's status, you will now see:
+
+[[[language=bash
+$ git status
+On branch future-2
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+
+	both added:      conflicting.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]]]
+
+Git tells us that __conflicting.txt__ is not merged and that we should fix it.
+To continue working, we should resolve such a conflict, telling Git what version we want to keep.
+Several solutions work: either we keep the version we had in ==future-2==, we keep the version incoming from ==future-1==, or we keep a can manually resolve the conflict and keep whatever version we want.
+
+The easiest, non-thinking, way to merge is to open the conflicting file and resolve the conflict.
+For example, if we open our `conflicting.txt` file with a text editor we will see:
+
+[[[
+<<<<<<< HEAD
+I'm in future-2
+=======
+I'm in future-1
+>>>>>>> future-1
+]]]
+
+Git modified our file adding some __<<<<<<<__, __>>>>>>>__ and __\=\=\=\=\=\=\=__ markers in our file.
+What this markers delimit is the conflicts Git found.
+As the first line says, the first region (what is between the __<<<<<<<__ and the __\=\=\=\=\=\=\=__) corresponds at the version that was in ==HEAD== (i.e., ==future-2==).
+As the last line says, the last region (what is between the __\=\=\=\=\=\=\=__ and the __>>>>>>>__) corresponds to the version that was in ==future-1==.
+
+To resolve the conflict, you should:
+ - remove all the special markers
+ - keep only the version you want (or edit it to be different)
+ - add and commit the conflicting file
+ 
+For example, let's say we wanted to keep the version in future-2, we can edit the file leaving only
+
+[[[
+I'm in future-2
+]]]
+
+and then commit the resolved conflict:
+
+[[[bash
+$ git add conflicting.txt
+$ git commit -m "Resolve conflict"
+]]]
