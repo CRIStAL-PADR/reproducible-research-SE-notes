@@ -10,7 +10,7 @@ Unexperienced developers fear changing some parts of their project.
 This happens mainly when developers cannot guarantee that the changed code is right or will work properly.
 The absence or the complexity of testing feeds this fear even more.
 However, when using a VCS, making mistakes is not painful anymore.
-We can come back to any saved version fand ignore or discard potentially wrong versions.
+We can come back to any saved version and ignore or discard potentially wrong versions.
 
 Finally, a VCS does not only store our versions but other useful meta-data.
 For example, it saves the timestamp of any change, its author, and some useful comments.
