@@ -643,3 +643,22 @@ and then commit the resolved conflict:
 $ git add conflicting.txt
 $ git commit -m "Resolve conflict"
 ]]]
+
+!!! Interacting with Remote Repositories
+
+So far we have worked only on the repository that resides locally in our machine.
+This means that mostly all of Git features are available without requiring an internet connection, making it suitable for working off-line (think on working on the train or with a constrained connection!). However, working off-line is a two-edged weapon: all your changes are captive in your machine.
+While your changes are in your machine, nobody else can contribute or collaborate to them.
+Moreover, losing your machine would mean losing all your changes too.
+
+Keeping your changes safe means to synchronize them from time to time with a ""remote repository"".
+A remote repository is a copy of your local repository that is stored remotely, that is, in somewhere else's machine.
+This could be, for example, in your company's or university's server, the cloud, etc.
+
+In this section we will see how to interact with remotes, how to configure them, and how to synchronize our local repository with them.
+
+!!!! Git Remotes
+
+!!!! Pushing your commits
+
+!!!! Pulling new commits
