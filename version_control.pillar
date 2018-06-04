@@ -138,7 +138,7 @@ In other words, when we create a new commit, the parent of our new commit is the
 A commit is said to be an ancestor of another commit if it preceeds it in history.
 Moreover, a commit can have one or many parents, and many commits can have the same commit as parent.
 
-+Graph of commits>figures/commit-graph.pdf|width=50|label=commit_graph+
++Graph of commits>figures/commit-graph.pdf|width=65|label=commit_graph+
 
 For instance, take a look at the schema of a typical commit graph represented in Figure *@commit_graph*.
 - Commit ==a4153b1== is the first commit in the graph, with no parents. A commit with no parents represents the first commit in a repository, when no previous history was available.
@@ -250,7 +250,7 @@ What the commit command is doing behind is to create a new node in our history g
 Moreover, it will update the master branch label to point to this new commit.
 The commit graph in this case will look as in Figure *@commit_graph_1*.
 
-+History graph after our first commit>figures/commit_graph_1.pdf|width=60|label=commit_graph_1+
++History graph after our first commit>figures/commit_graph_1.pdf|width=65|label=commit_graph_1+
 
 If we see the status of our repository after the commit we will also see that it changed.
 There is nothing to commit:
@@ -418,7 +418,7 @@ When checking out a tag, Git tells you that we are in ''detached HEAD'' state.
 And that whatever commit we do in this state will be lost unless we create a branch.
 What happened here is that the ==checkout== command modified the ""HEAD"" reference to point to the commit pointed by the tag, instead of a branch. Figure *@detached-head* shows the commit graph for this particular case.
 
-+Detached HEAD after checking out a tag>figures/dettached_head.pdf|width=50|label=detached-head+
++Detached HEAD after checking out a tag>figures/dettached_head.pdf|width=65|label=detached-head+
 
 !!!! Getting out of Detached HEAD
 
@@ -436,7 +436,7 @@ Branches in Git represent different histories.
 As in one of science fiction time-travel theories, Git branching is equivalent to take one moment in time have several alternative time-lines from there.
 Figure *@Branches* illustrates the idea, showing that you can have two different futures from commit _0c0e5ff_.
 
-+History lines can be branched from a commit>figures/branches.pdf|width=50|label=Branches+
++History lines can be branched from a commit>figures/branches.pdf|width=65|label=Branches+
 
 By default, a Git repository will include a single branch, called ""master"". Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
 You can ask Git for the branches in the repository using the command ==git branch -v==.
@@ -459,7 +459,7 @@ Figure *@new_branch* shows what happens in the graph view.
 $ git branch development
 ]]]
 
-+A new branch points by default to the same commit as the current branch>figures/new_branch.pdf|width=50|label=new_branch+
++A new branch points by default to the same commit as the current branch>figures/new_branch.pdf|width=65|label=new_branch+
 
 However, as we see in the graph view, creating a new branch does not modify HEAD.
 Indeed, our current branch/commit did not move.
@@ -525,7 +525,7 @@ $ git branch -v
 This change will create two diffent history lines, as shown in Figure *@Branches2*.
 One history line represented by the ==master== branch, and another history line represented by the ==development== branch.
 
-+Divergent history>figures/branches.pdf|width=50|label=Branches2+
++Divergent history>figures/branches.pdf|width=65|label=Branches2+
 
 !!! Merging history lines
 
@@ -537,7 +537,7 @@ The concept behind merging is not difficult.
 Using the same idea of graph of commits that we used before, a merge can be represented as a commit that has several parents, thus joining several histories.
 Figure *@merge* illustrates such a merge commit.
 
-+Merging the history with a merge commit>figures/merge.pdf|width=50|label=merge+
++Merging the history with a merge commit>figures/merge.pdf|width=65|label=merge+
 
 However, as you see also in the picture, a merge commit will be referenced by one of the branches but not both.
 In other words, a merge operation means that a first branch will be merged into a second one.
