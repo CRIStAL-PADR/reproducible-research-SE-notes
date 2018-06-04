@@ -65,6 +65,7 @@ Connect yourself to your Github settings (usually https://github.com/settings/pr
 @@note Alternatively, you can follow the *instructions on Github>https://help.github.com/articles/connecting-to-github-with-ssh/*.
 
 !!!! Cloning the Repository
+@cloning
 
 Git, constrastingly to other VCSs, is a distributed VCS. This means that you work not only against the remote repository but also you can work locally. To support that, Git makes a ""local copy"" of the repository in your machine. To create such a copy, the usual Git command is ""clone"".
 
@@ -659,6 +660,81 @@ In this section we will see how to interact with remotes, how to configure them,
 
 !!!! Git Remotes
 
-!!!! Pushing your commits
+A Git remote is a Git server that is hosted in some machine other than ours.
+Usually, a remote will be hosted by some company like GitHub or GitLab, but it can be hosted also within our own company/university/research laboratory.
+Actually, we have already worked with a remote without knowing it, when we have cloned our repository in Section *@cloning*. The code we used in that moment was:
 
-!!!! Pulling new commits
+[[[language=bash
+$ git clone git@github.com:[your_username]/[your_repo_name].git
+]]]
+
+Which can be generalized as:
+
+[[[language=bash
+$ git clone [remote]
+]]]
+
+Once created, we can interrogate our repository for its remotes using the command ==git remote -v==.
+We will then observe that git created automatically a remote named ""origin"" pointing to the location that we just cloned.
+
+[[[language=bash
+$ git remote -v
+origin	git@github.com:[your_username]/[your_repo_name].git (fetch)
+origin	git@github.com:[your_username]/[your_repo_name].git (push)
+]]]
+
+This first means that Git allows us to assign a name to avoid using urls all the way.
+In addition, we can see that Git differentiates remotes used for ""fetch""ing from those used for ""push""ing.
+Those differences are important for more advanced git configuration, that we will not cover in this chapter.
+
+!!!! Adding and Removing Remotes
+
+For advanced scenarios, when we need more than the default ""origin"" remote, we will need to use different remotes.
+All git commands interacting with a remote repository will have a variant accepting a remote repository as argument, as we will see later.
+In those cases, we can specify the remote's url on each of those commands to interact with the desired remote.
+
+However, to avoid copy-pasting different remote urls all the time, Git provides us with the possibility of configuring new ""named remotes"" such as origin.
+The drawback of such an approach is that our list of remotes will need to be maintained from time to time, for example, if urls become invalid or our repository moves.
+In such cases, we will want to modify or remove old remotes to keep avoid errors or mistakes.
+
+To create a new named remote we can execute the command ==git remote add [remote_name] [url]==.
+
+[[[
+$ git remote add someRemote [url]
+$ git remote -v
+origin	git@github.com:[your_username]/[your_repo_name].git (fetch)
+origin	git@github.com:[your_username]/[your_repo_name].git (push)
+someRemote [url] (fetch)
+someRemote [url] (push)
+]]]
+
+Existing remotes can then be renamed using the ==git remote rename [old_name] [new_name]==.
+And in case the remote name you wanted to rename does not exist, Git will answer you with a falta error.
+
+[[[
+$ git remote rename someRemote company_remote
+$ git remote rename non_existent newname
+fatal: No such remote: non_existent
+]]]
+
+Existing remotes can then be renamed using the ==git remote rename [old_name] [new_name]==.
+And in case the remote name you wanted to rename does not exist, Git will answer you with a falta error.
+
+[[[
+$ git remote rename someRemote company_remote
+$ git remote rename non_existent newname
+fatal: No such remote: non_existent
+]]]
+
+Finally, to remove an existing ""named remote"" you can use the ==git remote remove [remote_name]==.
+And in case the remote name you wanted to rename does not exist, Git will answer you with a falta error.
+
+[[[
+$ git remote remove company_remote
+$ git remote remove non_existent
+fatal: No such remote: non_existent
+]]]
+
+!!!! Share your commits: Pushing
+
+!!!! Update your repository: Fetching and Pulling
