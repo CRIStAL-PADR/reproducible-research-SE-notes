@@ -18,15 +18,28 @@ This avoids adding this kind of identifying data in the code, leaving the code m
 
 In this chapter we will explore the basics of VCSs with Git and Github. We have chosen Git because of its popularity nowadays, and Github because it is one of the most prominent platforms for Git. However, most of the concepts can be easily applied to other VCSs and platforms. This chapter will start with the setup of a repository, how to store changes into it and how to investigate/query them. The second part of the chapter will show some other advanced features such as tagging and branches, including merging.
 
+!!! Amateurs, engineers and researchers: What are VCSs useful for? 
+
+VCSs are a technology that are mostly used to store programming source code.
+However, they can most of the times store any kind of files: from text files to binary files.
+This means that we can use VCSs to version text documents, pictures, websites, pdfs, excel files or others.
+
+Software engineers use VCSs to manage their software projects.
+They store the project's versions to store all file changes in (at a minimum) a daily basis.
+They may use it generally to store the project's documentation.
+
+These technologies can be, however, of value in other fields, particularly in research, where the reproducibility of experimental results and documents is important.
+Researchers can use VCSs to version experimental setups and their results, to track the advance and changes of their research papers.
+
+While this chapter will cover the basics of VCSs using Git, the workflow specific chapters will show how to apply these techniques in specific scenarios: reproducible code, reproducible papers, reproducible documentation.
+
 !!! Setting up a Repository
 
 A Git repository is like a database storing changes. In the modern world, good practice is to store the main repository in a remote machine, usually a server hosted in our company/university or in the cloud. We avoid storing our main repository only in our machine, as losing our machine would then result in losing our project. As we shall see, a remotely-stored Git repository advantageously replaces manual backups.
 
-@@todo Explain what a repository could be to a researcher: a paper, the code for a paper, both. We could use the same running examples throughout the book when we instantiate workflows, versions, etc. Maybe we can have a special format in the book for these "notes for the researchers".
-
 This chapter will assume you have Git already installed in your machine, and that you're using a *nix operating system. An appendix at the end will give some details on different setups and installation procedures.
 
-The easiest way to start a repository is to create it directly online. If you have a Github account, get yourself to the "New Repository" action (usually within the menu using the "+" symbol) and you will see the form in *@new_repo_github*. Follow the form and create your repository
+The easiest way to start a repository is to create it directly online. If you have a Github account, get yourself to the "New Repository" action (usually within the menu using the "+" symbol) and you will see the form in Figure *@new_repo_github*. Follow the form and create your repository
 
 +Creating a New Repository in Github>figures/new-repository-github.png|label=new_repo_github+
 
@@ -44,7 +57,7 @@ To create an SSH key, in *nix systems you can simply type in your terminal
 $ ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
 ]]]
 
-Follow the instructions in your terminal such as setting the location for your key pair (usually it is $HOME/.ssh) and the passphrase (a kind of password). Finally, you'll end up with your public/private pair on the selected location. It is now time to upload it to Github.
+Follow the instructions in your terminal such as setting the location for your key pair (usually it is ==$HOME/.ssh==) and the passphrase (a kind of password). Finally, you'll end up with your public/private pair on the selected location. It is now time to upload it to Github.
 
 Connect yourself to your Github settings (usually https://github.com/settings/profile) and go to the "SSH and GPG keys" menu. Import there the contents of your public key file. You should be now able to use your repository.
 
@@ -107,7 +120,7 @@ From this perspective, a Git repository works as a transactional database.
 You are working on the changes of your disk, but they will not be effectively applied until you finish your transaction.
 Finishing your transaction is done, as in the database world, using the ""commit"" command.
 The result of this transaction is to create a new commit object in the Git repository.
-This commit object will contain an id (usually a hash such as 7ba52e5) plus all changes we wanted to apply.
+This commit object will contain an id (usually a hash such as ==7ba52e5==) plus all changes we wanted to apply.
 
 Git will store your last changes but also remember the entire history of changes you did.
 It keeps a list of all changes you did so you can do some nice stuff like for example:
@@ -128,14 +141,14 @@ Moreover, a commit can have one or many parents, and many commits can have the s
 +Graph of commits>figures/commit-graph.pdf|width=50|label=commit_graph+
 
 For instance, take a look at the schema of a typical commit graph represented in Figure *@commit_graph*.
-- Commit a4153b1 is the first commit in the graph, with no parents. A commit with no parents represents the first commit in a repository, when no previous history was available.
-- Commit 35ac17f's parent is a4153b1 and commit a4153b1's parent is 7ba52e5.
-- Commit b01aba4's parent is also a4153b1.
-- Commit b8bfed7 has two parents: 7ba52e5 and b01aba4.
+- Commit ==a4153b1== is the first commit in the graph, with no parents. A commit with no parents represents the first commit in a repository, when no previous history was available.
+- Commit ==35ac17f=='s parent is ==a4153b1== and commit ==a4153b1=='s parent is ==7ba52e5==.
+- Commit ==b01aba4=='s parent is also ==a4153b1==.
+- Commit ==b8bfed7== has two parents: ==7ba52e5== and b01aba4.
 
 You may be asking yourself how can we arrive to such a situation.
-In short, a commit that is parent of many commits is creating an alternative history line: it is the result of a "branch" operation.
-Likewise, a commit that has many parents is joining two histories: it is the result of a "merge" operation.
+In short, a commit that is parent of many commits is creating an alternative history line: it is the result of a ""branch"" operation.
+Likewise, a commit that has many parents is joining two histories: it is the result of a ""merge"" operation.
 
 !!!! Naming commits with references
 
@@ -187,10 +200,10 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ]]]
 
-Git tells us that we are doing an initial commits, and that there are two files (project.txt) that it doesn't know yet, they are untracked.
-Then it tells us that it is not tracking any file and that we need to do a __git add__ to track them.
+Git tells us that we are doing an initial commits, and that there are two files (==project.txt==) that it doesn't know yet, they are untracked.
+Then it tells us that it is not tracking any file and that we need to do a ==git add== to track them.
 
-To make it simple, you can see this whole __tracking__ story as going to the supermarket.
+To make it simple, you can see this whole ""tracking"" story as going to the supermarket.
 If you want to buy something from the supermarket, you have take whatever you want first and put it in your basket.
 Then, you go to the cashier, you pay and take your things home.
 Now imagine that passing through the cashier to pay is equivalent to do a commit command.
@@ -218,7 +231,7 @@ Changes to be committed:
 Now Git says that our two new files will be committed.
 Let's also notice that it says that we are on a branch called master.
 Let's now proceed to commit to save our changes in the repository.
-We can do that by using the commit command with the __m__ option to specify a message:
+We can do that by using the commit command with the ==m== option to specify a message:
 
 [[[language=bash
 $ git commit -m "first version"
@@ -264,7 +277,7 @@ It arrives the time for every woman/men to make mistakes and want to discard the
 Doing so may be dangerous, since once discarded you will not able to recover your changes.
 It is however possible to instruct Git to do so.
 For it, there are two Git comments that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
-__git reset__ and __git clean__
+==git reset== and ==git clean==
 
 [[[language=bash
 $ git reset --hard
@@ -420,8 +433,8 @@ Figure *@Branches* illustrates the idea, showing that you can have two different
 
 +History lines can be branched from a commit>figures/branches.pdf|width=50|label=Branches+
 
-By default, a Git repository will include a single branch, called __master__. Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
-You can ask Git for the branches in the repository using the command __git branch -v__.
+By default, a Git repository will include a single branch, called ""master"". Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
+You can ask Git for the branches in the repository using the command ==git branch -v==.
 
 [[[language=bash
 $ git branch -v
@@ -433,7 +446,7 @@ Then, for each branch it shows what commit it points, and the comment on that co
 
 !!!! Creating a new branch
 
-To create a new branch, we can use the command __git branch__ giving as argument the new branch name.
+To create a new branch, we can use the command ==git branch [branch_name]== giving as argument the new branch name.
 This will create a new branch from our current commit, the one that can be resolved from HEAD.
 Figure *@new_branch* shows what happens in the graph view.
 
@@ -570,7 +583,7 @@ CONFLICT (add/add): Merge conflict in conflicting.txt
 Automatic merge failed; fix conflicts and then commit the result.
 ]]]
 
-We see that as soon as we merge, Git tries to automatically merge the file __conflicting.txt__.
+We see that as soon as we merge, Git tries to automatically merge the file ==conflicting.txt==.
 It detects however a merge conflict that does not allow it to continue.
 If we check Git's status, you will now see:
 
@@ -588,12 +601,12 @@ Unmerged paths:
 no changes added to commit (use "git add" and/or "git commit -a")
 ]]]
 
-Git tells us that __conflicting.txt__ is not merged and that we should fix it.
+Git tells us that ==conflicting.txt== is not merged and that we should fix it.
 To continue working, we should resolve such a conflict, telling Git what version we want to keep.
-Several solutions work: either we keep the version we had in ==future-2==, we keep the version incoming from ==future-1==, or we keep a can manually resolve the conflict and keep whatever version we want.
+Several solutions work: either we keep the version we had in ""future-2"", we keep the version incoming from ""future-1"", or we keep a can manually resolve the conflict and keep whatever version we want.
 
 The easiest, non-thinking, way to merge is to open the conflicting file and resolve the conflict.
-For example, if we open our `conflicting.txt` file with a text editor we will see:
+For example, if we open our ==conflicting.txt== file with a text editor we will see:
 
 [[[
 <<<<<<< HEAD
@@ -603,17 +616,17 @@ I'm in future-1
 >>>>>>> future-1
 ]]]
 
-Git modified our file adding some __<<<<<<<__, __>>>>>>>__ and __\=\=\=\=\=\=\=__ markers in our file.
+Git modified our file adding some ==<<<<<<<==, ==>>>>>>>== and ==\=\=\=\=\=\=\=== markers in our file.
 What this markers delimit is the conflicts Git found.
-As the first line says, the first region (what is between the __<<<<<<<__ and the __\=\=\=\=\=\=\=__) corresponds at the version that was in ==HEAD== (i.e., ==future-2==).
-As the last line says, the last region (what is between the __\=\=\=\=\=\=\=__ and the __>>>>>>>__) corresponds to the version that was in ==future-1==.
+As the first line says, the first region (what is between the ==<<<<<<<== and the ==\=\=\=\=\=\=\===) corresponds at the version that was in ""HEAD"" (i.e., ""future-2"").
+As the last line says, the last region (what is between the ==\=\=\=\=\=\=\=== and the ==>>>>>>>==) corresponds to the version that was in ""future-1"".
 
 To resolve the conflict, you should:
  - remove all the special markers
  - keep only the version you want (or edit it to be different)
  - add and commit the conflicting file
  
-For example, let's say we wanted to keep the version in future-2, we can edit the file leaving only
+For example, let's say we wanted to keep the version in ""future-2"", we can edit the file leaving only
 
 [[[
 I'm in future-2
