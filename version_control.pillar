@@ -143,7 +143,7 @@ Moreover, a commit can have one or many parents, and many commits can have the s
 
 For instance, take a look at the schema of a typical commit graph represented in Figure *@commit_graph*.
 - Commit ==a4153b1== is the first commit in the graph, with no parents. A commit with no parents represents the first commit in a repository, when no previous history was available.
-- Commit ==35ac17f=='s parent is ==a4153b1== and commit ==a4153b1=='s parent is ==7ba52e5==.
+- Commit ==35ac17f=='s parent is ==a4153b1== and commit ==7ba52e5=='s parent is ==35ac17f==.
 - Commit ==b01aba4=='s parent is also ==a4153b1==.
 - Commit ==b8bfed7== has two parents: ==7ba52e5== and b01aba4.
 
