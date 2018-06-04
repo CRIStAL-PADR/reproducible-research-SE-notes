@@ -529,6 +529,7 @@ One history line represented by the ==master== branch, and another history line 
 +Divergent history>figures/branches.pdf|width=65|label=Branches2+
 
 !!! Merging history lines
+@merging
 
 The most complicated part of Git is not branching or commiting, but merging.
 In our time-travel, time-line metaphores we said that branching is equivalent to open new time-lines.
@@ -699,7 +700,7 @@ In such cases, we will want to modify or remove old remotes to keep avoid errors
 
 To create a new named remote we can execute the command ==git remote add [remote_name] [url]==.
 
-[[[
+[[[language=bash
 $ git remote add someRemote [url]
 $ git remote -v
 origin	git@github.com:[your_username]/[your_repo_name].git (fetch)
@@ -711,7 +712,7 @@ someRemote [url] (push)
 Existing remotes can then be renamed using the ==git remote rename [old_name] [new_name]==.
 And in case the remote name you wanted to rename does not exist, Git will answer you with a falta error.
 
-[[[
+[[[language=bash
 $ git remote rename someRemote company_remote
 $ git remote rename non_existent newname
 fatal: No such remote: non_existent
@@ -720,7 +721,7 @@ fatal: No such remote: non_existent
 Existing remotes can then be renamed using the ==git remote rename [old_name] [new_name]==.
 And in case the remote name you wanted to rename does not exist, Git will answer you with a falta error.
 
-[[[
+[[[language=bash
 $ git remote rename someRemote company_remote
 $ git remote rename non_existent newname
 fatal: No such remote: non_existent
@@ -729,12 +730,64 @@ fatal: No such remote: non_existent
 Finally, to remove an existing ""named remote"" you can use the ==git remote remove [remote_name]==.
 And in case the remote name you wanted to rename does not exist, Git will answer you with a falta error.
 
-[[[
+[[[language=bash
 $ git remote remove company_remote
 $ git remote remove non_existent
 fatal: No such remote: non_existent
 ]]]
 
-!!!! Share your commits: Pushing
-
 !!!! Update your repository: Fetching and Pulling
+
+Before being able to share our commits in some external server, we need before to update our repository to avoid them being out of synchronization.
+While you can always try to share your commits by pushing (see Section *@pushing*), you will see with experience that Git favors pulling before pushing.
+This is, among others, because in your local repository you can do whatever manipulation you want to solve mistakes and merge conflicts, while you cannot do the same in your remote repository.
+
+Concretely, when using Git you have to have a state of mind where:
+1. you update your repository
+2. you fix ""locally"" whatever existing conflict between your work and the remote work
+3. you then publish your changes.
+
+@@note Actually, our recommended workflow has one more step before updating: commit. If you try to update when your working copy is dirty, updating can destroy your changes. Instead, if you commit before doing an update, your changes will be safely stored in the database. You'll be able to do any expert manipulation with your changes once they are in the repository.
+
+As we said before, a Git repository is no other than a database.
+It is a database that stores commits and references to those commits.
+And to update this database, we require two basic operations: 
+- ""fetch"". Bring the commits and references from a remote repository to your local repository without affecting your own.
+- ""merge"". Merge the remote references with your own references, the same operation explained in Section *@merging*.
+
+In addition, the ""pull"" operation does both fetch and merge in a single operation (Figure *@fetch_in_workflow*).
+
+Fetching is done through the ==git fetch [remote]== command, where we can specify both a remote url or a remote name as remote.
+Or, if we don't specify a remote, Git will by default fetch from whatever remote is specified as ""origin"".
+Executing a ""fetch"" will show an output like the following:
+
+[[[language=bash
+$ git fetch [remote_name]
+remote: Counting objects: 79, done.
+remote: Compressing objects: 100% (23/23), done.
+remote: Total 79 (delta 52), reused 74 (delta 52), pack-reused 4
+Unpacking objects: 100% (79/79), done.
+From git://github.com/[project_owner]/[your_repo_name]
+   6b52ae6..5c53245  development -> [remote_name]/development
+ * [new branch]      issue/876 -> [remote_name]/issue/876
+ * [new tag]         v1.0     -> v1.0
+]]]
+
+Indeed, fetch will bring some objects (e.g., commits) to our repository, bring new branches and so on, but it will not update any of your branches or tags.
+We can then proceed to merge our local branch with the one in the remote by doing a normal merge operation but indicating a ""remote branch"" (that is, a branch prefixed by its remote name):
+
++Fetch is an operation that brings things from a remote into your local repository. Merge will join the remote history with your current history and update your working copy. Pull will do both of them.>figures/fetch_in_workflow.pdf|width=90|label=fetch_in_workflow+
+
+[[[language=bash
+$ git merge [remote_name]/master
+[Merge made by the 'recursive' strategy.
+ ...
+ 1 file changed, 10 insertions(+), 1 deletions(-)
+ ...]
+]]]
+
+These both operations could have been replaced by a ==git pull [remote_name] [branch_name]== command.
+Pulling will fetch all commits from the branch named [branch_name] in the remote [remote_name] and then merge those commits with your current branch.
+
+!!!! Share your commits: Pushing
+@pushing
