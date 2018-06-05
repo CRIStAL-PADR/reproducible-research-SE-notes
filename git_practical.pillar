@@ -1,0 +1,128 @@
+!! Practical Git by Scenarios 
+
+!!! Discarding your changes
+
+It arrives the time for every woman/men to make mistakes and want to discard them.
+Doing so may be dangerous, since once discarded you will not able to recover your changes.
+It is however possible to instruct Git to do so.
+For it, there are two Git comments that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
+==git reset== and ==git clean==
+
+[[[language=bash
+$ git reset --hard
+$ git clean -df
+]]]
+
+The reason for needing two commands instead of one relies on the fact that Git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in Git's documentation.
+
+!!! Exploring the History
+
+!!!! The ==git log== command
+The commit graphs we have shown so far are not evident at all while when we use the ==git status== command.
+There is however a way to ask Git about them using the ==git log== command.
+
+[[[language=bash
+$ git log
+commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
+Author: Guille Polito <guillermopolito@gmail.com>
+Date:   Wed Mar 21 15:37:32 2018 +0100
+
+    Adding a title
+
+commit 37adf4eaa945cbd7460991f88bff5aa902db06ce
+Author: Guille Polito <guillermopolito@gmail.com>
+Date:   Wed Mar 21 14:02:43 2018 +0100
+
+    first version
+]]]
+
+==git log== prints the list of commits in order of parenthood.
+The one on the top is the most recent commit, our last commit.
+The one below is its parent, and so on.
+As you can see, each commit has an id, the author name, the timestamp and its message.
+
+We can also ask Git what are the changes introduced in a particular commit using the command ==git show==.
+
+[[[language=bash
+$ git show 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
+commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
+Author: Guille Polito <guillermopolito@gmail.com>
+Date:   Wed Mar 21 15:37:32 2018 +0100
+
+    Adding a title
+
+diff --git a/README.md b/README.md
+index e69de29..cad05f1 100644
+--- a/README.md
++++ b/README.md
+@@ -0,0 +1 @@
++! a title
+\ No newline at end of file
+]]]
+
+That will give us the commit description as in ==git log== plus a (not so readable) diff of the modified files showing the inserted, modified and deleted lines.
+More advanced graphical tools are able to read this description and show a more user-friendly diff.
+
+!!!! Seeing the history graph
+
+Git's log provides a more graphish view on the terminal using some cute ascii art.
+This view can be accesses through the ==git log \-\-graph \-\-oneline \-\-all== command.
+Here is an example of this view for a more complex project.
+In this view, stars represent the commits with their ids and commit messages, and lines represent the parenthood relationships.
+
+[[[language=bash
+$ git log --graph --oneline --all
+* 4eb8446 Documenting
+* e5a3e2e Add tests
+* 680a79a Some other
+| *   ed4854f Merge pull request #1137
+| |\
+| | * 9e30e37 Some feature
+| * |   ba7f65c Merge pull request #1138
+| |\ \
+| | * | 31a40c4 Some Enhancement
+| | |/
+| * |   2d4698d Merge pull request #1139
+| |\ \
+| | * | 20c0ff4 Some fix
+| | |/
+| * |   ae3ec45 Merge pull request #1136
+]]]
+
+However, we are not always in the mood of using the terminal, or of wanting to decode what was done in ascii art.
+There are tools that are more suitable to explore the history of a project, usually providing some nice graphical capabilities.
+This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*) or Github's network view (Figure *@commit_graph_github_network*).
+
++Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
++Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
+
+
+!!! Getting out of Detached HEAD
+
+Detached head means no other than "HEAD is not pointing to a branch".
+Being in a detached HEAD state is not bad in itself, but it may provoke loss of changes.
+As a matter of fact, any commit that is not properly referenced by another commit or by another Git reference (tag, branch) may be garbage collected.
+
+Git will not forbid you to commit in this state, but any new commit you create will only reachable if you remember the commit hash.
+To get out of dettached HEAD, the easiest solution is to checkout a branch, as we will see in the next section.
+Checking out a branch will set HEAD to point to a branch instead of a commit, saving you some HEADaches.
+
+!!!! Accessing your Repository through SSH
+@setupssh
+
+To be able to access your repository from your local machine, you need to setup your credentials.
+Think it this way: you need to tell the server who you are on every interaction you have with it.
+Otherwise, Github will reject any operation against your repository.
+Such a setup requires the creation and uploading of SSH keys.
+
+An SSH key works as a lock: a key is actually a pair of a public and a private key. The private key is meant to reside in your machine and not be published at all. A public key is meant to be shared with others to prove your identity. Whenever you want to prove your identity, SSH will exchange messages encrypted with your public key, and see if you are able to decrypt it using your private key.
+
+To create an SSH key, in *nix systems you can simply type in your terminal
+
+[[[language=bash
+$ ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
+]]]
+
+Follow the instructions in your terminal such as setting the location for your key pair (usually it is ==$HOME/.ssh==) and the passphrase (a kind of password). Finally, you'll end up with your public/private pair on the selected location. It is now time to upload it to Github.
+
+Connect yourself to your Github settings (usually https://github.com/settings/profile) and go to the "SSH and GPG keys" menu. Import there the contents of your public key file. You should be now able to use your repository.
