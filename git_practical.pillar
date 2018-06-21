@@ -96,6 +96,24 @@ This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*)
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
+!!! How to Undo a commit (0%)
+
+What happens if the commit was already pushed.
+And if not?
+
+!!! How to overwrite a commit / overwrite a message (0%)
+
+!!! Ignoring files (0%)
+@gitignore
+
+Ignore generated files.
+Mainly with binary files.
+Pdfs, etc.
+
+!!! Commit hooks (0%)
+@hooks
+
+How to execute a script on each commit.
 
 !!! Getting out of Detached HEAD
 

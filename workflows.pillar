@@ -2,6 +2,8 @@
 
 In this section, we detail example workflows for researchers.
 
+!!! Having private/public remotes
+
 !!! Writing a scientific paper
 
 In that case, your repository contains at least the source text of the paper, and typically also includes figures. As always, it is advised not to include final products such as pdfs in your repository, only source material that allows any user to produce the outputs himself.
