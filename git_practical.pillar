@@ -126,3 +126,5 @@ $ ssh-keygen -t rsa -b 4096 -C "your_email@some_domain.com"
 Follow the instructions in your terminal such as setting the location for your key pair (usually it is ==$HOME/.ssh==) and the passphrase (a kind of password). Finally, you'll end up with your public/private pair on the selected location. It is now time to upload it to Github.
 
 Connect yourself to your Github settings (usually https://github.com/settings/profile) and go to the "SSH and GPG keys" menu. Import there the contents of your public key file. You should be now able to use your repository.
+
+!!! Excercises (Guille 0%)
