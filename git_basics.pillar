@@ -1,0 +1,446 @@
+!! Getting Started with Git
+
+In this chapter we introduce the basics of Git and VCSs through guided examples.
+We first start by setting up a repository in a remote server and then load it in our own machine.
+We then show how we can inspect the state of our repository and save our files into it.
+Once our changes are saved, we show how we can push our changes to our remote repository in a distant server.
+
+This chapter will assume you have Git already installed in your machine, and that you're using a *nix operating system.
+For users of other systems such as Windows, an appendix at the end will give some details on different setups and installation procedures.
+Moreover, you will see that we will approach Git with the ''command-line''.
+Don't be affraid if you've never used it before, it is not as difficult as it may seem and you will get used to it.
+There is always a first time!
+Also, we promise you that everything you learn in here can be applied to, and will actually help you better understand, non command-line tools.
+
+!!! Creating a Repository
+
+A Git repository is a store where we will save changes.
+Changes are saved incrementally and all our history of changes in maintained in it.
+
+To create a repository, the easiest way is to create it in an online hosting service such as GitHub or GitLab.
+Once you have an account and log into it, get yourself to the ''New Repository'' action, within the menu using the ==+== symbol.
+Figure *@new_repo_github* shows the kind of form GitHub provides to its users to create a new repository.
+
+
++Creating a New Repository in Github>figures/new-repository-github.png|label=new_repo_github+
+
+Follow the form and create your repository.
+Once finished, your repository is created, you'll be redirected to your repository page.
+Figure *@repository_page* shows how such a page looks in GitHub.
+
++A Repository Page for a project called ""test"" in GitHub>figures/GitHub_repository_page.png|label=repository_page+
+
+We are already set to work from the command line now.
+
+!!! ==git clone==
+@cloning
+
+Git, constrastingly to other VCSs, is a distributed VCS.
+This means that you work not only against the remote repository but also you can work locally.
+To support that, Git makes a ""local copy"" of the repository in your machine.
+To create such a copy, the easiest way is to use the ==git clone [url]== command.
+
+Git support different kind of urls, the most known being SSH and HTTPS urls.
+We will use in this chapter HTTPS urls because they have an easier setup, but for those readers that are curious, Section *@sshvshttps* compares SSH and HTTPS and Section *@setupssh* shows how to setup your SSH environment.
+
+To obtain the HTTPS url of your repository, go to your repository's page and look for it under the clone/HTTPS options.
+As an example, Figure *@HTTPS_GitHub* illustrates how to get such url from a GitHub project page.
+Copy that url and use it in your command line as first argument of your ==git clone== as in:
+
++Getting the HTTPS url of your repository from GitHub>figures/HTTPS_url_GitHub.png|width=90|label=HTTPS_GitHub+
+
+[[[language=bash
+$ git clone [url]
+Cloning into '[your_project_name]'...
+remote: Counting objects: 11082, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 11082 (delta 2), reused 6 (delta 2), pack-reused 11076
+Receiving objects: 100% (11082/11082), 4.35 MiB | 1.22 MiB/s, done.
+Resolving deltas: 100% (4063/4063), done.
+Checking connectivity... done.
+]]]
+
+When this command finishes, we see it created a directory named as your repository (your_repo_name).
+This directory, also called the ""working directory"", is where we will work and interact with our repository.
+In other words, all files in this directory are the files that are managed by (and thus stored on) the repository.
+Moreover, it is inside this directory that you will issue your Git commands to work.
+You are now ready to go and start working on your project.
+
+!!! ==git status==
+
+After some time working, we end up with a couple of new files with some contents on it: ''e.g.,'' a README.md file with some explanations and a txt file with some project information in it.
+We can check our advance using the command line commands ==ls== that lists existing files and ==cat== that outputs the contents of the file to the terminal.
+
+[[[language=bash
+$ ls
+project.txt README.md
+]]]
+
+[[[
+$ cat project.txt
+# Done
+ - created the repository
+ - git clone
+ - created this file
+ 
+# To do
+ - commit this file
+ - push it to my remote repository
+]]]
+
+[[[language=bash
+$ cat README.md
+#My Project
+
+This project is an example Git repository used to learn Git.
+Check the project.txt file for information about pending tasks.
+]]]
+
+There is something else we can know at this stage: What does Git know about these files?
+Git indeed tracks our files to know what should be saved and what should not.
+We can use this information to see what are actually the changes that happened while we were working.
+To obtain such information from Git, we should use the ==git status== command:
+
+[[[language=bash
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	project.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]]]
+
+Git tells us that the file ==README.md== is modified and that it does not yet know ==project.txt==, it is untracked.
+It also tells us that no changes were added to commit and that we need to do a ==git add== to track them.
+
+!!! ==git add== and ==git commit==
+
+We would like now to save our changes in our Git repository.
+This way, if anything happens, we can always recover our work up to this point.
+Saving our work in the repository is called a ""commit"".
+However, before committing our changes, we need to make Git ""track"" them.
+
+To make it simple, you can see this whole tracking story as going to the supermarket.
+If you want to buy something from the supermarket, you have take whatever you want first and put it in your basket.
+Then, you go to the cashier, you pay and take your things home.
+Now imagine that passing through the cashier to pay is equivalent to do a commit command.
+This means that first you need to add stuff to your c!
+
+Tracking changes for commit (''i.e.,'' adding stuff to your bag) is done through the ==git add [file]== command.
+Let's proceed to track those changes and see what is the status of our repository afterwards.
+
+[[[language=bash
+$ git add README.md
+$ git add project.txt
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   README.md
+	new file:   project.txt
+]]]
+
+Now Git says that our two new files will be committed.
+Let's now proceed to commit to save our changes in the repository.
+We can do that by using the ==git commit -m \"[message]\"== command:
+
+[[[language=bash
+$ git commit -m "first version"
+[master a93c016] first version
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+ create mode 100644 project.txt
+]]]
+
+If we see the status of our repository after the commit we will also see that it has changed.
+There is nothing to commit:
+
+[[[language=bash
+$ git status
+On branch master
+nothing to commit, working directory clean
+]]]
+
+If we repeat the process and we change one of our existent files, we will see something interesting:
+
+[[[
+$ cat project.txt
+# Done
+ - created the repository
+ - git clone
+ - created this file
+ - commit this file
+ 
+# To do
+ - push it to my remote repository
+]]]
+
+[[[language=bash
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   project.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]]]
+
+Indeed, changing again the file requires that we do a ==git add [file]== and ==git commit== again on the same file, even if Git already knew about it.
+This is because Git will ask us to explicitly track ""every change"" we do.
+So we will need to repeat the same operation of before.
+
+[[[language=bash
+$ git add project.txt
+$ git commit -m "Commit is not in ToDo anymore"
+[master e14a09f] Commit is not in ToDo anymore
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+]]]
+
+
+!!! Creating new history lines with branches
+
+Branches in Git represent different histories.
+As in one of science fiction time-travel theories, Git branching is equivalent to take one moment in time have several alternative time-lines from there.
+Figure *@Branches* illustrates the idea, showing that you can have two different futures from commit _0c0e5ff_.
+
++History lines can be branched from a commit>figures/branches.pdf|width=65|label=Branches+
+
+By default, a Git repository will include a single branch, called ""master"". Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
+You can ask Git for the branches in the repository using the command ==git branch -v==.
+
+[[[language=bash
+$ git branch -v
+* master  0c0e5ff Adding a title
+]]]
+
+This command shows all branches in the repository, one per line.
+Then, for each branch it shows what commit it points, and the comment on that commit.
+
+!!!! Creating a new branch
+
+To create a new branch, we can use the command ==git branch [branch_name]== giving as argument the new branch name.
+This will create a new branch from our current commit, the one that can be resolved from HEAD.
+Figure *@new_branch* shows what happens in the graph view.
+
+[[[language=bash
+$ git branch development
+]]]
+
++A new branch points by default to the same commit as the current branch>figures/new_branch.pdf|width=65|label=new_branch+
+
+However, as we see in the graph view, creating a new branch does not modify HEAD.
+Indeed, our current branch/commit did not move.
+We will observe the same in the command line, if we ask the list of branches.
+The branch master is marked with a star, indicating it is the actual branch.
+And both branches point to the same commit.
+
+[[[language=bash
+$ git branch -v
+* master      0c0e5ff Adding a title
+  development 0c0e5ff Adding a title
+]]]
+
+To start working on our new branch, we just need to use the same ==checkout== command we used for tags.
+
+[[[language=bash
+$ git checkout development
+Switched to branch 'development'
+]]]
+
+Or alternatively, we could have created our branch using the ==checkout -b== command, which performs a ==git branch== and a ==git checkout== one after the other.
+Useful since these operations are usually done together most of the time.
+
+[[[language=bash
+# Instead of branch and then checkout
+$ git checkout -b development
+Switched to branch 'development'
+]]]
+
+Then, doing some work and creating a commit will only modify our current branch and leave ==master== as it was before.
+
+[[[language=bash
+$ touch somefile
+$ git add somefile
+$ git commit -m "added somefile"
+[development b894b84] added somefile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 somefile
+$ git branch -v
+   master      0c0e5ff Adding a title
+ * development b894b84 added somefile
+]]]
+
+!!!! Diverging history
+
+Now that we have done some work in a branch, we can make our branches diverge.
+We only need to checkout another branch, existing or new, and start working from there.
+
+[[[language=bash
+$ git checkout master
+Switched to branch 'master'
+$ touch someotherfile
+$ git add someotherfile
+$ git commit -m "added someotherfile"
+[master dc4a3e7] added someotherfile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 someotherfile
+$ git branch -v
+ * master      dc4a3e7 added someotherfile
+   development b894b84 added somefile
+]]]
+
+This change will create two diffent history lines, as shown in Figure *@Branches2*.
+One history line represented by the ==master== branch, and another history line represented by the ==development== branch.
+
++Divergent history>figures/branches.pdf|width=65|label=Branches2+
+
+
+!!! Interacting with Remote Repositories
+
+So far we have worked only on the repository that resides locally in our machine.
+This means that mostly all of Git features are available without requiring an internet connection, making it suitable for working off-line (think on working on the train or with a constrained connection!). However, working off-line is a two-edged weapon: all your changes are captive in your machine.
+While your changes are in your machine, nobody else can contribute or collaborate to them.
+Moreover, losing your machine would mean losing all your changes too.
+
+Keeping your changes safe means to synchronize them from time to time with a ""remote repository"".
+A remote repository is a copy of your local repository that is stored remotely, that is, in somewhere else's machine.
+This could be, for example, in your company's or university's server, the cloud, etc.
+
+In this section we will see how to interact with remotes, how to configure them, and how to synchronize our local repository with them.
+
+!!!! Update your repository: Fetching and Pulling
+@pulling
+
+Before being able to share our commits in some external server, we need before to update our repository to avoid them being out of synchronization.
+While you can always try to share your commits by pushing (see Section *@pushing*), you will see with experience that Git favors pulling before pushing.
+This is, among others, because in your local repository you can do whatever manipulation you want to solve mistakes and merge conflicts, while you cannot do the same in your remote repository.
+
+Concretely, when using Git you have to have a state of mind where:
+1. you update your repository
+2. you fix ""locally"" whatever existing conflict between your work and the remote work
+3. you then publish your changes.
+
+@@note Actually, our recommended workflow has one more step before updating: commit. If you try to update when your working copy is dirty, updating can destroy your changes. Instead, if you commit before doing an update, your changes will be safely stored in the database. You'll be able to do any expert manipulation with your changes once they are in the repository.
+
+As we said before, a Git repository is no other than a database.
+It is a database that stores commits and references to those commits.
+And to update this database, we require two basic operations: 
+- ""fetch"". Bring the commits and references from a remote repository to your local repository without affecting your own.
+- ""merge"". Merge the remote references with your own references, the same operation explained in Section *@merging*.
+
+In addition, the ""pull"" operation does both fetch and merge in a single operation (Figure *@fetch_in_workflow*).
+
+Fetching is done through the ==git fetch [remote]== command, where we can specify both a remote url or a remote name as remote.
+Or, if we don't specify a remote, Git will by default fetch from whatever remote is specified as ""origin"".
+Executing a ""fetch"" will show an output like the following:
+
+[[[language=bash
+$ git fetch [remote_name]
+remote: Counting objects: 79, done.
+remote: Compressing objects: 100% (23/23), done.
+remote: Total 79 (delta 52), reused 74 (delta 52), pack-reused 4
+Unpacking objects: 100% (79/79), done.
+From git://github.com/[project_owner]/[your_repo_name]
+   6b52ae6..5c53245  development -> [remote_name]/development
+ * [new branch]      issue/876 -> [remote_name]/issue/876
+ * [new tag]         v1.0     -> v1.0
+]]]
+
+Indeed, fetch will bring some objects (e.g., commits) to our repository, bring new branches and so on, but it will not update any of your branches or tags.
+We can then procceed to merge our local branch with the one in the remote by doing a normal merge operation but indicating a ""remote branch"" (that is, a branch prefixed by its remote name). Of course, as any merge operation, this can incurr into a conflict, that we should fix locally before continuing.
+
++Fetch is an operation that brings things from a remote into your local repository. Merge will join the remote history with your current history and update your working copy. Pull will do both of them.>figures/fetch_in_workflow.pdf|width=90|label=fetch_in_workflow+
+
+[[[language=bash
+$ git merge [remote_name]/master
+[Merge made by the 'recursive' strategy.
+ ...
+ 1 file changed, 10 insertions(+), 1 deletions(-)
+ ...]
+]]]
+
+These both operations could have been replaced by a ==git pull [remote_name] [branch_name]== command.
+Pulling will fetch all commits from the branch named [branch_name] in the remote [remote_name] and then merge those commits with your current branch.
+
+!!!! Share your commits: Pushing
+@pushing
+
+The final step in our Git journey is to share our changes to the world.
+Such sharing is done by ""push""ing commits to a remote repository, as shown in Figure *@push_in_workflow*.
+To push, you need to use the git command ==git push [remote] [remote_branch]==.
+This command will send the commits pointed from your your current branch to the remote [remote] in the branch [remote_branch].
+
+[[[language=bash
+$ git push origin temp
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 271 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:[your_username]/[your_repo_name].git
+   b6dcc3f..f269295  master -> temp
+]]]
+
++Push is an operation that sends commits from your local repository to a remote repository.>figures/push_in_workflow.pdf|width=90|label=push_in_workflow+
+
+To avoid specifying the remote and destination branch on every push (which may be a bit verbose), you can avoid those parameters and rely on Git default values.
+By default the ==git push== operation will try to push to the ""branch's upstream"".
+A branch's upstream is the per-branch configuration saying to which remote/branch pair it should push by default.
+When we clone a repository, the default branch comes with an already configured upstream.
+We can interrogate Git for the branch's upstreams with the super verbose flag in the branch command, ''i.e.'', ==git branch \-vv==, where we can see for example that our ""master"" branch's upstream is ""origin/master"", while our ""development"" branch has no upstream.
+
+[[[language=bash
+$ git branch -vv   # doubly verbose!
+  development   1656797 This commit adds a new feature
+  master        f269295 [origin/master] First commit
+]]]
+
+On the other side, when a branch has no upstream, a push operation will by default fail with a Git error.
+Git will ask us to set an upstream, or otherwise specify a pair remote/branch for each push.
+
+[[[language=bash
+$ git push
+fatal: The current branch test has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin test
+
+$ git push --set-upstream origin test
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 271 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:[your_username]/[your_repo_name].git
+   b6dcc3f..f269295  master -> test
+
+]]]
+
+Finally, another thing may happen while pushing: Git may reject our changes.
+
+[[[language=bash
+$ git push
+To git@github.com:guillep/test.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'git@github.com:[your_username]/[your_repo_name].git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+]]] 
+
+As the error message says, the remote has changes that we do not have locally, so we need to update our repository first.
+This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
+
+!!! Conclusion
