@@ -135,7 +135,14 @@ With this message Git means that you should not blindly overwrite the history.
 Also, it suggests to pull changes from the remote repository.
 However, doing that will bring back to our repository the history we wanted to undo!
 What we want to do is to impose our current (undone) state in the remote repository.
-To do that, we need to ""force"" the push
+To do that, we need to ""force"" the push using the ==git push --force== or the ==git push -f== option.
+
+[[[
+$git push -f
+Total 0 (delta 0), reused 0 (delta 0)
+To git@github.com:REPOSITORY_OWNER/YOUR_REPOSITORY.git
++ a1713f3...6e0c7bf YOUR_BRANCH -> YOUR_BRANCH (forced update)
+]]]
 
 !!! How to overwrite a commit / overwrite a message (0%)
 
