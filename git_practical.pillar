@@ -96,17 +96,16 @@ This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*)
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
-!!! How to Undo a commit (0%)
+!!! Rewriting the history
 
 Many times it happens that we accidentally commit something wrong.
-Maybe we wanted to commit more or less things or just a different content.
-In that case, we can undo Git's history: we can make the current branch point to the current commit parent.
+Maybe we wanted to commit more or less things, maybe a completely different content, or we did a mistake in the commit's message. In these cases, we can rewrite Git's history, e.g, undo our current commit and go back to the previous commit, or rewrite the current commit with some new properties.
 
-@@note Take into account that rewriting the history can have severe consequences. Imagine that the commit you want to undo was already pushed. This means that somebody else could have pulled this commit into her repository. If we undo this commit, we are making everybody else's repositories obsolete! This can be indeed problematic depending on the number of users the project has, and their knowledge on Git to be able to solve this issue.
+Be careful! Rewriting the history can have severe consequences. Imagine that the commit you want to undo was already pushed. This means that somebody else could have pulled this commit into her/his repository. If we undo this already publised commit, we are making everybody else's repositories obsolete! This can be indeed problematic depending on the number of users the project has, and their knowledge on Git to be able to solve this issue.
 
-!!!! Using ==git reset -hard==
+!!!! Undo a commit using ==git reset --hard==
 
-If regardless the warning you still want to undo the last commit, this is as easy as:
+To undo the last commit, it is as easy as:
 
 [[[language=bash
 $ git reset --hard HEAD~1
@@ -115,6 +114,23 @@ $ git reset --hard HEAD~1
 ==git reset --hard [commitish]== makes your current branch point to [commitish]. ==HEAD== is your current head, and you can read ==~1== as \"minus one\". In other words, ==HEAD~1== is head minus one, which boils down to the parent of head, our previous commit.
 
 You can use this same trick to rewrite the history in any other way, since you can use any commitish expression to reset. For example, ==HEAD~17== means 17 versions before head, or ==someBranch~4== means four commits before the branch ==someBranch==.
+
+!!! Update a commit's message using ==git commit --amend==
+
+To change our current commit's message you can use the following command:
+
+[[[
+$ git commit --amend -m "New commit message"
+]]]
+
+Or, if you don't use the ==-m== option, a text editor will be prompt so you can edit a commit message.
+
+[[[
+$ git commit --amend
+]]]
+
+You can use the same trick not only to modify a commit's message but to modify your entire commit. Actually, just adding new things with ==git add== before an ==--amend== will replace the current commit with a new commit merging the previous commit changes with what you just added.
+
 
 !!!! Pushing rewritten history
 
@@ -143,8 +159,6 @@ Total 0 (delta 0), reused 0 (delta 0)
 To git@github.com:REPOSITORY_OWNER/YOUR_REPOSITORY.git
 + a1713f3...6e0c7bf YOUR_BRANCH -> YOUR_BRANCH (forced update)
 ]]]
-
-!!! How to overwrite a commit / overwrite a message (0%)
 
 !!! Ignoring files (0%)
 @gitignore
