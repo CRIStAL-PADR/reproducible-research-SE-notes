@@ -98,8 +98,44 @@ This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*)
 
 !!! How to Undo a commit (0%)
 
-What happens if the commit was already pushed.
-And if not?
+Many times it happens that we accidentally commit something wrong.
+Maybe we wanted to commit more or less things or just a different content.
+In that case, we can undo Git's history: we can make the current branch point to the current commit parent.
+
+@@note Take into account that rewriting the history can have severe consequences. Imagine that the commit you want to undo was already pushed. This means that somebody else could have pulled this commit into her repository. If we undo this commit, we are making everybody else's repositories obsolete! This can be indeed problematic depending on the number of users the project has, and their knowledge on Git to be able to solve this issue.
+
+!!!! Using ==git reset -hard==
+
+If regardless the warning you still want to undo the last commit, this is as easy as:
+
+[[[language=bash
+$ git reset --hard HEAD~1
+]]]
+
+==git reset --hard [commitish]== makes your current branch point to [commitish]. ==HEAD== is your current head, and you can read ==~1== as \"minus one\". In other words, ==HEAD~1== is head minus one, which boils down to the parent of head, our previous commit.
+
+You can use this same trick to rewrite the history in any other way, since you can use any commitish expression to reset. For example, ==HEAD~17== means 17 versions before head, or ==someBranch~4== means four commits before the branch ==someBranch==.
+
+!!!! Pushing rewritten history
+
+As soon as the history we have rewritten was never pushed before, we can continue working normally and pushing our changes then without problems. However, if we have already pushed the commit we want to undo, this means that we are potentially impacting all users of our repository. Because of the problems it can pose to other people, pushing a rewritten history is not a completely favoured by Git. Better said, it is not allowed by default and you'll be warned about it:
+
+[[[
+$ git push
+To git@github.com:REPOSITORY_OWNER/YOUR_REPOSITORY.git
+ ! [rejected]        YOUR_BRANCH -> YOUR_BRANCH (non-fast-forward)
+error: failed to push some refs to 'git@github.com:REPOSITORY_OWNER/YOUR_REPOSITORY.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+]]]
+
+With this message Git means that you should not blindly overwrite the history.
+Also, it suggests to pull changes from the remote repository.
+However, doing that will bring back to our repository the history we wanted to undo!
+What we want to do is to impose our current (undone) state in the remote repository.
+To do that, we need to ""force"" the push
 
 !!! How to overwrite a commit / overwrite a message (0%)
 
