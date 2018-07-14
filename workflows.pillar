@@ -1,6 +1,8 @@
-!! Workflows for researchers
+!! Workflows for researchers (10% Remi, Guillaume)
 
 In this section, we detail example workflows for researchers.
+
+!!! Having private/public remotes
 
 !!! Writing a scientific paper
 
@@ -17,3 +19,5 @@ Since papers and supplementary material now tend to spend some time online and u
 
 Your repository contains
 !!! Putting it all together: a reproducible paper
+
+!!! Excercises (Guille 0%)

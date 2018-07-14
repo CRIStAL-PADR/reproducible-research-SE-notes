@@ -1,4 +1,5 @@
 !! Expert Git
+@expert_git
 
 !!! Some Git Internals
 
@@ -476,8 +477,12 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 As the error message says, the remote has changes that we do not have locally, so we need to update our repository first.
 This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
 
-!!! SSH or HTTP access?
+!!! SSH or HTTP access? (0% Ayoub)
 @sshvshttps
+
+https://serverfault.com/questions/430059/what-are-the-pros-and-cons-of-ssh-and-http-for-a-git-server
+
+https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh
 
 !!! Commit in workflow
 
@@ -506,3 +511,251 @@ $ git commit -m "Adding a title"
 ]]]
 
 +History graph after our second commit>figures/commit_graph_2.pdf|width=65|label=commit_graph_2+
+
+
+!!! Creating new history lines with branches
+
+Branches in Git represent different histories.
+As in one of science fiction time-travel theories, Git branching is equivalent to take one moment in time have several alternative time-lines from there.
+Figure *@Branches* illustrates the idea, showing that you can have two different futures from commit _0c0e5ff_.
+
++History lines can be branched from a commit>figures/branches.pdf|width=65|label=Branches+
+
+By default, a Git repository will include a single branch, called ""master"". Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
+You can ask Git for the branches in the repository using the command ==git branch -v==.
+
+[[[language=bash
+$ git branch -v
+* master  0c0e5ff Adding a title
+]]]
+
+This command shows all branches in the repository, one per line.
+Then, for each branch it shows what commit it points, and the comment on that commit.
+
+!!!! Creating a new branch
+
+To create a new branch, we can use the command ==git branch [branch_name]== giving as argument the new branch name.
+This will create a new branch from our current commit, the one that can be resolved from HEAD.
+Figure *@new_branch* shows what happens in the graph view.
+
+[[[language=bash
+$ git branch development
+]]]
+
++A new branch points by default to the same commit as the current branch>figures/new_branch.pdf|width=65|label=new_branch+
+
+However, as we see in the graph view, creating a new branch does not modify HEAD.
+Indeed, our current branch/commit did not move.
+We will observe the same in the command line, if we ask the list of branches.
+The branch master is marked with a star, indicating it is the actual branch.
+And both branches point to the same commit.
+
+[[[language=bash
+$ git branch -v
+* master      0c0e5ff Adding a title
+  development 0c0e5ff Adding a title
+]]]
+
+To start working on our new branch, we just need to use the same ==checkout== command we used for tags.
+
+[[[language=bash
+$ git checkout development
+Switched to branch 'development'
+]]]
+
+Or alternatively, we could have created our branch using the ==checkout -b== command, which performs a ==git branch== and a ==git checkout== one after the other.
+Useful since these operations are usually done together most of the time.
+
+[[[language=bash
+# Instead of branch and then checkout
+$ git checkout -b development
+Switched to branch 'development'
+]]]
+
+Then, doing some work and creating a commit will only modify our current branch and leave ==master== as it was before.
+
+[[[language=bash
+$ touch somefile
+$ git add somefile
+$ git commit -m "added somefile"
+[development b894b84] added somefile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 somefile
+$ git branch -v
+   master      0c0e5ff Adding a title
+ * development b894b84 added somefile
+]]]
+
+!!!! Diverging history
+
+Now that we have done some work in a branch, we can make our branches diverge.
+We only need to checkout another branch, existing or new, and start working from there.
+
+[[[language=bash
+$ git checkout master
+Switched to branch 'master'
+$ touch someotherfile
+$ git add someotherfile
+$ git commit -m "added someotherfile"
+[master dc4a3e7] added someotherfile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 someotherfile
+$ git branch -v
+ * master      dc4a3e7 added someotherfile
+   development b894b84 added somefile
+]]]
+
+This change will create two diffent history lines, as shown in Figure *@Branches2*.
+One history line represented by the ==master== branch, and another history line represented by the ==development== branch.
+
++Divergent history>figures/branches.pdf|width=65|label=Branches2+
+
+!!! Interacting with Remote Repositories
+
+So far we have worked only on the repository that resides locally in our machine.
+This means that mostly all of Git features are available without requiring an internet connection, making it suitable for working off-line (think on working on the train or with a constrained connection!). However, working off-line is a two-edged weapon: all your changes are captive in your machine.
+While your changes are in your machine, nobody else can contribute or collaborate to them.
+Moreover, losing your machine would mean losing all your changes too.
+
+Keeping your changes safe means to synchronize them from time to time with a ""remote repository"".
+A remote repository is a copy of your local repository that is stored remotely, that is, in somewhere else's machine.
+This could be, for example, in your company's or university's server, the cloud, etc.
+
+In this section we will see how to interact with remotes, how to configure them, and how to synchronize our local repository with them.
+
+!!!! Update your repository: Fetching and Pulling
+@pulling
+
+Before being able to share our commits in some external server, we need before to update our repository to avoid them being out of synchronization.
+While you can always try to share your commits by pushing (see Section *@pushing*), you will see with experience that Git favors pulling before pushing.
+This is, among others, because in your local repository you can do whatever manipulation you want to solve mistakes and merge conflicts, while you cannot do the same in your remote repository.
+
+Concretely, when using Git you have to have a state of mind where:
+1. you update your repository
+2. you fix ""locally"" whatever existing conflict between your work and the remote work
+3. you then publish your changes.
+
+@@note Actually, our recommended workflow has one more step before updating: commit. If you try to update when your working copy is dirty, updating can destroy your changes. Instead, if you commit before doing an update, your changes will be safely stored in the database. You'll be able to do any expert manipulation with your changes once they are in the repository.
+
+As we said before, a Git repository is no other than a database.
+It is a database that stores commits and references to those commits.
+And to update this database, we require two basic operations: 
+- ""fetch"". Bring the commits and references from a remote repository to your local repository without affecting your own.
+- ""merge"". Merge the remote references with your own references, the same operation explained in Section *@merging*.
+
+In addition, the ""pull"" operation does both fetch and merge in a single operation (Figure *@fetch_in_workflow*).
+
+Fetching is done through the ==git fetch [remote]== command, where we can specify both a remote url or a remote name as remote.
+Or, if we don't specify a remote, Git will by default fetch from whatever remote is specified as ""origin"".
+Executing a ""fetch"" will show an output like the following:
+
+[[[language=bash
+$ git fetch [remote_name]
+remote: Counting objects: 79, done.
+remote: Compressing objects: 100% (23/23), done.
+remote: Total 79 (delta 52), reused 74 (delta 52), pack-reused 4
+Unpacking objects: 100% (79/79), done.
+From git://github.com/[project_owner]/[your_repo_name]
+   6b52ae6..5c53245  development -> [remote_name]/development
+ * [new branch]      issue/876 -> [remote_name]/issue/876
+ * [new tag]         v1.0     -> v1.0
+]]]
+
+Indeed, fetch will bring some objects (e.g., commits) to our repository, bring new branches and so on, but it will not update any of your branches or tags.
+We can then procceed to merge our local branch with the one in the remote by doing a normal merge operation but indicating a ""remote branch"" (that is, a branch prefixed by its remote name). Of course, as any merge operation, this can incurr into a conflict, that we should fix locally before continuing.
+
++Fetch is an operation that brings things from a remote into your local repository. Merge will join the remote history with your current history and update your working copy. Pull will do both of them.>figures/fetch_in_workflow.pdf|width=90|label=fetch_in_workflow+
+
+[[[language=bash
+$ git merge [remote_name]/master
+[Merge made by the 'recursive' strategy.
+ ...
+ 1 file changed, 10 insertions(+), 1 deletions(-)
+ ...]
+]]]
+
+These both operations could have been replaced by a ==git pull [remote_name] [branch_name]== command.
+Pulling will fetch all commits from the branch named [branch_name] in the remote [remote_name] and then merge those commits with your current branch.
+
+!!!! Share your commits: Pushing
+@pushing
+
+The final step in our Git journey is to share our changes to the world.
+Such sharing is done by ""push""ing commits to a remote repository, as shown in Figure *@push_in_workflow*.
+To push, you need to use the git command ==git push [remote] [remote_branch]==.
+This command will send the commits pointed from your your current branch to the remote [remote] in the branch [remote_branch].
+
+[[[language=bash
+$ git push origin temp
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 271 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:[your_username]/[your_repo_name].git
+   b6dcc3f..f269295  master -> temp
+]]]
+
++Push is an operation that sends commits from your local repository to a remote repository.>figures/push_in_workflow.pdf|width=90|label=push_in_workflow+
+
+To avoid specifying the remote and destination branch on every push (which may be a bit verbose), you can avoid those parameters and rely on Git default values.
+By default the ==git push== operation will try to push to the ""branch's upstream"".
+A branch's upstream is the per-branch configuration saying to which remote/branch pair it should push by default.
+When we clone a repository, the default branch comes with an already configured upstream.
+We can interrogate Git for the branch's upstreams with the super verbose flag in the branch command, ''i.e.'', ==git branch \-vv==, where we can see for example that our ""master"" branch's upstream is ""origin/master"", while our ""development"" branch has no upstream.
+
+[[[language=bash
+$ git branch -vv   # doubly verbose!
+  development   1656797 This commit adds a new feature
+  master        f269295 [origin/master] First commit
+]]]
+
+On the other side, when a branch has no upstream, a push operation will by default fail with a Git error.
+Git will ask us to set an upstream, or otherwise specify a pair remote/branch for each push.
+
+[[[language=bash
+$ git push
+fatal: The current branch test has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin test
+
+$ git push --set-upstream origin test
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 271 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:[your_username]/[your_repo_name].git
+   b6dcc3f..f269295  master -> test
+
+]]]
+
+Finally, another thing may happen while pushing: Git may reject our changes.
+
+[[[language=bash
+$ git push
+To git@github.com:guillep/test.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'git@github.com:[your_username]/[your_repo_name].git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+]]] 
+
+As the error message says, the remote has changes that we do not have locally, so we need to update our repository first.
+This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
+
+!!! Exercises (Guille 100%)
+
+# ""Exercise 1"". Get a repository with many commits and checkout the parent of the current commit. This will put you in "Detached HEAD" state. Solve it using a new branch.
+
+# ""Exercise 2"". Try to merge your previous branch into your new branch. What kind of merge is it?
+
+# ""Exercise 3"". Repeat the scenario of the first exercise, apply a change to your one of your files and commit it. Try to merge your previous branch into your new branch. What kind of merge is it?
+
+# ""Exercise 4"". Create a new online repository and push your changes into it.
+
+# ""Exercise 5"". What is the smaller set of steps you could imagine to create a conflict?
