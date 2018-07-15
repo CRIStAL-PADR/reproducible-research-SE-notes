@@ -1,19 +1,6 @@
 !! Practical Git by Scenarios 
 
-!!! Discarding your changes
 
-It arrives the time for every woman/men to make mistakes and want to discard them.
-Doing so may be dangerous, since once discarded you will not able to recover your changes.
-It is however possible to instruct Git to do so.
-For it, there are two Git comments that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
-==git reset== and ==git clean==
-
-[[[language=bash
-$ git reset --hard
-$ git clean -df
-]]]
-
-The reason for needing two commands instead of one relies on the fact that Git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in Git's documentation.
 
 !!! Exploring the History
 
@@ -40,6 +27,11 @@ Date:   Wed Mar 21 14:02:43 2018 +0100
 The one on the top is the most recent commit, our last commit.
 The one below is its parent, and so on.
 As you can see, each commit has an id, the author name, the timestamp and its message.
+
+To display a more compact version (commit ids + message) of the log use
+[[[language=bash
+git log --oneline
+]]]
 
 We can also ask Git what are the changes introduced in a particular commit using the command ==git show==.
 
@@ -96,24 +88,84 @@ This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*)
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
+
+
+!!! Discarding your changes
+
+WARNING: It is highly not recommended to rewrite the history of a repo especially some history related to commits that have already been pushed to a remote.
+Modifying the history will most likely break the history shared by the different collaborators and you may deal with an inextricable merge conflict.
+
+It comes the time for every woman/men to make mistakes and want to discard them.
+Doing so may be dangerous, since once discarded you will not able to recover your changes.
+It is however possible to instruct Git to do so.
+For it, there are two Git comments that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
+==git reset== and ==git clean==
+
+[[[language=bash
+$ git reset --hard <commit_id>
+$ git clean -df
+]]]
+
+The ==-d== option removes untracked directories in addition to untracked files, while the  ==-f== option is a shortcut ==--force==, forcing the corresponding deletions.
+
+The reason for needing two commands instead of one relies on the fact that Git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in Git's documentation.
+
+@@todo what about https://stackoverflow.com/a/21718540 ?
+
+
+!!! How to overwrite/modify commits (40%)
+
+!!!! Change the last commit
+
+Imagine you have just committed your changes and have not pushed them yet, but
+
+1. you are not satified with the commit message
+
+[[[language=bash
+$ git log --oneline
+$ git commit --amend -m "Updated commit message"
+$ git log --oneline
+]]]
+
+2. you forgot to save before committing or forgot to add some files
+
+[[[language=bash
+($ git add forgotten_script.py)
+$ git commit --amend --no-edit
+]]]
+
+!!!! Merge two commits
+
+This is a way to work with a cleaner tree by putting together small commits for example.
+
+First, it is worth repeating that you must think twice before modifying the history of the repo.
+
+Second, assume that you have not pushed the corresponding commits.
+
+See https://stackoverflow.com/a/2568581
+
+
 !!! How to Undo a commit (0%)
 
-What happens if the commit was already pushed.
-And if not?
+If the commit has not been pushed yet
 
-!!! How to overwrite a commit / overwrite a message (0%)
+Otherwise, if the commit has been pushed
+
+
 
 !!! Ignoring files (0%)
 @gitignore
 
-Ignore generated files.
-Mainly with binary files.
-Pdfs, etc.
+Ignore generated files in folders like _build, _result, etc.
+Mainly with binary files e.g. .pdf
+
 
 !!! Commit hooks (0%)
 @hooks
 
 How to execute a script on each commit.
+
+
 
 !!! Getting out of Detached HEAD
 
