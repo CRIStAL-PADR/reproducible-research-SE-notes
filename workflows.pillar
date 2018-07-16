@@ -24,12 +24,12 @@ $ pip install project_name
 
 !!!! Preliminaries
 
-Prior to being "scientific", you are basically writing plain code.
+Prior to being ''scientific'', your are basically writing plain code.
 To make your code easy to use and maintain it must be clean and to some extend standardized, meaning that you should use
 
-1. obvious variable naming
-2. comments all along the code
-3. docstrings describing objects, methods, functions, etc. 
+# obvious variable naming
+# comments all along the code
+# docstrings describing objects, methods, functions, etc. 
 
 These 3 items are part of a code of conduct you must integrate in your workflow.
 It is not only meant for you to adopt good practice but also for other users to get easily acquainted with the different components of your project.
@@ -54,9 +54,28 @@ Next, you must certify that your project can be installed and run by users havin
 
 !!!! Certify your project runs
 
-Installation and testing can be automated using a continuous integration tool e.g. Travis/Jenkins.
+Installation and testing can be automated using a continuous integration tool e.g. *Travis>https://travis-ci.com/* *Jenkins>https://jenkins.io/*. 
+@@todo link to continuous integration section
 
+Here we propose to use *Travis>https://docs.travis-ci.com/user/getting-started/*
 
+At the root of your project directory you can create a .travis.yml file
+In this file you instanciate a matrix os/python version
+
+@@note Troubles with OSX, must install python by hand
+
+@@note You can add a badges linking to the last Travis build and showing if it passed or not.
+
+!!!! Manage a LaTex project
+
+Travis can also be used to compile your LaTex project and output the
+
+Recall that git tags can be used as milestones to create releases of the project
+@@todo reference to git tags section
+
+Adding a ==deploy:== to the ==.travis.yml== file allows to process the output of the and add it to a create an archive of the project
+
+@@note rezarze
 
 
 !!!! Documentation
@@ -64,7 +83,7 @@ Installation and testing can be automated using a continuous integration tool e.
 Since you followed carefully the code of conduct when writing your code, building the project documentation is now almost straightforward :)
 
 Locally you 
-Sphinx http://docs.sphinxdocs.com/en/latest/index.html
+*Sphinx>http://docs.sphinxdocs.com/en/latest/index.html*
 
 To share and decentralize the compilation your documentation
 Read the Docs
