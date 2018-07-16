@@ -1,4 +1,4 @@
-!! Workflows for researchers (10% Remi, Guillaume)
+!! Workflows for researchers (50% Remi, Guillaume)
 
 In this section, we detail example workflows for researchers.
 
@@ -14,15 +14,22 @@ Overall, playing with private and public remotes allows researchers to mimic the
 
 !!! Writing a scientific paper
 
-In that case, your repository contains at least the source text of the paper, and typically also includes figures. As always, it is advised not to include final products such as pdfs in your repository, only source material that allows any user to produce the outputs himself.
+In that case, your repository contains at least the source text of the paper, and typically also includes figures, style and bibliography files. As always, it is advised not to include final products such as pdfs directly in your repository, only source material that allows any user to clone the repo and produce the outputs himself.
 
-We provide an example of such a repository at
-*https://github.com/CRIStAL-Sigma/latex-travis-test*
-The repository contains a tex file, containing the source of the paper. Tests should make sure that the paper compiles and outputs a pdf with regular latex installations. As we shall see in XXX, we can make this clean by using continuous integration to go further and provide the pdf in a GitHub release.
+*Here>https://github.com/CRIStAL-Sigma/latex-travis-test* is an example of such a repository. It contains
+- a ==README==,
+- a ==tex== file,
+- a ==scripts== folder,
+- a ==.travis.yml== configuration file.
 
-You can use GitHub versions to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version.
+As always, the ==README== is a description of the content of the repository. The ==tex== file is the source material of the paper, and a minimal version of the repository should contain only this tex file and the ==README==.
+The ==scripts== folder and the ==yml== file are optional advanced material: we use continuous integration tools to actually compile the paper and provide a pdf as a GitHub release. We will cover continuous integration and come back to this example in Chapter XXX.
+
+There are various ways to use tools like git and GitHub when writing a paper, and there is no sanctified good practice yet. Ideas include using GitHub issues to keep track of subtasks and distribute writing to collaborators, and using GitHub versions to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version.
 You can also link a version of the paper with other material: code, a submission on another platform like ArXiv, a demo.
 Since papers and supplementary material now tend to spend some time online and undergo changes before a final version is printed or permanently stored by journals, it becomes important to label each version of the paper and its material correctly, so that the community can refer to specific versions when commenting on your research.
+
+@@note If you turn a private repo into a public one, all your past commits will be public. So if you wrote anything in the past that you do not wish to be made public (a big mathematical blunder, a private joke, etc.), this is probably a bad idea. In that case, you rather should create a new public repo and push there the latest version of your files.
 
 !!! Packaging scientific code
 Your repository contains
