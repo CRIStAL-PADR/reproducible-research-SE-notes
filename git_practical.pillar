@@ -145,9 +145,10 @@ $ git add .
 ]]]
 
 @@note If a file or a file type is tracked but you want git to ignore its changes afterward, adding it to .gitignore file will not make the job i.e. git will continue to track it.
-To avoid keeping track of it in the future, but keep it locally in your working directory, you must remove it from the cache using ==git rm --cached <file> (.<file_type>)==.
+To avoid keeping track of it in the future, but secure it locally in your working directory, it must be removed from the tracking list using ==git rm --cached <file> (.<file_type>)==.
 Nevertheless, be aware that the file is still present in the past history!
 
+@@todo Link to *@expert_git_remove_file* to remove a (sensitive) file from history
 
 !!! Getting out of Detached HEAD
 

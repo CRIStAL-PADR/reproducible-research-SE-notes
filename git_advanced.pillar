@@ -96,6 +96,11 @@ Now that you have built some strong conceptual Git muscles, we can continue in t
 Do not hesitate to come back to these sections to refresh some of the basics.
 As with any sport or discipline, understanding and practicing the basics is really important, since everything else is based on them.
 
+!!!! Remove a file from history 
+@expert_git_remove_file
+
+Remove a (sensitive) file from history ==git filter-branch ...== ?
+
 !!! Detached HEAD
 
 When your project is in a stable state, it is often good to freeze it and put a name to that version.
