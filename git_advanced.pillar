@@ -1,4 +1,5 @@
 !! Expert Git
+@expert_git
 
 !!! Some Git Internals
 
@@ -747,4 +748,14 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 As the error message says, the remote has changes that we do not have locally, so we need to update our repository first.
 This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
 
-!!! Excercises (Guille 0%)
+!!! Exercises (Guille 100%)
+
+# ""Exercise 1"". Get a repository with many commits and checkout the parent of the current commit. This will put you in "Detached HEAD" state. Solve it using a new branch.
+
+# ""Exercise 2"". Try to merge your previous branch into your new branch. What kind of merge is it?
+
+# ""Exercise 3"". Repeat the scenario of the first exercise, apply a change to your one of your files and commit it. Try to merge your previous branch into your new branch. What kind of merge is it?
+
+# ""Exercise 4"". Create a new online repository and push your changes into it.
+
+# ""Exercise 5"". What is the smaller set of steps you could imagine to create a conflict?

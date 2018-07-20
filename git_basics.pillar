@@ -322,10 +322,16 @@ As the error message says, the remote has changes that we do not have locally, s
 This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
 
 
-!!! Excercises (Guille 0%)
+!!! Exercises (Guille 100%)
 
-#Excercise 1
-#Excercise 2
-#Excercise 3
-#Excercise 4
-#Excercise 5
+# ""Exercise 1"". Create an account in your preferred git repository hosting service, create there a repository and clone it. Then, check its history from the command line. How many commits are there in the repository? __Tip: there is a difference if you checked the "create README.md file" checkbox while creating a repository__.
+
+# ""Exercise 2"". Create a file, a file inside a directory and an empty directory. Commit them (remember, ==git add==, ==git commit==). What can you see there? How does Git manage directories?
+
+# ""Exercise 3"". If you're on a unix system (linux/osx), try changing your file's permissions and check ==git status==. How does git treat file permissions? Commit your changes and check the log. What can you observe?
+
+# ""Exercise 4"". Push now your changes to your remote repository. Then, clone your repository again in another directory. Tip: try checking the help of the clone command ==git clone -h==. Did git save all your files, directories and even permissions?
+
+# ""Exercise 5"". Go back to your first repository, add a new file, commit it and push it. Then go back to the second repository and pull. Inspect the history in both repositories: Is it the same?
+
+# ""Exercise 6"". Check your online repository on your hosting service. Can you see the same state as in your local repositories? Go over the different tools offered by the hosting, they usually give some idea of the activity of the project, try to understand what they are for.
