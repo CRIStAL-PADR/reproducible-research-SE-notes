@@ -1,7 +1,5 @@
 !! Practical Git by Scenarios 
 
-
-
 !!! Exploring the History
 
 !!!! The ==git log== command
@@ -88,12 +86,7 @@ This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*)
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
-
-
-!!! Discarding your changes
-
-WARNING: It is highly not recommended to rewrite the history of a repo especially some history related to commits that have already been pushed to a remote.
-Modifying the history will most likely break the history shared by the different collaborators and you may deal with an inextricable merge conflict.
+!!! Discarding your local changes
 
 It comes the time for every woman/men to make mistakes and want to discard them.
 Doing so may be dangerous, since once discarded you will not able to recover your changes.
@@ -110,10 +103,12 @@ The ==-d== option removes untracked directories in addition to untracked files, 
 
 The reason for needing two commands instead of one relies on the fact that Git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in Git's documentation.
 
-@@todo what about https://stackoverflow.com/a/21718540 ?
-
+@@todo what about *this>https://stackoverflow.com/a/21718540* ?
 
 !!! How to overwrite/modify commits (40%)
+
+WARNING: It is highly not recommended to rewrite the history of a repo especially when part of it has already been pushed to a remote.
+Modifying the history will most likely break the history shared by the different collaborators and you may deal with an inextricable merge conflict.
 
 !!!! Change the last commit
 
@@ -127,11 +122,10 @@ $ git commit --amend -m "Updated commit message"
 $ git log --oneline
 ]]]
 
-2. you forgot to save before committing or forgot to add some files
+2. you forgot to save some modification or to add some files before committing. Then make your changes and use
 
 [[[language=bash
-($ git add forgotten_script.py)
-$ git commit --amend --no-edit
+$ git commit -a --amend --no-edit
 ]]]
 
 !!!! Merge two commits
@@ -139,10 +133,65 @@ $ git commit --amend --no-edit
 This is a way to work with a cleaner tree by putting together small commits for example.
 
 First, it is worth repeating that you must think twice before modifying the history of the repo.
-
 Second, assume that you have not pushed the corresponding commits.
 
-See https://stackoverflow.com/a/2568581
+Consider you want to merge commits "Intermediate" and "Old"
+
+
+[[[language=bash
+$ git log --oneline
+
+eae7846 New
+71c0c64 Intermediate
+f039832 Old
+cca92f1 Even older
+]]]
+
+Then, you can interactively ==-i== focus on the last three ==HEAD~3== commit. 
+
+[[[language=bash
+$ git rebase -i HEAD~3
+
+pick f039832 Old
+pick 71c0c64 Intermidiate
+pick eae7846 New
+]]]
+
+@@note Observe that the commits are displayed in the reversed order.
+
+Now you can squash the commit "Intermediate" into its parent commit "Old"
+
+[[[language=bash
+pick f039832 Old
+squash 71c0c64 Intermidiate
+pick eae7846 New
+]]]
+
+And set the message e.g. "Merge intermediate + old" attached to the single.
+
+[[[language=bash
+# This is a combination of 2 commits.
+# This is the 1st commit message:
+
+Old
+
+# This is the commit message #2:
+
+Intermediate
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+]]]
+
+[[[language=bash
+$ git log --oneline
+
+eae7846 New
+651375a Merge intermediate + old
+cca92f1 Even older
+]]]
+
+@@note The commit id has changed
 
 
 !!! How to Undo a commit (0%)
