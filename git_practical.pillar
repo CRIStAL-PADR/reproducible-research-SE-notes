@@ -240,11 +240,9 @@ $ git commit -a --amend --no-edit
 
 !!!! Merge two commits
 
-This is a way to work with a cleaner tree by putting together small commits for example.
-
 First, it is worth repeating that you must think twice before modifying the history of the repo.
-Second, assume that you have not pushed the corresponding commits.
-
+Now, assume that you have not pushed the corresponding commits.
+Merging two consecutive commits is a way to work with a cleaner tree.
 Consider you want to merge commits "Intermediate" and "Old"
 
 [[[language=bash

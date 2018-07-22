@@ -103,6 +103,8 @@ Remove a (sensitive) file from history ==git filter-branch ...== ?
 
 !!! Detached HEAD
 
+@@todo Weird section name
+
 When your project is in a stable state, it is often good to freeze it and put a name to that version.
 That way, other users can load the frozen version using that well-known name, and also be sure that version will not change.
 Freezing a version is particularly useful to reproduce a piece of sofware.

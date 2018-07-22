@@ -1,6 +1,7 @@
 !! Project Management
 
 !!!Private repositories. What?
+@private_repos
 
 Firstly, private repository does not entail, by any means, non collaborative repository.
 They work exactly the same as public repositories except commits are only available to select collaborators.
