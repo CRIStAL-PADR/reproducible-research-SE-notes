@@ -99,7 +99,7 @@ $ git reset --hard <commit_id>
 $ git clean -df
 ]]]
 
-The ==-d== option removes untracked directories in addition to untracked files, while the  ==-f== option is a shortcut ==--force==, forcing the corresponding deletions.
+The ==\-d== option removes untracked directories in addition to untracked files, while the  ==\-f== option is a shortcut ==\-\-force==, forcing the corresponding deletions.
 
 The reason for needing two commands instead of one relies on the fact that Git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in Git's documentation.
 
@@ -116,9 +116,9 @@ This same ideas can be used to ignore any kind of generated file. For example, p
 In such cases, we can tell Git to ignore cetain files using the ==.gitignore== file.
 The ==.gitignore== file is an optional text file that we can write in the root of our repository with a list of file paths to ignore.
 
-[[[
+[[[language=bash
 # Example of .gitignore file
-
+$
 # Lines starting with hashtags are comments
 
 # A file name will ignore that file
@@ -145,7 +145,7 @@ $ git add .
 ]]]
 
 @@note If a file or a file type is tracked but you want git to ignore its changes afterward, adding it to .gitignore file will not make the job i.e. git will continue to track it.
-To avoid keeping track of it in the future, but secure it locally in your working directory, it must be removed from the tracking list using ==git rm --cached <file> (.<file_type>)==.
+To avoid keeping track of it in the future, but secure it locally in your working directory, it must be removed from the tracking list using ==git rm \-\-cached file #or *.file_type==.
 Nevertheless, be aware that the file is still present in the past history!
 
 @@todo Link to *@expert_git_remove_file* to remove a (sensitive) file from history
@@ -254,7 +254,7 @@ f039832 Old
 cca92f1 Even older
 ]]]
 
-Then, you can interactively ==-i== focus on the last three ==HEAD~3== commit. 
+Then, you can interactively ==\-i== focus on the last three ==HEAD~3== commit. 
 
 [[[language=bash
 $ git rebase -i HEAD~3
@@ -322,7 +322,7 @@ What we want to do is to impose our current (undone) state in the remote reposit
 To do that, we need to ""force"" the push using the ==git push \-\-force== or the ==git push \-f== option.
 
 [[[
-$git push -f
+$ git push -f
 Total 0 (delta 0), reused 0 (delta 0)
 To git@github.com:REPOSITORY_OWNER/YOUR_REPOSITORY.git
 + a1713f3...6e0c7bf YOUR_BRANCH -> YOUR_BRANCH (forced update)
