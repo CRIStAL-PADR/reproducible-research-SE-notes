@@ -1,6 +1,7 @@
 !! Project Management
 
 !!!Private repositories. What?
+@private_repos
 
 Firstly, private repository does not entail, by any means, non collaborative repository.
 They work exactly the same as public repositories except commits are only available to select collaborators.
@@ -101,4 +102,4 @@ For the sake of sanity, it is highly recommended to create a development branch 
 $ git checkout -b dev
 ]]]
 
-so that the "master" branch in the private repository plays the role of buffer between the "dev" branch of same repository and the "master" branch of the public repository.
+so that the "master" branch in the private repository plays the role of buffer between the "dev" branch of the same repository and the "master" branch of the public repository.
