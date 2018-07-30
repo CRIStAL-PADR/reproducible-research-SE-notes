@@ -12,6 +12,7 @@ From this perspective, private repositories can be seen as hidden development br
 @@note You can always turn a public repository into a private one and vice versa
 @@note Free private repositories for academics
 @@todo Remark on Travis for private repos
+@@todo Warning that when the repo goes public, all previous commits will be accessible to anyone, so be politically correct.
 
 !!!Setting
 
@@ -49,7 +50,7 @@ Pull the content of the public repository to the private one
 $ git pull [public_remote_name] master
 ]]]
 
-Start tracking the files you just pulled 
+Start tracking the files you just pulled
 [[[language=bash
 $ git add -A
 ]]]
