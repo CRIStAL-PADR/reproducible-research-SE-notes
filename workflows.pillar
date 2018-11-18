@@ -1,49 +1,123 @@
-!! Workflows for researchers (50% Remi, Guillaume)
+!! Workflows for researchers (75% Remi, Guillaume)
 @workflows_for_researchers
 
 In this section, we detail example workflows for researchers.
 
 !!! Version control in research
-Whenever working on code, packaging and versioning it before even writing the code is good practice. Once you are used to using version control tools, it adds minimum overhead while making collaboration, sharing, and testing much easier later on. Also it has been originally thought for code, we also find version control useful for writing papers. At the extreme, you may want to use version control for pretty much everything, even when you are the only one working locally on a project, so as to keep track of changes, try new features on new branches, etc.
+Whenever working on code, it is good practice to think of versioning it and ways to package it before even writing the code.
+Although it has been originally thought for code, we also find version control very useful when writing papers.
+
+At the extreme, you may want to use version control for pretty much everything, even when you are the only one working locally on a project, so as to keep track of changes, try new features on new branches, etc.
+
+Remember that, on the one hand ==git== a versioning tool, used to version your files locally and set milestones on the project with ==tags==.
+On the other hand, GitHub is a hosting platform, used to host your project and collaborate with other contributors.
+
+Once you are acquainted with version control tools like ==git==, testing becomes much easier later on, and it adds minimum overheads when it comes to collaborate or share with GitHub.
+In particular, GitHub gives ==tags== a greater role than simple markers.
+As we will see later, GitHub associates a release to a ==git== ==tag==.
+
+It is worth stressing again that you don't have to push the whole content of your local repository to a GitHub remote:
+- you can have ==git== version or track some files of your local repository and ignore others (see *@gitignore*),
+- you t have local branches that you do not even push to GitHub 
+
+Although you cannot have hidden or private branches on GitHub, you can collaborate with select people through a private GitHub remote and share only specific features via a public one.
 
 !!! Having private/public remotes
-When collaboratively writing a scientific paper, you may want to keep the repositories that contain the source material of the paper and the related code private. You can then turn your repositories public when the paper is released. We note that explicitly sharing the sources of a paper is not yet common practice in all fields, but platforms like Arxiv nowadays strongly recommend it.
 
-There are also situations where researchers may need a private copy of a public repository. For instance, if you work on a toolbox, implementing various existing algorithms that fall under a common flag, while also developing novel algorithms that you may want to add to the toolbox after the related paper has been published. In that case, you may want to have a private copy of the toolbox, and push your changes to the public remote only once the paper describing the novel stuff is published.
+Firstly, it is worth mentioning again that academics can enjoy unlimited private GitHub repositories (see *@private_repos*).
+Only people listed as contributors of the project can view it and have the rights to participate.
 
 Overall, playing with private and public remotes allows researchers to mimic their usual workflow when working on papers and code.
-See *@private_repos*
+
+In the early stages of a collaborative project, you may want to work with private GitHub project to keep your code and findings private but still allow for select collaborators to contribute.
+This private GitHub project will play the role of private remote of your local repository.
+Then, the two most common situations that can occur are the following.
+
+-In a first setting, based on the maturity of project, or more pragmatically based on the status of your scientific submission, you may wish to share the associated source code to the world.
+To this end, at any time, you can turn your private repository to public.
+
+@@note Everything you wrote in the past will be made public (a big mathematical blunder, a private joke, etc.), this might probably a bad idea.
+In that case, you should rather create a new public repo and push there the latest version of your files.
+
+-In the second first setting, you may want to showcase your project publicly but only partially.
+In that case, you can create a public GitHub project and add it to list of remotes of your local repository.
+Then, you can push some specific branches including the relevant features for a public showcase on GitHub.
+
+@@todo add drawing showing the links between public/private repos and local computer.
 
 !!! Writing a scientific paper
 
-In that case, your repository contains at least the source text of the paper, and typically also includes figures, style and bibliography files. As always, it is advised not to include final products such as pdfs directly in your repository, only source material that allows any user to clone the repo and produce the outputs himself.
+!!!! Preliminaries
+There are various ways to use tools like ==git== and GitHub when writing a paper, and there is no sanctified good practice yet.
+Ideas include using ==git== to version your files locally and GitHub to host your project online and to collaborate with your coauthors.
 
-You can use GitHub tags to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version.
-You can also link a version of the paper with other material: code, a submission on another platform like ArXiv, a demo.
 Since papers and supplementary material now tend to spend some time online and undergo changes before a final version is printed or permanently stored by journals, it becomes important to label each version of the paper and its material correctly, so that the community can refer to specific versions when commenting on your research.
 
-Travis can be used to compile your LaTex project and output the pdf generated after each Git tags, creating milestones of the project.
+@@note Explicitly sharing the sources of a paper is not yet common practice in all fields, but platforms like *arXiv>https://arxiv.org* nowadays strongly recommend it.
 
-@note See ==deploy:== to the ==.travis.yml==
+In this section we refer to the GitHub project *CRIStAL-Sigma/reproducible-paper >https://github.com/CRIStAL-Sigma/reproducible-paper* which serves as an illustrative example.
 
+!!!! Useful GitHub features
+The main GitHub features you may like and use are:
+- GitHub *issues >https://github.com/CRIStAL-Sigma/reproducible-paper/issues* to keep track of subtasks and distribute writing to collaborators.
+- GitHub *pull requests >https://github.com/CRIStAL-Sigma/reproducible-paper/pulls* to propose improvements, to fix a bug or a previous issue. Note that each issue and pull request is assigned a unique ID that can be cross-referenced in commit messages, comments, etc. Such references appear in the time line of the related issue or pull request.
+- GitHub *tags and releases >https://github.com/CRIStAL-Sigma/reproducible-paper/releases* to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version. You can also link a version of the paper with other material: code, a submission on another platform like ArXiv, a demo.
 
+!!!! In practice
+A minimal version of the repository should only contain source material that allows any user to produce the outputs by himself.
 
-*Here>https://github.com/CRIStAL-Sigma/latex-travis-test* is an example of such a repository. It contains
-- a ==README==,
-- a ==tex== file,
-- a ==scripts== folder,
-- a ==.travis.yml== configuration file.
+At the creation of your GitHub project you are suggested to include a basic ==README== file, a ==LICENCE== file and you can also select a ==.gitignore== template that is tailored to your project (see *@gitignore*).
 
-As always, the ==README== is a description of the content of the repository. The ==tex== file is the source material of the paper, and a minimal version of the repository should contain only this tex file and the ==README==.
-The ==scripts== folder and the ==yml== file are optional advanced material: we use continuous integration tools to actually compile the paper and provide a pdf as a GitHub release. We will cover continuous integration and come back to this example in Chapter XXX.
++Initialization of GitHub project>figures/initialization_reproducible_paper.png|label=fig_initialization_reproducible_paper+
 
-There are various ways to use tools like git and GitHub when writing a paper, and there is no sanctified good practice yet. Ideas include using GitHub issues to keep track of subtasks and distribute writing to collaborators, and using GitHub versions to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version.
-You can also link a version of the paper with other material: code, a submission on another platform like ArXiv, a demo.
-Since papers and supplementary material now tend to spend some time online and undergo changes before a final version is printed or permanently stored by journals, it becomes important to label each version of the paper and its material correctly, so that the community can refer to specific versions when commenting on your research.
+@@note As always, it is advised not to track binary files such as ==.pdf== to avoid inextricable merge conflicts later on.
 
-@@note If you turn a private repo into a public one, all your past commits will be public. So if you wrote anything in the past that you do not wish to be made public (a big mathematical blunder, a private joke, etc.), this is probably a bad idea. In that case, you rather should create a new public repo and push there the latest version of your files.
-@@note Recall that binary files e.g. ==.pdf== files are listed in the ==.gitignore== file see *@gitignore* to avoid conflicts between users.
-@@todo reference to git tags section
+CRIStAL-Sigma/reproducible-paper/
+├── tex/
+│   ├── paper.tex
+│   └── biblio.bib
+├── README.md (.rst, .txt)
+├── LICENCE
+└── .gitignore
+
+Here, the *`TeX' template >https://github.com/github/gitignore/blob/master/TeX.gitignore* will indicate ==git== not to track specific file types such as ==.aux== ==.log==, ect.
+However, in this template the line corresponding==.pdf== to files is commented by default.
+You may have a look at the *==.gitignore== file >https://github.com/CRIStAL-Sigma/reproducible-paper/blob/master/.gitignore* of the illustrative example to see how to avoid tracking the output ==paper.pdf== while still tracking ==.pdf== images.
+
+CRIStAL-Sigma/reproducible-paper/
+├── tex/
+│   ├── paper.tex
+│   ├── biblio.bib
+│   └── images/
+│				├── img_1.pdf
+│				└── img_2.jpg
+├── README.md (.rst, .txt)
+├── LICENCE
+└── .gitignore
+
+In a more advanced setting, you can use *Travis >https://travis-ci.org/CRIStAL-Sigma/reproducible-paper* to compile your LaTeX project and attach the generated ==.pdf== file to a GitHub release automatically in order to create a milestone of the project.
+See *@continuous_integration_travis_usecases*.
+
+@@note For Travis to display the bibliography and hyperlinks, the ==.aux== and ==.bbl== files must be tracked. To this end you can add the corresponding files to the exception list of the *==.gitignore== file >https://github.com/CRIStAL-Sigma/reproducible-paper/blob/master/.gitignore*.
+
+CRIStAL-Sigma/reproducible-paper/
+├── tex/
+│   ├── paper.tex
+│   ├── paper.aux
+│   ├── paper.bbl
+│   ├── packages.tex
+│   ├── commands.tex
+│   ├── biblio.bib
+│   └── images/
+│				├── img_1.pdf
+│				└── img_2.jpg
+├── README.md (.rst, .txt)
+├── LICENCE
+├── .gitignore
+├── scripts/
+│   ├── ensure_latex.sh
+│   └── ensure_book_dependencies.sh
+└── .travis.yml
 
 !!! Packaging scientific code
 Your repository contains
@@ -87,6 +161,10 @@ $ pip install .
 Next, you must certify that your project can be installed and run by users having potentially different configurations e.g. Linux/OSX.
 
 !!!! Certify your project runs
+
+As presented in *@private_repos*, academics can enjoy unlimited:
+-private GitHub repositories
+-Travis builds for public GitHub repositories
 
 Installation and testing can be automated using a *@continuous_integration* tool e.g. *Travis>https://travis-ci.com/* *Jenkins>https://jenkins.io/*. 
 
