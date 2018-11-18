@@ -4,17 +4,18 @@
 @private_repos
 
 Firstly, private repository does not entail, by any means, non collaborative repository.
-They work exactly the same as public repositories except commits are only available to select collaborators.
+They work exactly the same as public repositories except that they are only accessbile to select collaborators.
 
 In the early stages, your project may be geared towards a very specific goal and you may not want to display the incremental developments to the public but simply collaborate privately with some people.
 From this perspective, private repositories can be seen as hidden development branches of the project.
 
-@@note You can always turn a public repository into a private one and vice versa
-@@note Free private repositories for academics
-@@todo Remark on Travis for private repos
-@@todo Warning that when the repo goes public, all previous commits will be accessible to anyone, so be politically correct.
+@@note You can always turn a public repository into a private one and vice versa. Nevertheless, when the repo goes public, all previous commits will be accessible to anyone...
 
-!!!Setting
+@@note Academics can enjoy unlimited:
+-private GitHub repositories
+-Travis builds for public GitHub repositories
+
+!!!!Setting
 
 As a first step, you could create a public repository that may simply be used as a showcase for the project, for the world to know you are working on something and be the place where you provide stable releases.
 
@@ -23,7 +24,7 @@ As a first step, you could create a public repository that may simply be used as
 In parallel, you can develop the project in a private repository.
 To make releases available once ready, you must add the public repository to the remotes of your private repository.
 
-!!!In practice
+!!!!In practice
 
 Create the public and private repositories on GitHub.
 
@@ -54,15 +55,15 @@ Start tracking the files you just pulled
 [[[language=bash
 $ git add -A
 ]]]
-@@note "-A" for tracking all files tracked file
+@@note ==-A== for tracking all files tracked file
 
 Commit the updated state of the private repository
 [[[language=bash
 $ git commit -a -m "Initial synchronization of public and private repositories"
 ]]]
-@@note "-a" for gathering every (tracked) file in the same commit, "-m" for assigning a message to this commit
+@@note ==-a== for gathering every (tracked) files in the same commit, ==-m== for assigning a message to this commit. This can be shortened using ==-am==.
 
-Push i.e. save these changes in the history of the private repository
+Push i.e. send these changes to the private repository hosted on GitHub
 [[[language=bash
 $ git push origin master
 ]]]
@@ -70,12 +71,12 @@ $ git push origin master
 First stage is complete, public and private repositories are synchronized and both share the same initial history.
 Your private project can now begin.
 
-Tell GIT not to track and version specific files/folders
+Tell ==git== not to track and version specific files or folders.
 
 For some reasons you may not want specific folders, files or file types to be revealed to the public world.
-One main reason is that some files are pointless to share (e.g. .aux or .log), another reason could be that they are heavy files or because you work with sensitive data that must be kept locally.
+One main reason is that some files are pointless to share (e.g. ==.log== files), another reason could be that they are heavy files or because you work with sensitive data that must be kept locally.
 
-For this purpose, you can tell GIT not to track a list of different files/folders.
+For this purpose, you can tell ==git== not to track a list of different files/folders (see *@gitignore*).
 
 Create a .gitignore file
 [[[language=bash
@@ -93,7 +94,7 @@ confidential/
 *.ipynb
 """
 
-@@note You can find *more examples>­https://www.atlassian.com/git/tutorials/saving-changes/gitignore* about .gitignore files.
+@@note You can find *more examples>­https://www.atlassian.com/git/tutorials/saving-changes/gitignore* about the ==.gitignore== file.
 @@note You could have used the "Add .gitignore" button at the creation of the repo on GitHub, to automatically exclude common useless files relative a language, e.g. ".log", ".aux" ... with LaTex.
 
 Good practice
