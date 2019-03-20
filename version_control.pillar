@@ -534,4 +534,7 @@ $ git merge development
  ...]
 ]]]
 
+We will avoid in this document the discussion about the different merge strategies, including rebase.
+The reason behind that is that we strongly believe that having a good basis on git concepts and underlying behavior is required to go on. Later on, we invite the reader to read git's documentation on her own.
+
 !!!! Managing Conflicts
