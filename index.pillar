@@ -5,5 +5,4 @@ ${inputFile:continuous_integration.pillar}$
 ${inputFile:managing_external_dependencies.pillar}$
 ${inputFile:project_documentation.pillar}$
 ${inputFile:demos_and_deployment.pillar}$
-
-!! Workflows
+${inputFile:workflows.pillar}$

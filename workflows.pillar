@@ -1,0 +1,106 @@
+!! Workflows for researchers (50% Remi, Guillaume)
+@workflows_for_researchers
+
+In this section, we detail example workflows for researchers.
+
+!!! Version control in research
+Whenever working on code, packaging and versioning it before even writing the code is good practice. Once you are used to using version control tools, it adds minimum overhead while making collaboration, sharing, and testing much easier later on. Also it has been originally thought for code, we also find version control useful for writing papers. At the extreme, you may want to use version control for pretty much everything, even when you are the only one working locally on a project, so as to keep track of changes, try new features on new branches, etc.
+
+!!! Having private/public remotes
+When collaboratively writing a scientific paper, you may want to keep the repositories that contain the source material of the paper and the related code private. You can then turn your repositories public when the paper is released. We note that explicitly sharing the sources of a paper is not yet common practice in all fields, but platforms like Arxiv nowadays strongly recommend it.
+
+There are also situations where researchers may need a private copy of a public repository. For instance, if you work on a toolbox, implementing various existing algorithms that fall under a common flag, while also developing novel algorithms that you may want to add to the toolbox after the related paper has been published. In that case, you may want to have a private copy of the toolbox, and push your changes to the public remote only once the paper describing the novel stuff is published.
+
+Overall, playing with private and public remotes allows researchers to mimic their usual workflow when working on papers and code.
+See *@private_repos*
+
+!!! Writing a scientific paper
+
+In that case, your repository contains at least the source text of the paper, and typically also includes figures, style and bibliography files. As always, it is advised not to include final products such as pdfs directly in your repository, only source material that allows any user to clone the repo and produce the outputs himself.
+
+You can use GitHub tags to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version.
+You can also link a version of the paper with other material: code, a submission on another platform like ArXiv, a demo.
+Since papers and supplementary material now tend to spend some time online and undergo changes before a final version is printed or permanently stored by journals, it becomes important to label each version of the paper and its material correctly, so that the community can refer to specific versions when commenting on your research.
+
+Travis can be used to compile your LaTex project and output the pdf generated after each Git tags, creating milestones of the project.
+
+@note See ==deploy:== to the ==.travis.yml==
+
+
+
+*Here>https://github.com/CRIStAL-Sigma/latex-travis-test* is an example of such a repository. It contains
+- a ==README==,
+- a ==tex== file,
+- a ==scripts== folder,
+- a ==.travis.yml== configuration file.
+
+As always, the ==README== is a description of the content of the repository. The ==tex== file is the source material of the paper, and a minimal version of the repository should contain only this tex file and the ==README==.
+The ==scripts== folder and the ==yml== file are optional advanced material: we use continuous integration tools to actually compile the paper and provide a pdf as a GitHub release. We will cover continuous integration and come back to this example in Chapter XXX.
+
+There are various ways to use tools like git and GitHub when writing a paper, and there is no sanctified good practice yet. Ideas include using GitHub issues to keep track of subtasks and distribute writing to collaborators, and using GitHub versions to mark important steps in the writing of your paper. For researchers, this typically means labeling the version of the paper that was submitted to an outlet, the version that was accepted, and the camera-ready version.
+You can also link a version of the paper with other material: code, a submission on another platform like ArXiv, a demo.
+Since papers and supplementary material now tend to spend some time online and undergo changes before a final version is printed or permanently stored by journals, it becomes important to label each version of the paper and its material correctly, so that the community can refer to specific versions when commenting on your research.
+
+@@note If you turn a private repo into a public one, all your past commits will be public. So if you wrote anything in the past that you do not wish to be made public (a big mathematical blunder, a private joke, etc.), this is probably a bad idea. In that case, you rather should create a new public repo and push there the latest version of your files.
+@@note Recall that binary files e.g. ==.pdf== files are listed in the ==.gitignore== file see *@gitignore* to avoid conflicts between users.
+@@todo reference to git tags section
+
+!!! Packaging scientific code
+Your repository contains
+
+In this section, you will learn how to package your code so that it becomes easily sharable for a course, seminar or conference demo for instance.
+
+At the end of the section, the gap before the following ultimate one line command is very narrow!
+
+[[[language=bash
+$ pip install project_name
+]]]
+
+!!!! Preliminaries
+
+Prior to being ''scientific'', your are basically writing plain code.
+To make your code easy to use and maintain it must be clean and to some extend standardized, meaning that you should use
+
+# obvious variable naming
+# comments all along the code
+# docstrings describing objects, methods, functions, etc. 
+
+These 3 items are part of a code of conduct you must integrate in your workflow.
+It is not only meant for you to adopt good practice but also for other users to get easily acquainted with the different components of your project.
+
+Bear in mind that all the effort you put in writing proper code will be rewarded when building your project documentation!
+
+@@todo refer to documentation section
+
+!!!! Make your project easy to install
+
+At the root of your project directory you can create a setup.py file.
+This file collects the main information: name, version, description, url of the project.
+But even more importantly it contains the list of dependencies your project is built on e.g. numpy, matplotlib, cvxopt, ect.
+
+[[[language=bash
+$ git clone https://github.com/user_name/project_name.git
+$ cd project_name
+$ pip install . 
+]]]
+
+Next, you must certify that your project can be installed and run by users having potentially different configurations e.g. Linux/OSX.
+
+!!!! Certify your project runs
+
+Installation and testing can be automated using a *@continuous_integration* tool e.g. *Travis>https://travis-ci.com/* *Jenkins>https://jenkins.io/*. 
+
+Here we propose to use *Travis>https://docs.travis-ci.com/user/getting-started/*
+
+At the root of your project directory you can create a .travis.yml file
+In this file you instanciate a matrix os/python version
+
+@@note Troubles with OSX, must install python by hand
+
+You can add a badges linking to the last Travis build and showing if it passed or not.
+
++Adding the Travis badge>figures/travis_badge.png|label=travis_badge+
+
+!!! Putting it all together: a reproducible paper
+
+!!! Excercises (Guille 0%)
