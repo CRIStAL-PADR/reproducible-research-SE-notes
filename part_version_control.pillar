@@ -1,5 +1,6 @@
 ${inputFile:version_control.pillar}$
 ${inputFile:git_basics.pillar}$
 ${inputFile:git_practical.pillar}$
+${inputFile:git_good_practices.pillar}$
 ${inputFile:git_advanced.pillar}$
 ${inputFile:workflows.pillar}$
