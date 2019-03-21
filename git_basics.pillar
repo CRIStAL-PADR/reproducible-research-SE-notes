@@ -5,7 +5,7 @@ We first start by setting up a repository in a remote server and then load it in
 We then show how we can inspect the state of our repository and save our files into it.
 Once our changes are saved, we show how we can push our changes to our remote repository in a distant server.
 
-This chapter will assume you have Git already installed in your machine, and that you're using a *nix operating system.
+This chapter will assume you have Git already installed in your machine, and that you're using a \*nix operating system.
 For users of other systems such as Windows, an appendix at the end will give some details on different setups and installation procedures.
 Moreover, you will see that we will approach Git with the ''command-line''.
 Don't be affraid if you've never used it before, it is not as difficult as it may seem and you will get used to it.
@@ -14,40 +14,57 @@ Also, we promise you that everything you learn in here can be applied to, and wi
 
 !!! Creating a Repository
 
-A Git repository is a store where we will save changes.
-Changes are saved incrementally and all our history of changes in maintained in it.
+A Git repository is a store of files and directories.
+The big difference between a Git repository and a simple filesystem is that the changes we make are stored as events, like a timeline (Figure *@history_versions*).
+Git not only stores such a timeline but also allows us to query it, undo some of its changes, and so on.
 
-To create a repository, the easiest way is to create it in an online hosting service such as GitHub or GitLab.
-Once you have an account and log into it, get yourself to the ''New Repository'' action, within the menu using the ==+== symbol.
++A Repository as a timeline of changes>figures/history-versions.pdf|label=history_versions+
+
+Before working with such a history/repository we need to set it up.
+Fortunately, setting up a Git repository is much lightweight than setting up a database repository.
+Though there are many different ways to create a Git repository, we will start with a simple solution to be up and running as fast as possible. We will study other ways to setup repositories in Chapter *@expert_git*.
+
+Let's proceed to create a repository in an online hosting service such as GitHub or GitLab.
+I'll give you some minutes to create an account and log into it.
+Then you're ready to use the ''New Repository'' action, within the menu using the ==\+== symbol.
 Figure *@new_repo_github* shows the kind of form GitHub provides to its users to create a new repository.
-
 
 +Creating a New Repository in Github>figures/new-repository-github.png|label=new_repo_github+
 
-Follow the form and create your repository.
-Once finished, your repository is created, you'll be redirected to your repository page.
+Following the form/wizard will eventually get you a running repository on-line.
+You will be most probably then redirected to your repository page.
 Figure *@repository_page* shows how such a page looks in GitHub.
 
 +A Repository Page for a project called ""test"" in GitHub>figures/GitHub_repository_page.png|label=repository_page+
 
-We are already set to work from the command line now.
+We are almost set to work from the command line now.
+However, we need to set-up our mind around a couple of extra concepts.
+The repository we just created does not exist in our machine.
+Actually, it is stored in some server maintained by github/gitlab.
+To interact with this repository we will need a network connection.
+We will call this repository, living in a remote server, a ""remote repository"".
 
 !!! ==git clone==
 @cloning
 
 Git, constrastingly to other VCSs, is a distributed VCS.
-This means that you work not only against the remote repository but also you can work locally.
-To support that, Git makes a ""local copy"" of the repository in your machine.
-To create such a copy, the easiest way is to use the ==git clone [url]== command.
+This has a lot of consequences in the way we work, that we will study in detail in Chapter *@expert_git*.
+For now, you will have to remember only one thing: instead of being connected all the time to our remote repository, we will copy the repository we just created in our machine.
+Then we can work against our copy in the repository.
+Eventually, we will synchronize the state between our local repository with the remote one.
+This is what makes possible the disconnected or off-line workflow that people often praise in Git.
 
-Git support different kind of urls, the most known being SSH and HTTPS urls.
-We will use in this chapter HTTPS urls because they have an easier setup, but for those readers that are curious, Section *@sshvshttps* compares SSH and HTTPS and Section *@setupssh* shows how to setup your SSH environment.
+Making a local copy of a remote repository is such a common task that git has a dedicated command for it, the ==git clone [url]== command.
+The ==git clone== command receives as argument the url of our repository, that we can get from our repository page.
+You will see that your repository page will offer you different url options, the most used being SSH and HTTPS urls.
+We will use in this chapter HTTPS urls because they have an easier setup, but for those readers that are curious, Section *@sshvshttps* compares SSH and HTTPS, and Section *@setupssh* shows how to setup your SSH environment.
 
 To obtain the HTTPS url of your repository, go to your repository's page and look for it under the clone/HTTPS options.
 As an example, Figure *@HTTPS_GitHub* illustrates how to get such url from a GitHub project page.
-Copy that url and use it in your command line as first argument of your ==git clone== as in:
 
 +Getting the HTTPS url of your repository from GitHub>figures/HTTPS_url_GitHub.png|width=90|label=HTTPS_GitHub+
+
+Copy that url and use type your command as in:
 
 [[[language=bash
 $ git clone [url]
@@ -60,21 +77,32 @@ Resolving deltas: 100% (4063/4063), done.
 Checking connectivity... done.
 ]]]
 
-When this command finishes, we see it created a directory named as your repository (your_repo_name).
-This directory, also called the ""working directory"", is where we will work and interact with our repository.
-In other words, all files in this directory are the files that are managed by (and thus stored on) the repository.
-Moreover, it is inside this directory that you will issue your Git commands to work.
+When the command finishes, Git is done creating a directory named as your repository (your_repo_name).
+We will call this directory the ""working directory"" as it is where we will work and interact with our repository.
+The working directory, with all the files and directories it contains, is managed git and linked to our repository.
+Do not worry, there is nothing else you need to do to keep this link, Git will automatically track your changes for you.
+
 You are now ready to go and start working on your project.
 
-!!! ==git status==
+!!! Making Changes: How does Git manage my history?
 
-After some time working, we end up with a couple of new files with some contents on it: ''e.g.,'' a README.md file with some explanations and a txt file with some project information in it.
-We can check our advance using the command line commands ==ls== that lists existing files and ==cat== that outputs the contents of the file to the terminal.
+Let's now dive in our working directory and start making changes to it.
+I'll for example create a file called ==project.txt==, then open it with a text editor and add some lines to it.
+
+[[[language=bash
+$ cd your_project_name
+$ touch project.txt
+...
+]]]
+
+After some time working, I can use the ==ls== command to check the files in my directory.
 
 [[[language=bash
 $ ls
 project.txt README.md
 ]]]
+
+And then the ==cat== command to check their contents from the command line.
 
 [[[
 $ cat project.txt
@@ -96,10 +124,31 @@ This project is an example Git repository used to learn Git.
 Check the project.txt file for information about pending tasks.
 ]]]
 
-There is something else we can know at this stage: What does Git know about these files?
+Basically, we have modified some files, but we have done no Git at all.
+What does Git know about these files at this point?
+
+!!!! Git does nothing without your permission
+
+A new important thing to grasp about Git at this point is that it will do nothing until we explicitly ask it to do it.
+In this sense, Git is not any kind of repository but a transactional repository.
+All changes we do in our working directory are not stored by git automatically.
+Instead, we need to explicitly store them using a ==commit== command, as we do with transactional database to store any data.
+
+The transactional aspect means also that:
+- while we do not commit, we can easily rollback our changes
+- on the other side of the coin, until we commit we may lose our changes
+
+We will see more of this ''explicitness'' applied in other cases throghover these chapters.
+Sometimes it may seem that Git is just dumb, and that it cannot guess what we want to do when it is obvious.
+However, the case is that Git has so many possibilities that not guessing is the healthier decision in most cases.
+Specially when considering destructive operations that may make you lose hours of work.
+
+!!!! ==git status==
+
+We can then turn our question around: Does Git know something about these files?
 Git indeed tracks our files to know what should be saved and what should not.
 We can use this information to see what are actually the changes that happened while we were working.
-To obtain such information from Git, we should use the ==git status== command:
+The ==git status== command produces a list of the current changes.
 
 [[[language=bash
 $ git status
@@ -118,8 +167,13 @@ Untracked files:
 no changes added to commit (use "git add" and/or "git commit -a")
 ]]]
 
-Git tells us that the file ==README.md== is modified and that it does not yet know ==project.txt==, it is untracked.
-It also tells us that no changes were added to commit and that we need to do a ==git add== to track them.
+Reading the output of ==git status== we can see that it lists several things:
+- ""Changes not staged for commit."" Lists the modified files that Git already knows.
+- ""Untracked Files."" Lists the files that are in the working directory but were never added under the control of Git.
+
+Also, ==git status== shows some hints about possible commands that we may use next such as ==git add== or ==git checkout==.
+
+!!!! Git and directories
 
 !!! ==git commit==
 

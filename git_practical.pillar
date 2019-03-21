@@ -99,7 +99,7 @@ $ git reset --hard <commit_id>
 $ git clean -df
 ]]]
 
-The ==-d== option removes untracked directories in addition to untracked files, while the  ==-f== option is a shortcut ==--force==, forcing the corresponding deletions.
+The ==\-d== option removes untracked directories in addition to untracked files, while the  ==\-f== option is a shortcut ==\-\-force==, forcing the corresponding deletions.
 
 The reason for needing two commands instead of one relies on the fact that Git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in Git's documentation.
 
