@@ -84,7 +84,7 @@ Do not worry, there is nothing else you need to do to keep this link, Git will a
 
 You are now ready to go and start working on your project.
 
-!!! Making Changes: How does Git manage my history?
+!!! Making Changes: How does Git track my changes?
 
 Let's now dive in our working directory and start making changes to it.
 I'll for example create a file called ==project.txt==, then open it with a text editor and add some lines to it.
@@ -136,7 +136,7 @@ Instead, we need to explicitly store them using a ==commit== command, as we do w
 
 The transactional aspect means also that:
 - while we do not commit, we can easily rollback our changes
-- on the other side of the coin, until we commit we may lose our changes
+- the other side of the coin, until we commit all our changes are in a transient state, and we may lose them
 
 We will see more of this ''explicitness'' applied in other cases throghover these chapters.
 Sometimes it may seem that Git is just dumb, and that it cannot guess what we want to do when it is obvious.
@@ -175,21 +175,63 @@ Also, ==git status== shows some hints about possible commands that we may use ne
 
 !!!! Git and directories
 
-!!! ==git commit==
+You may have observed a curious behaviour with directories.
+If you create an empty directory and then use the ==git status== command, you'll notice the directory is not listed at all.
+It even looks like the directory is being completely ignored.
+For example, if we try adding an empty directory into a new repository Git will actually say ''working tree clean'' as if there were no changes at all.
+
+[[[language=bash
+$ mkdir emptyDirectory
+$ git status
+On branch master
+nothing to commit, working tree clean
+]]]
+
+Indeed, Git does not manage empty directories but only files.
+Directories are only modelled as paths to get to files.
+No extra information is tracked for them.
+In other words, we cannot just store directories into Git.
+And in case we want to do it for some reason, we need to put files into them.
+
+!!! Commiting your changes
 
 We would like now to save our changes in our Git repository.
 This way, if anything happens, we can always recover our work up to this point.
-Saving our work in the repository is called a ""commit"".
-However, before committing our changes, we need to make Git ""track"" them.
+We have said before that the operation of saving our work in the repository is called a ""commit"".
+If we try the ==git commit== command we will see this is not as direct as expected.
+
+[[[language=bash
+$git commit
+On branch master
+
+Initial commit
+
+Untracked files:
+	README.md
+	project.txt
+
+nothing added to commit but untracked files present
+]]]
+
+If we read Git's message, we will notice that though it has correctly we have new files, he is asking us to ''add'' them to commit.
+
+!!!! The Groceries Metaphore
 
 To make it simple, you can see this whole tracking story as going to the supermarket.
-If you want to buy something from the supermarket, you have take whatever you want first and put it in your basket.
-Then, you go to the cashier, you pay and take your things home.
-Now imagine that passing through the cashier to pay is equivalent to do a commit command.
-This means that first you need to add stuff to your c!
+Imagine you make your grocery list and go to the supermarket.
+To get our groceries and take them home, we need first to go look for them, put them in our shopping cart, and then go and pay for them.
+An extra services may propose to take your grocery list and do the groceries for you.
+But such extra service may be charged extra and takes out some control from you (and can \-\-and will!\-\- make mistakes!).
 
-Tracking changes for commit (''i.e.,'' adding stuff to your bag) is done through the ==git add [file]== command.
-Let's proceed to track those changes and see what is the status of our repository afterwards.
+Same same, Git committing all changes is not its default behavior.
+Partly because Git's philosophy is to ask the user explicitly what to do, which in this case is translated to asking what to commit.
+Instead, Git requires us to add the files we want to commit to a list of ''added'' files, also called in Git terminology the ''staging area'', and equivalent to your shopping cart.
+Once our staging area is full with the changes we want to commit, we need to pay for those changes using the ==git commit== command.
+
+
+!!!! A First Commit
+Adding changes to your staging area is done through the ==git add [file]== command.
+Let's proceed to add our changes and see what is the status of our repository afterwards.
 
 [[[language=bash
 $ git add README.md
@@ -203,9 +245,9 @@ Changes to be committed:
 	new file:   project.txt
 ]]]
 
-Now Git says that our two new files will be committed.
-Let's now proceed to commit to save our changes in the repository.
-We can do that by using the ==git commit -m \"[message]\"== command:
+Now Git says that our two new files are listed as \"to be committed\".
+Let's now proceed to save our changes in the repository with the ==git commit -m \"[message]\"== command.
+The ''message'' used as argument of this command is a piece of text that we can use to explain the contents of the changes, or the intention of our changes.
 
 [[[language=bash
 $ git commit -m "first version"
@@ -223,7 +265,10 @@ On branch master
 nothing to commit, working directory clean
 ]]]
 
-If we repeat the process and we change one of our existent files, we will see something interesting:
+!!!! Add then Commit, all over again
+
+If we repeat the process and we change one of our existing files, we will see something interesting.
+Commiting our changes in a file we added before requires that we do a ==git add [file]== and ==git commit== again on the same file, even if Git already knew about it.
 
 [[[
 $ cat project.txt
@@ -249,9 +294,8 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ]]]
 
-Indeed, changing again the file requires that we do a ==git add [file]== and ==git commit== again on the same file, even if Git already knew about it.
-This is because Git will ask us to explicitly track ""every change"" we do.
-So we will need to repeat the same operation of before.
+This is because even if in the surface Git seems to manage files, it actually manages ''changes'' in those files.
+Technically speaking, the changes we have done are ''new'' changes, so we have to tell Git we are interested in those changes.
 
 [[[language=bash
 $ git add project.txt
