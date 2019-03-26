@@ -307,21 +307,32 @@ $ git commit -m "Commit is not in ToDo anymore"
 !!! Synchronizing with your Remote Repository
 
 So far we have worked only on the local repository residing in our machine.
-This means that mostly all of Git features are available without requiring an internet connection, making it suitable for working off-line (think on working on the train or with a constrained connection!). However, working off-line is a two-edged weapon: all your changes are captive in your machine.
+This means that mostly all of Git features are available without requiring any internet connection, making it suitable for working off-line (think on working on the train or with a constrained connection!).
+However, working off-line is a two-edged weapon: all your changes are also captive in your machine.
 While your changes are in your machine, nobody else can contribute or collaborate to them.
 Moreover, losing your machine would mean losing all your changes too.
 Keeping your changes safe means to synchronize them from time to time with your remote repository.
 
-!!!! ==git pull==
+Git's metaphore for remote synchronization is based on the ideas of ''pulling'' and ''pushing'' changes between repositories.
+Git makes us situate ourselves in our local repository.
+We bring other's changes by pulling them from remote repositories to our local repository.
+We send our changes by pushing them from our local repositories to one or many remote repositories.
+
+
+
+
+!!!! Getting Remote Changes with ==git pull==
 @pulling_basic
 
 Before being able to share our commits in some external server, we need before to update our repository to avoid them being de-synchronized.
 While you can always try to share your commits by directly pushing (see Section *@pushing*), you will see with experience that Git favors pulling before pushing.
-This is, among others, because in your local repository you can do whatever manipulation you want to solve mistakes and merge conflicts, while you cannot do the same in your remote repository.
+This is, among others, because in your local repository you have complete control to do whatever manipulation you want, what is especially important to solve mistakes and merge conflicts.
+You cannot do the same in your remote repository.
 
-For our example, pulling does not seem really necessary because you are the only person modifying your repository.
-But let's imagine that you have done a modification in this same repository from another machine.
-In that case, you would like to update your existing repository with the changes doing from this other machine.
+In our example pulling does not seem really necessary because you are the only person modifying your repository.
+No new changes happened in the remote repository in the meantime.
+However, let's imagine that you have done a modification in this same repository from another machine or even a different clone in the same machine (which are totally feasible scenarii).
+In that case, you would like to update your local repository with those new changes.
 
 Updating our repository is done through the ==git pull== command.
 Pulling will update our database and then update our files.
@@ -341,14 +352,20 @@ Fast-forward
  create mode 100644 newfile
 ]]]
 
-Three different scenarios can actually happen from a pull operation, which will be studied in detail in Section *@merging*:
+!!!!! A Bit on Merging
+
+We will see in detail in Section *@fetchingandpulling* that ==git pull== performs two different operations: a fetch and a merge.
+The fetch lookups new commits in remote repositories.
+The merge, studied in detail in Section *@merging*, takes the state in the remote repository and your local repository and tries to make a single version of of that. Three different scenarios can actually happen from a pull operation, which will be:
 - ""Fast-forward"": the updates were applied without needing a merge.
 - ""Automatic Merge"": the updates were applied without conflicts. Git had to do a merge commit and will ask you for a commit message.
-- ""Merge Conflict"": the updates could not applied. You need to manually resolve conflicts between your changes and the incoming changes.
+- ""Merge Conflict"": The changes you did and incoming changes affect some common files. In this case Git does not know what version to keep (or even if a mixture is possible) and asks you to solve it manually before doing a new commit.
 
-Fast-forward and automatic merge are the simplest ones to manage since they require almost no manual interaction other than introducing a message.
+Once the merge is resolved, your working copy is updated with the new version of your repository.
+Luckily for us, fast-forward and automatic merges are the simplest and more common ones.
+They require almost no manual interaction other than introducing a message.
 
-!!!! ==git push==
+!!!! Sending your Changes with ==git push==
 @pushing
 
 The final step in our Git journey is to share our changes to the world.
@@ -357,7 +374,7 @@ To push, you need to use the git command ==git push [remote] [remote_branch]==.
 This command will send the commits pointed from your your current branch to the remote [remote] in the branch [remote_branch].
 
 [[[language=bash
-$ git push origin temp
+$ git push origin master
 Counting objects: 3, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (2/2), done.
@@ -369,11 +386,13 @@ To git@github.com:[your_username]/[your_repo_name].git
 
 +Push is an operation that sends commits from your local repository to a remote repository.>figures/push_in_workflow.pdf|width=90|label=push_in_workflow+
 
-To avoid specifying the remote and destination branch on every push (which may be a bit verbose), you can avoid those parameters and rely on Git default values.
-By default the ==git push== operation will try to push to the ""branch's upstream"".
-A branch's upstream is the per-branch configuration saying to which remote/branch pair it should push by default.
+!!!!! A Branch's Upstream
+
+We can omit the destination branch and remote from the command, relying on Git default values.
+By default a ==git push== operation will push to the so called ""branch's upstream"".
+A branch's upstream is a configuration specifying a pair (remote, branch) where we should push by default that branch.
 When we clone a repository, the default branch comes with an already configured upstream.
-We can interrogate Git for the branch's upstreams with the super verbose flag in the branch command, ''i.e.'', ==git branch \-vv==, where we can see for example that our ""master"" branch's upstream is ""origin/master"", while our ""development"" branch has no upstream.
+We can interrogate Git for the branch's upstream with the super verbose flag in the branch command, ''i.e.'', ==git branch \-vv==, where we can see for example that our ""master"" branch's upstream is ""origin/master"", while our ""development"" branch has no upstream.
 
 [[[language=bash
 $ git branch -vv   # doubly verbose!
@@ -381,8 +400,8 @@ $ git branch -vv   # doubly verbose!
   master        f269295 [origin/master] First commit
 ]]]
 
-On the other side, when a branch has no upstream, a push operation will by default fail with a Git error.
-Git will ask us to set an upstream, or otherwise specify a pair remote/branch for each push.
+When a branch has no upstream, a push operation will by default fail with a Git error.
+Git will ask us to set an upstream, or otherwise specify explicitly a pair remote/branch for each push.
 
 [[[language=bash
 $ git push
@@ -399,10 +418,14 @@ Writing objects: 100% (3/3), 271 bytes | 0 bytes/s, done.
 Total 3 (delta 0), reused 0 (delta 0)
 To git@github.com:[your_username]/[your_repo_name].git
    b6dcc3f..f269295  master -> test
-
 ]]]
 
-Finally, another thing may happen while pushing: Git may reject our changes.
+!!!!! Pushes can get Rejected
+
+In some scenarii Git may reject our pushes, so they are not saved to the remote repository.
+In general Git rejectes changes when the remote repository has diverged from ours.
+Of course a rejection may also happen when we don't have write permissions in the remote repository.
+The typical error shows something like the following:
 
 [[[language=bash
 $ git push
@@ -416,11 +439,28 @@ hint: (e.g., 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ]]] 
 
-As the error message says, the remote has changes that we do not have locally, so we need to update our repository first.
-This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
+As the error message says, the remote has changes that we do not have locally.
+In other words, our push has been rejected because otherwise we would have overwritten the remote changes.
+Instead, we need to take the remote changes and ''mix and match'' them with our changes, by applying a pull (Section *@pulling*) and a merge (*@merging*).
+After the pull, our repository will have our outgoing changes, but no more incoming changes, and so our push will not be rejected
 
+!!! Overview
 
-!!! Exercises (Guille 100%)
+In this chapter we have studied the basic operations of Git.
+We have seen that a new repository starts in your local machine with a ==git clone== that creates a working copy directory.
+Changes in our working copy are tracked by Git automatically and we can query the tracking using ==git status==.
+We can then proceed to operate on our changes as illustrated in *@simple_overview*.
+
++Overview of Git basic operations: ==add==, ==commit==, ==pull== and ==push== (\+ extra ==fetch== and ==merge==).>figures/simple_overview.pdf|width=90|label=simple_overview+
+
+We have seen that:
+
+- ==""git add""== tells Git about files to track for commit
+- ==""git commit""== finishes a transaction and stores our changes in a commit
+- ==""git pull""== synchronizes a remote repository with our local repository by doing first a ==fetch== and then a ==merge==. Different merge scenarios may happen, in which some of them cause conflicts that have to be manually resolved.
+- ==""git push""== sends our changes to a remote repository. A push can get rejected
+
+!!! Exercises
 
 # ""Exercise 1"". Create an account in your preferred git repository hosting service, create there a repository and clone it. Then, check its history from the command line. How many commits are there in the repository? __Tip: there is a difference if you checked the "create README.md file" checkbox while creating a repository__.
 

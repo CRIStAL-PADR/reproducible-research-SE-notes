@@ -360,7 +360,7 @@ fatal: No such remote: non_existent
 ]]]
 
 !!!! Update your repository: Fetching and Pulling
-@pulling
+@fetchingandpulling
 
 Before being able to share our commits in some external server, we need before to update our repository to avoid them being out of synchronization.
 While you can always try to share your commits by pushing (see Section *@pushing*), you will see with experience that Git favors pulling before pushing.
