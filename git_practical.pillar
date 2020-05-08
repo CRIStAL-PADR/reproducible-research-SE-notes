@@ -2,6 +2,29 @@
 
 In this chapter we will show some ==git== features that can help you in your daily use of ==git==.
 
+
+!!! Little helpers for your working copy
+
+!!!! Remove Files from the Staging Area
+It may happen that you went too fast and added a file to your staging area (remember the groceries' list) and that you changed your mind and do not want to add it anymore. Your file is not committed so a simple ==reset== will do the job.
+You can either remove single files or everything.
+
+[[[language=bash
+$ git reset HEAD file
+# Or everything
+$ git reset HEAD .
+]]]
+
+
+!!!! Getting back your file as in your local repository
+
+Another common scenario is that you modified a file of your working copy and your realize that it would be better to drop the changes and get back the file that is versioned in your local repository. Simply checkouting again will fix your problem
+
+[[[language=bash
+$ git checkout file
+]]]
+
+
 !!! Exploring the History
 
 !!!! The ==git log== Command
