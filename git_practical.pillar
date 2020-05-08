@@ -1,8 +1,10 @@
 !! Practical Git by Scenarios 
 
+In this chapter we will show some ==git== features that can help you in your daily use of ==git==.
+
 !!! Exploring the History
 
-!!!! The ==git log== command
+!!!! The ==git log== Command
 The commit graphs we have shown so far are not evident at all while when we use the ==git status== command.
 There is however a way to ask Git about them using the ==git log== command.
 
@@ -53,7 +55,7 @@ index e69de29..cad05f1 100644
 That will give us the commit description as in ==git log== plus a (not so readable) diff of the modified files showing the inserted, modified and deleted lines.
 More advanced graphical tools are able to read this description and show a more user-friendly diff.
 
-!!!! Seeing the history graph
+!!!! Accessing the History Graph
 
 Git's log provides a more graphish view on the terminal using some cute ascii art.
 This view can be accesses through the ==git log \-\-graph \-\-oneline \-\-all== command.
@@ -86,9 +88,9 @@ This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*)
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
-!!! Discarding your local changes
+!!! Discarding your Local Changes
 
-It comes the time for every woman/men to make mistakes and want to discard them.
+It comes the time for every woman/man to make mistakes and want to discard them.
 Doing so may be dangerous, since once discarded you will not able to recover your changes.
 It is however possible to instruct Git to do so.
 For it, there are two Git comments that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
@@ -103,9 +105,10 @@ The ==\-d== option removes untracked directories in addition to untracked files,
 
 The reason for needing two commands instead of one relies on the fact that Git has several staging areas (such as the ones used to keep the tracked files), which we usually would like to clean when we discard the repository. Of course, experienced readers may search why they would need both in Git's documentation.
 
-@@todo what about *this>https://stackoverflow.com/a/21718540* ?
+%@@todo what about *this>https://stackoverflow.com/a/21718540* ?
+%stef
 
-!!! Ignoring files (100%)
+!!! Ignoring files
 @gitignore
 
 Many times we will find that we do not want to commit some files that are in our repository's directory. This is mostly the case of generated or automatically downloaded files. For example, imagine you have a C project and some makefiles to compile it, generating a binary library. While it would be good to store the result of compilation from time to time, storing it in a Git repository (or SVN, or Bazar) may be a cause of headaches. First, as you will see in *@expert_git*, this may be a cause for conflicts.
@@ -180,7 +183,7 @@ Follow the instructions in your terminal such as setting the location for your k
 
 Connect yourself to your Github settings (usually https://github.com/settings/profile) and go to the "SSH and GPG keys" menu. Import there the contents of your public key file. You should be now able to use your repository.
 
-!!! Rewriting the history (Guille 100%)
+!!! Rewriting the History 
 
 Many times it happens that we accidentally commit something wrong.
 Maybe we wanted to commit more or less things, maybe a completely different content, or we did a mistake in the commit's message. In these cases, we can rewrite Git's history, e.g, undo our current commit and go back to the previous commit, or rewrite the current commit with some new properties.
@@ -215,7 +218,7 @@ $ git commit --amend
 
 You can use the same trick not only to modify a commit's message but to modify your entire commit. Actually, just adding new things with ==git add== before an ==\-\-amend== will replace the current commit with a new commit merging the previous commit changes with what you just added.
 
-!!! How to overwrite/modify commits (Guillaume 80%)
+!!! How to overwrite/modify commits
 
 WARNING: It is highly not recommended to rewrite the history of a repo especially when part of it has already been pushed to a remote.
 Modifying the history will most likely break the history shared by the different collaborators and you may deal with an inextricable merge conflict.
@@ -298,9 +301,9 @@ eae7846 New
 cca92f1 Even older
 ]]]
 
-@@note The commit id has changed
+Note that  the commit id has changed
 
-!!!! Pushing rewritten history
+!!!! Pushing Rewritten History
 
 As soon as the history we have rewritten was never pushed before, we can continue working normally and pushing our changes then without problems. However, if we have already pushed the commit we want to undo, this means that we are potentially impacting all users of our repository. Because of the problems it can pose to other people, pushing a rewritten history is not a completely favoured by Git. Better said, it is not allowed by default and you'll be warned about it:
 
@@ -327,3 +330,11 @@ Total 0 (delta 0), reused 0 (delta 0)
 To git@github.com:REPOSITORY_OWNER/YOUR_REPOSITORY.git
 + a1713f3...6e0c7bf YOUR_BRANCH -> YOUR_BRANCH (forced update)
 ]]]
+
+!!! Conclusion
+
+This chapter presented some operations that may help you. 
+As a general principle avoid rewriting history because you may lose changes and 
+get into unrecovable state.
+
+
