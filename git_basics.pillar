@@ -72,7 +72,7 @@ As an example, Figure *@HTTPS_GitHub* illustrates how to get such url from a Git
 Copy that url and use type your command as in:
 
 [[[language=bash
-$ ==git== clone [url]
+$ git  clone [url]
 Cloning into '[your_project_name]'...
 remote: Counting objects: 11082, done.
 remote: Compressing objects: 100% (4/4), done.
@@ -156,7 +156,7 @@ We can use this information to see what are actually the changes that happened w
 The ==git status== command produces a list of the current changes.
 
 [[[language=bash
-$ ==git== status
+$ git status
 On branch master
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -187,7 +187,7 @@ For example, if we try adding an empty directory into a new repository ==git== w
 
 [[[language=bash
 $ mkdir emptyDirectory
-$ ==git== status
+$ git status
 On branch master
 nothing to commit, working tree clean
 ]]]
@@ -239,9 +239,9 @@ Adding changes to your staging area is done through the ==git add [file]== comma
 Let's proceed to add our changes and see what is the status of our repository afterwards.
 
 [[[language=bash
-$ ==git== add README.md
-$ ==git== add project.txt
-$ ==git== status
+$ git  add README.md
+$ git  add project.txt
+$ git  status
 On branch master
 Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
@@ -255,7 +255,7 @@ Let's now proceed to save our changes in the repository with the ==git commit -m
 The ''message'' used as argument of this command is a piece of text that we can use to explain the contents of the changes, or the intention of our changes.
 
 [[[language=bash
-$ ==git== commit -m "first version"
+$ git  commit -m "first version"
 [master a93c016] first version
  2 files changed, 12 insertions(+), 1 deletion(-)
  create mode 100644 project.txt
@@ -265,7 +265,7 @@ If we check the status of our repository after the commit is done, we see that i
 There is nothing to commit:
 
 [[[language=bash
-$ ==git== status
+$ git  status
 On branch master
 nothing to commit, working directory clean
 ]]]
@@ -288,7 +288,7 @@ $ cat project.txt
 ]]]
 
 [[[language=bash
-$ ==git== status
+$ git  status
 On branch master
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -303,8 +303,8 @@ This is because even if on the surface ==git== seems to manage files, it actuall
 Technically speaking, the changes we have done are ''new'' changes, so we have to tell ==git== we are interested in those changes.
 
 [[[language=bash
-$ ==git== add project.txt
-$ ==git== commit -m "Commit is not in ToDo anymore"
+$ git  add project.txt
+$ git  commit -m "Commit is not in ToDo anymore"
 [master e14a09f] Commit is not in ToDo anymore
  1 file changed, 1 insertion(+), 1 deletion(-)
 ]]]
@@ -343,7 +343,7 @@ Updating our repository is done through the ==git pull== command.
 Pulling will update our database and then update our files.
 
 [[[language=bash
-$ ==git== pull
+$ git  pull
 remote: Counting objects: 2, done.
 remote: Compressing objects: 100% (1/1), done.
 remote: Total 2 (delta 1), reused 2 (delta 1), pack-reused 0
@@ -379,7 +379,7 @@ To push, you need to use the ==git== command ==git push [remote] [remote_branch]
 This command will send the commits pointed from your your current branch to the remote [remote] in the branch [remote_branch].
 
 [[[language=bash
-$ ==git== push origin master
+$ git  push origin master
 Counting objects: 3, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (2/2), done.
@@ -400,7 +400,7 @@ When we clone a repository, the default branch comes with an already configured 
 We can interrogate ==git== for the branch's upstream with the super verbose flag in the branch command, ''i.e.'', ==git branch \-vv==, where we can see for example that our ""master"" branch's upstream is ""origin/master"", while our ""development"" branch has no upstream.
 
 [[[language=bash
-$ ==git== branch -vv   # doubly verbose!
+$ git  branch -vv   # doubly verbose!
   development   1656797 This commit adds a new feature
   master        f269295 [origin/master] First commit
 ]]]
@@ -409,13 +409,13 @@ When a branch has no upstream, a push operation will by default fail with a ==gi
 Git will ask us to set an upstream, or otherwise specify explicitly a pair remote/branch for each push.
 
 [[[language=bash
-$ ==git== push
+$ git  push
 fatal: The current branch test has no upstream branch.
 To push the current branch and set the remote as upstream, use
 
     ==git== push --set-upstream origin test
 
-$ ==git== push --set-upstream origin test
+$ git  push --set-upstream origin test
 Counting objects: 3, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (2/2), done.
@@ -433,7 +433,7 @@ Of course a rejection may also happen when we don't have write permissions in th
 The typical error shows something like the following:
 
 [[[language=bash
-$ ==git== push
+$ git  push
 To git@github.com:guillep/test.git
  ! [rejected]        master -> master (fetch first)
 error: failed to push some refs to 'git@github.com:[your_username]/[your_repo_name].git'
