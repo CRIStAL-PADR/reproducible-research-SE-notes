@@ -1,15 +1,15 @@
-!! Practical ==git== by Scenarios 
+!! Practical Git Scenarios 
 
 In this chapter we will show some ==git== features that can help you in your daily use of ==git==.
 
 !!! Exploring the History
 
-!!!! The ====git== log== Command
-The commit graphs we have shown so far are not evident at all while when we use the ====git== status== command.
-There is however a way to ask ==git== about them using the ====git== log== command.
+!!!! The ==git log== Command
+The commit graphs we have shown so far are not evident at all while when we use the ==git status== command.
+There is however a way to ask ==git== about them using the ==git log== command.
 
 [[[language=bash
-$ git  log
+$ git log
 commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
 Author: Guille Polito <guillermopolito@gmail.com>
 Date:   Wed Mar 21 15:37:32 2018 +0100
@@ -23,20 +23,20 @@ Date:   Wed Mar 21 14:02:43 2018 +0100
     first version
 ]]]
 
-====git== log== prints the list of commits in order of parenthood.
+==git log== prints the list of commits in order of parenthood.
 The one on the top is the most recent commit, our last commit.
 The one below is its parent, and so on.
 As you can see, each commit has an id, the author name, the timestamp and its message.
 
 To display a more compact version (commit ids + message) of the log use
 [[[language=bash
-==git== log --oneline
+git log --oneline
 ]]]
 
-We can also ask ==git== what are the changes introduced in a particular commit using the command ====git== show==.
+We can also ask ==git== what are the changes introduced in a particular commit using the command ==git show==.
 
 [[[language=bash
-$ git  show 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
+$ git show 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
 commit 0c0e5ff55b56fe8eabc1661a1da64b41f9d74472
 Author: Guille Polito <guillermopolito@gmail.com>
 Date:   Wed Mar 21 15:37:32 2018 +0100
@@ -52,18 +52,18 @@ index e69de29..cad05f1 100644
 \ No newline at end of file
 ]]]
 
-That will give us the commit description as in ====git== log== plus a (not so readable) diff of the modified files showing the inserted, modified and deleted lines.
+That will give us the commit description as in ==git log== plus a (not so readable) diff of the modified files showing the inserted, modified and deleted lines.
 More advanced graphical tools are able to read this description and show a more user-friendly diff.
 
 !!!! Accessing the History Graph
 
 Git's log provides a more graphish view on the terminal using some cute ascii art.
-This view can be accesses through the ====git== log \-\-graph \-\-oneline \-\-all== command.
+This view can be accesses through the ==git log \-\-graph \-\-oneline \-\-all== command.
 Here is an example of this view for a more complex project.
 In this view, stars represent the commits with their ids and commit messages, and lines represent the parenthood relationships.
 
 [[[language=bash
-$ git  log --graph --oneline --all
+$ git log --graph --oneline --all
 * 4eb8446 Documenting
 * e5a3e2e Add tests
 * 680a79a Some other
@@ -88,17 +88,17 @@ This is the case of tools such as SourceTree (Figure *@commit_graph_sourcetree*)
 +Example of SourceTree's commit graph view>figures/sourcetree_tree.png|label=commit_graph_sourcetree+
 +Example of Github's commit graph view>figures/github_network_tree.png|label=commit_graph_github_network+
 
-!!! Discarding your Local Changes
+!!! Discarding your Local Committed Changes
 
 It comes the time for every woman/man to make mistakes and want to discard them.
 Doing so may be dangerous, since once discarded you will not able to recover your changes.
 It is however possible to instruct ==git== to do so.
 For it, there are two ==git== comments that will perform the task for you and when combined they will completely discard every dirty file and directory in your repository:
-====git== reset== and ====git== clean==.
+==git reset== and ==git clean==.
 
 [[[language=bash
-$ git  reset --hard <commit_id>
-$ git  clean -df
+$ git reset --hard <commit_id>
+$ git clean -df
 ]]]
 
 The ==\-d== option removes untracked directories in addition to untracked files, while the  ==\-f== option is a shortcut ==\-\-force==, forcing the corresponding deletions.
@@ -108,7 +108,7 @@ The reason for needing two commands instead of one relies on the fact that ==git
 %@@todo what about *this>https://stackoverflow.com/a/21718540* ?
 %stef
 
-!!! Ignoring files
+!!! Ignoring Files
 @gitignore
 
 Many times we will find that we do not want to commit some files that are in our repository's directory. This is mostly the case of generated or automatically downloaded files. For example, imagine you have a C project and some makefiles to compile it, generating a binary library. While it would be good to store the result of compilation from time to time, storing it in a ==git== repository (or SVN, or Bazar) may be a cause of headaches. First, as you will see in *@expert_git*, this may be a cause for conflicts.
@@ -137,14 +137,14 @@ someignoredfile.txt
 Once your file is ready, you have to add it and commit it to ==git== to make it take effect.
 
 [[[language=bash
-$ git  add .gitignore
-$ git  commit -m "Added gitignore"
+$ git add .gitignore
+$ git commit -m "Added gitignore"
 ]]]
 
-From this moment on, all listed files will be ignored by ====git== add== and ====git== status==. And you will be able to perform further commands to add "all but ignored files":
+From this moment on, all listed files will be ignored by ==git add== and ==git status==. And you will be able to perform further commands to add "all but ignored files":
 
 [[[language=bash
-$ git  add .
+$ git add .
 ]]]
 
 @@note If a file or a file type is tracked but you want ==git== to ignore its changes afterward, adding it to .gitignore file will not make the job i.e. ==git== will continue to track it.
@@ -154,10 +154,10 @@ Nevertheless, be aware that the file is still present in the past history!
 %@@todo Link to *@expert_git_remove_file* to remove a (sensitive) file from history
 %stef
 
-!!! Commiting a file filtered out by the .gitignore
+!!! Commiting a File Filtered out by the .gitignore
 
 For certain workflow, it is better to filter out certain files such as generated pdf but from time to time you may want to version a file that would not be because its extension or folder is listed in the ==.gitignore== file. 
-You can still commit such a such without having to touch the ==.gitignore== file. You can use the ==--force== option of the ==add== command. 
+You can still commit such a such without having to touch the ==.gitignore== file. You can use the ==\-\-force== option of the ==add== command. 
 
 [[[language=bash
 $ git add -f that.pdf
@@ -200,21 +200,21 @@ Connect yourself to your Github settings (usually https://github.com/settings/pr
 Many times it happens that we accidentally commit something wrong.
 Maybe we wanted to commit more or less things, maybe a completely different content, or we did a mistake in the commit's message. In these cases, we can rewrite Git's history, e.g, undo our current commit and go back to the previous commit, or rewrite the current commit with some new properties.
 
-Be careful! Rewriting the history can have severe consequences. Imagine that the commit you want to undo was already pushed. This means that somebody else could have pulled this commit into her/his repository. If we undo this already publised commit, we are making everybody else's repositories obsolete! This can be indeed problematic depending on the number of users the project has, and their knowledge on ==git== to be able to solve this issue.
+Be careful! Rewriting the history can have severe consequences. Imagine that the commit you want to undo was already pushed. This means that somebody else could have pulled this commit into her/his repository. If we undo this already published commit, we are making everybody else's repositories obsolete! This can be indeed problematic depending on the number of users the project has, and their knowledge on ==git== to be able to solve this issue.
 
-!!!! Undo a commit using ====git== reset \-\-hard==
+!!!! Undo a commit using ==git reset \-\-hard==
 
 To undo the last commit, it is as easy as:
 
 [[[language=bash
-$ git  reset --hard HEAD~1
+$ git reset --hard HEAD~1
 ]]]
 
-====git== reset \-\-hard [commitish]== makes your current branch point to [commitish]. ==HEAD== is your current head, and you can read ==~1== as \"minus one\". In other words, ==HEAD~1== is head minus one, which boils down to the parent of head, our previous commit.
+==git reset \-\-hard [commitish]== makes your current branch point to [commitish]. ==HEAD== is your current head, and you can read ==~1== as \"minus one\". In other words, ==HEAD~1== is head minus one, which boils down to the parent of head, our previous commit.
 
 You can use this same trick to rewrite the history in any other way, since you can use any commitish expression to reset. For example, ==HEAD~17== means 17 versions before head, or ==someBranch~4== means four commits before the branch ==someBranch==.
 
-!!!! Update a commit's message using ====git== commit \-\-amend==
+!!!! Update a Commit's Message using ==git commit \-\-amend==
 
 To change our current commit's message you can use the following command:
 
@@ -228,14 +228,14 @@ Or, if you don't use the ==\-m== option, a text editor will be prompt so you can
 $ git  commit --amend
 ]]]
 
-You can use the same trick not only to modify a commit's message but to modify your entire commit. Actually, just adding new things with ====git== add== before an ==\-\-amend== will replace the current commit with a new commit merging the previous commit changes with what you just added.
+You can use the same trick not only to modify a commit's message but to modify your entire commit. Actually, just adding new things with ==git add== before an ==\-\-amend== will replace the current commit with a new commit merging the previous commit changes with what you just added.
 
-!!! How to overwrite/modify commits
+!!! How to Overwrite/Modify Commits
 
 WARNING: It is highly not recommended to rewrite the history of a repo especially when part of it has already been pushed to a remote.
 Modifying the history will most likely break the history shared by the different collaborators and you may deal with an inextricable merge conflict.
 
-!!!! Change the last commit
+!!!! Change the last Commit
 
 Imagine you have just committed your changes and have not pushed them yet, but
 
@@ -334,7 +334,7 @@ With this message ==git== means that you should not blindly overwrite the histor
 Also, it suggests to pull changes from the remote repository.
 However, doing that will bring back to our repository the history we wanted to undo!
 What we want to do is to impose our current (undone) state in the remote repository.
-To do that, we need to ""force"" the push using the ====git== push \-\-force== or the ====git== push \-f== option.
+To do that, we need to ""force"" the push using the ==git push \-\-force== or the ==git push \-f== option.
 
 [[[
 $==git== push -f
