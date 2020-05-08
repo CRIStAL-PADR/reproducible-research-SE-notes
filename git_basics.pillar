@@ -257,7 +257,7 @@ $ ==git== commit -m "first version"
  create mode 100644 project.txt
 ]]]
 
-If we see the status of our repository after the commit we will also see that it has changed.
+If we check the status of our repository after the commit is done, we see that it has changed.
 There is nothing to commit:
 
 [[[language=bash
@@ -295,7 +295,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ]]]
 
-This is because even if in the surface ==git== seems to manage files, it actually manages ''changes'' in those files.
+This is because even if on the surface ==git== seems to manage files, it actually manages ''changes'' to those files.
 Technically speaking, the changes we have done are ''new'' changes, so we have to tell ==git== we are interested in those changes.
 
 [[[language=bash
@@ -309,15 +309,15 @@ $ ==git== commit -m "Commit is not in ToDo anymore"
 
 So far we have worked only on the local repository residing in our machine.
 This means that mostly all of ==git== features are available without requiring any internet connection, making it suitable for working off-line (think on working on the train or with a constrained connection!).
-However, working off-line is a two-edged weapon: all your changes are also captive in your machine.
+However, working off-line is a two-edged sword: all your changes are also captive in your machine.
 While your changes are in your machine, nobody else can contribute or collaborate to them.
 Moreover, losing your machine would mean losing all your changes too.
 Keeping your changes safe means to synchronize them from time to time with your remote repository.
 
-Git's metaphore for remote synchronization is based on the ideas of ''pulling'' and ''pushing'' changes between repositories.
-Git makes us situate ourselves in our local repository.
-We bring other's changes by pulling them from remote repositories to our local repository.
-We send our changes by pushing them from our local repositories to one or many remote repositories.
+	==git=='s metaphore for remote synchronization is based on the ideas of ''pulling'' and ''pushing'' changes between repositories.
+ ==git== takes the perspective that we are located in our local repository.
+We bring other's changes by ''pulling'' them from remote repositories to our local repository.
+We send our changes by ''pushing'' them from our local repositories to one or many remote repositories.
 
 
 
@@ -353,11 +353,11 @@ Fast-forward
  create mode 100644 newfile
 ]]]
 
-!!!!! A Bit on Merging
+!!!! A Bit on Merging
 
 We will see in detail in Section *@fetchingandpulling* that ==git pull== performs two different operations: a fetch and a merge.
 The fetch lookups new commits in remote repositories.
-The merge, studied in detail in Section *@merging*, takes the state in the remote repository and your local repository and tries to make a single version of of that. Three different scenarios can actually happen from a pull operation, which will be:
+The merge, studied in detail in Section *@merging*, takes the state in the remote repository and your local repository and tries to make a single version of of that. Three different scenarii can actually happen from a pull operation, which will be:
 - ""Fast-forward"": the updates were applied without needing a merge.
 - ""Automatic Merge"": the updates were applied without conflicts. ==git== had to do a merge commit and will ask you for a commit message.
 - ""Merge Conflict"": The changes you did and incoming changes affect some common files. In this case ==git== does not know what version to keep (or even if a mixture is possible) and asks you to solve it manually before doing a new commit.
@@ -387,7 +387,7 @@ To git@github.com:[your_username]/[your_repo_name].git
 
 +Push is an operation that sends commits from your local repository to a remote repository.>figures/push_in_workflow.pdf|width=90|label=push_in_workflow+
 
-!!!!! A Branch's Upstream
+!!!! A Branch's Upstream
 
 We can omit the destination branch and remote from the command, relying on ==git== default values.
 By default a ==git push== operation will push to the so called ""branch's upstream"".
