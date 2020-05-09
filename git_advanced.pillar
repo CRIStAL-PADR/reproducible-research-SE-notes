@@ -1,32 +1,32 @@
-!! Expert Git
+!! Understanding Git
 @expert_git
 
-!!! Some Git Internals
-
 Before going on with the reproducibility concerns that brought you here to read this chapter and even before continuing with practical Git commands, we will dive a bit into Git concepts.
+
+!!! Some Git Internals
 Understanding a bit how Git works is useful when doing some more complicated stuff such as merging and branching.
 If you already know what is a Git commit, a Git reference and how the graph of Git objects is managed, you can skip this section.
 
 !!!! Dissecting a Git Repository
 
 Before starting explaining what is a commit, what is a branch, and so on, let's start easy by understanding the parts that compose our Git repository.
-When you create a Git repository as we did in the last section, or you clone an old repository that already has some files in it, you will find that there is more than meets the eye. A Git repository has usually three core collaborating components: the working copy, the repository, and the remotes. You can see an schematics on Figure *@repository_structure*.
+When you create a Git repository as we did in the last section, or you clone an old repository that already has some files in it, you will find that there is more than meets the eye. A Git repository has usually three core collaborating components: the ""working copy"", the ""repository"", and the ""remote"" repositories. You can see an schematics on Figure *@repository_structure*.
 
-+Git repository structure>figures/repository-structure.pdf|width=90|label=repository_structure+
++Git repository structure:  the working copy, the repository, and the remote repositories.>figures/repository-structure.pdf|width=90|label=repository_structure+
 
 What you usually see in your disk when you clone is not actually the Git repository but the ""working copy"".
 The working copy is the directory where your files are, where you work and apply modifications.
 It is called a working ""copy"" because what you see is actually a copy of what is in the repository.
-The working copy is a write-able copy: you can freely modify it, break it, add new things or remove things.
+The working copy is a write-able copy: you can freely modify it, break it, add new things or remove them.
 
-Actually, you can do whatever change you want in your working copy, that Git will not take it into account, at least not automatically.
+Actually, you can do whatever change you want in your working copy: Git will not take it into account, at least not automatically.
 Once your changes are ready, you have to commit them into your repository to store them in your repository.
 A commit will take your changes, freeze them, and store them in the local database.
 Just for the curious ones, the local database (also known as ""the BLOB"" in the Git jargon) is stored inside your working copy, in a hidden directory called "".git"".
 
 The commits you create from your changes live only inside your machine by default.
-If you want to share your commits with others, or to import commits from some fellow colleague, you have to interact with a remote repository (also called just remote).
-A remote is a distant Git repository that you will synchronize with your local one from time to time (this is where the famous pull and push come into play!).
+If you want to share your commits with others, or to import commits from some fellow colleague, you have to interact with a remote repository (also called just ""remote"").
+A remote is a distant Git repository that you will synchronize with your local one from time to time. This is where the famous pull and push come into play!.
 
 Of course, this is an utterly simplified scenario.
 You could have a repository without a working copy.
@@ -41,16 +41,16 @@ That's what we call a ""commit"".
 
 From this perspective, a Git repository works as a transactional database.
 You are working on the changes of your disk, but they will not be effectively applied until you finish your transaction.
-Finishing your transaction is done, as in the database world, using the ""commit"" command.
+Doing your transaction is performed, as in the database world, using the ""commit"" command.
 The result of this transaction is to create a new commit object in the Git repository.
 This commit object will contain an id (usually a hash such as ==7ba52e5==) plus all changes we wanted to apply.
 
 Git will store your last changes but also remember the entire history of changes you did.
 It keeps a list of all changes you did so you can do some nice stuff like for example:
 
-- come back in time to recover some old change
-- trace the changes in a file to see who (and why!) did a change
-- analyze your repository and do some archeology, to see how your project evolved
+- come back in time to recover some old changes,
+- trace the changes in a file to see who (and why!) did a change, or
+- analyze your repository and do some archeology, to see how your project evolved.
 
 !!!! It's a just graph of commits
 
@@ -79,8 +79,8 @@ You probably noticed that referring to commits by their id is awkward.
 Commit ids are generated automatically as hashes that avoid duplications as much as possible.
 However, they are not handy to work on a daily basis since they are hard to remember and type.
 
-To solve this, Git provides a second kind of objects: Git references.
-A Git reference is like a label that you put on a commit, to be able to identify that commit by a much much simpler name afterwards.
+To solve this, Git provides a second kind of objects: Git ""references"".
+A Git reference is like a label that you put on a commit, to be able to identify that commit by a much simpler name afterwards.
 For example, you can name a commit as ""release 1.0"" or you can name it as ""current development commit"".
 
 +Git references>figures/references.pdf|width=80|label=references+
@@ -96,10 +96,10 @@ Now that you have built some strong conceptual Git muscles, we can continue in t
 Do not hesitate to come back to these sections to refresh some of the basics.
 As with any sport or discipline, understanding and practicing the basics is really important, since everything else is based on them.
 
-!!!! Remove a file from history 
-@expert_git_remove_file
-
-Remove a (sensitive) file from history ==git filter-branch ...== ?
+%!!!! Remove a file from history 
+%@expert_git_remove_file
+%Remove a (sensitive) file from history ==git filter-branch ...== ?
+%stef: to me this is not at the same level and not complete so just commented
 
 !!! Detached HEAD
 
