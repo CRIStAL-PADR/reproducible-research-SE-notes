@@ -276,7 +276,141 @@ $ git add conflicting.txt
 $ git commit -m "Resolve conflict"
 ]]]
 
-!!! Interacting with Remote Repositories
+
+
+!!! Commit in workflow
+
+Commiting means that we are going to move some content from our working copy to our local repository, as it is shown in Figure *@commit_in_workflow*.
+
++Commit is an operation that stores things from your working copy into your local repository>figures/commit_in_workflow.pdf|width=90|label=commit_in_workflow+
+
+
+What the commit command is doing behind is to create a new node in our history graph.
+Moreover, it will update the master branch label to point to this new commit.
+The commit graph in this case will look as in Figure *@commit_graph_1*.
+
++History graph after our first commit>figures/commit_graph_1.pdf|width=65|label=commit_graph_1+
+
+If we repeat the process, i.e., we apply a change to one of our files, add and commit our commit graph will change again.
+A new commit with a new commit id will be created having as parent our previous commit.
+The master branch label will be updated and point to this new commit.
+The commit graph in this case will look as in Figure *@commit_graph_2*.
+Notice how our old commit is still there, but it's accessible as the parent of our new commit.
+
+[[[language=bash
+$ git add README.md
+$ git commit -m "Adding a title"
+[master 0c0e5ff] Adding a title
+ 1 file changed, 1 insertion(+)
+]]]
+
++History graph after our second commit>figures/commit_graph_2.pdf|width=65|label=commit_graph_2+
+
+
+!!! Creating new history lines with branches
+
+Branches in ==git== represent different histories.
+As in one of science fiction time-travel theories, ==git== branching is equivalent to take one moment in time have several alternative time-lines from there.
+Figure *@Branches* illustrates the idea, showing that you can have two different futures from commit ==0c0e5ff==.
+
++History lines can be branched from a commit>figures/branches.pdf|width=65|label=Branches+
+
+By default, a ==git== repository will include a single branch, called ""master"". Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
+You can ask ==git== for the branches in the repository using the command ==git branch -v==.
+
+[[[language=bash
+$ git branch -v
+* master  0c0e5ff Adding a title
+]]]
+
+This command shows all branches in the repository, one per line.
+Then, for each branch it shows what commit it points, and the comment on that commit.
+
+!!!! Creating a new branch
+
+To create a new branch, we can use the command ==git branch [branch_name]== giving as argument the new branch name.
+This will create a new branch from our current commit, the one that can be resolved from ==HEAD==.
+Figure *@new_branch* shows what happens in the graph view.
+
+[[[language=bash
+$ git branch development
+]]]
+
++A new branch points by default to the same commit as the current branch>figures/new_branch.pdf|width=65|label=new_branch+
+
+However, as we see in the graph view, creating a new branch does not modify ==HEAD==.
+Indeed, our current branch/commit did not move.
+We will observe the same in the command line, if we ask the list of branches.
+The branch master is marked with a star, indicating it is the actual branch.
+And both branches point to the same commit.
+
+[[[language=bash
+$ git branch -v
+* master      0c0e5ff Adding a title
+  development 0c0e5ff Adding a title
+]]]
+
+To start working on our new branch, we just need to use the same ==checkout== command we used for tags.
+
+[[[language=bash
+$ git checkout development
+Switched to branch 'development'
+]]]
+
+Or alternatively, we could have created our branch using the ==checkout -b== command, which performs a ==git branch== and a ==git checkout== one after the other.
+Useful since these operations are usually done together most of the time.
+
+[[[language=bash
+# Instead of branch and then checkout
+$ git checkout -b development
+Switched to branch 'development'
+]]]
+
+Then, doing some work and creating a commit will only modify our current branch and leave ==master== as it was before.
+
+[[[language=bash
+$ touch somefile
+$ git add somefile
+$ git commit -m "added somefile"
+[development b894b84] added somefile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 somefile
+$ git branch -v
+   master      0c0e5ff Adding a title
+ * development b894b84 added somefile
+]]]
+
+!!!! Diverging history
+
+Now that we have done some work in a branch, we can make our branches diverge.
+We only need to checkout another branch, existing or new, and start working from there.
+
+[[[language=bash
+$ git checkout master
+Switched to branch 'master'
+$ touch someotherfile
+$ git add someotherfile
+$ git commit -m "added someotherfile"
+[master dc4a3e7] added someotherfile
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 someotherfile
+$ git branch -v
+ * master      dc4a3e7 added someotherfile
+   development b894b84 added somefile
+]]]
+
+This change will create two different history lines, as shown in Figure *@Branches2*.
+One history line represented by the ==master== branch, and another history line represented by the ==development== branch.
+
++Divergent history>figures/branches.pdf|width=65|label=Branches2+
+
+
+
+
+!!! Interacting with Remote Repositories[Duplication ]
+
+@@note for guille there are some duplication. I moved the two sections one after the other to be able to remove the duplication.
+
 So far we have worked only on the repository that resides locally in our machine.
 This means that mostly all of ==git== features are available without requiring an internet connection, making it suitable for working off-line. However, working off-line is a two-edged sword: all your changes are captive in your machine.
 While your changes are in your machine, nobody else can contribute or collaborate to them.
@@ -288,7 +422,7 @@ This could be, for example, in your company's or university's server, the cloud,
 
 In this section we will see how to interact with remotes, how to configure them, and how to synchronize our local repository with them.
 
-!!!! ==git== Remotes
+!!!! ==git== Remotes [Not Duplicated]
 
 A ==git== remote is a ==git== server that is hosted in some machine other than ours.
 Usually, a remote will be hosted by some company like GitHub or GitLab, but it can be hosted also within our own company/university/research laboratory.
@@ -317,7 +451,7 @@ This first means that ==git== allows us to assign a name to avoid using urls all
 In addition, we can see that ==git== differentiates remotes used for ""fetch""ing from those used for ""push""ing.
 Those differences are important for more advanced git configuration, that we will not cover in this chapter.
 
-!!!! Adding and Removing Remotes
+!!!! Adding and Removing Remotes  [Not Duplicated]
 
 For advanced scenarios, when we need more than the default ""origin"" remote, we will need to use different remotes.
 All git commands interacting with a remote repository will have a variant accepting a remote repository as argument, as we will see later.
@@ -490,138 +624,14 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 As the error message says, the remote has changes that we do not have locally, so we need to update our repository first.
 This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
 
-!!! SSH or HTTP access? (0% Ayoub)
-@sshvshttps
+%!!! SSH or HTTP access? (0% Ayoub)
+%@sshvshttps
+%
+%https://serverfault.com/questions/430059/what-are-the-pros-and-cons-of-ssh-and-http-for-a-git-server
+%
+%https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh
+%stef incomplete -> commented
 
-https://serverfault.com/questions/430059/what-are-the-pros-and-cons-of-ssh-and-http-for-a-git-server
-
-https://stackoverflow.com/questions/11041729/why-does-github-recommend-https-over-ssh
-
-!!! Commit in workflow
-
- and it basically means that we are going to move some content from our working copy to our local repository, as it is shown in Figure *@commit_in_workflow*.
-
-+Commit is an operation that stores things from your working copy into your local repository>figures/commit_in_workflow.pdf|width=90|label=commit_in_workflow+
-
-
-What the commit command is doing behind is to create a new node in our history graph.
-Moreover, it will update the master branch label to point to this new commit.
-The commit graph in this case will look as in Figure *@commit_graph_1*.
-
-+History graph after our first commit>figures/commit_graph_1.pdf|width=65|label=commit_graph_1+
-
-If we repeat the process, i.e. we apply a change to one of our files, add and commit our commit graph will change again.
-A new commit with a new commit id will be created having as parent our previous commit.
-The master branch label will be updated and point to this new commit.
-The commit graph in this case will look as in Figure *@commit_graph_2*
-Notice how our old commit is still there, but he's accessible as the parent of our new commit.
-
-[[[language=bash
-$ git add README.md
-$ git commit -m "Adding a title"
-[master 0c0e5ff] Adding a title
- 1 file changed, 1 insertion(+)
-]]]
-
-+History graph after our second commit>figures/commit_graph_2.pdf|width=65|label=commit_graph_2+
-
-
-!!! Creating new history lines with branches
-
-Branches in ==git== represent different histories.
-As in one of science fiction time-travel theories, ==git== branching is equivalent to take one moment in time have several alternative time-lines from there.
-Figure *@Branches* illustrates the idea, showing that you can have two different futures from commit _0c0e5ff_.
-
-+History lines can be branched from a commit>figures/branches.pdf|width=65|label=Branches+
-
-By default, a ==git== repository will include a single branch, called ""master"". Most people only need a single branch to work. However, it may be useful to split work in several branches as we will see later.
-You can ask ==git== for the branches in the repository using the command ==git branch -v==.
-
-[[[language=bash
-$ git branch -v
-* master  0c0e5ff Adding a title
-]]]
-
-This command shows all branches in the repository, one per line.
-Then, for each branch it shows what commit it points, and the comment on that commit.
-
-!!!! Creating a new branch
-
-To create a new branch, we can use the command ==git branch [branch_name]== giving as argument the new branch name.
-This will create a new branch from our current commit, the one that can be resolved from HEAD.
-Figure *@new_branch* shows what happens in the graph view.
-
-[[[language=bash
-$ git branch development
-]]]
-
-+A new branch points by default to the same commit as the current branch>figures/new_branch.pdf|width=65|label=new_branch+
-
-However, as we see in the graph view, creating a new branch does not modify HEAD.
-Indeed, our current branch/commit did not move.
-We will observe the same in the command line, if we ask the list of branches.
-The branch master is marked with a star, indicating it is the actual branch.
-And both branches point to the same commit.
-
-[[[language=bash
-$ git branch -v
-* master      0c0e5ff Adding a title
-  development 0c0e5ff Adding a title
-]]]
-
-To start working on our new branch, we just need to use the same ==checkout== command we used for tags.
-
-[[[language=bash
-$ git checkout development
-Switched to branch 'development'
-]]]
-
-Or alternatively, we could have created our branch using the ==checkout -b== command, which performs a ==git branch== and a ==git checkout== one after the other.
-Useful since these operations are usually done together most of the time.
-
-[[[language=bash
-# Instead of branch and then checkout
-$ git checkout -b development
-Switched to branch 'development'
-]]]
-
-Then, doing some work and creating a commit will only modify our current branch and leave ==master== as it was before.
-
-[[[language=bash
-$ touch somefile
-$ git add somefile
-$ git commit -m "added somefile"
-[development b894b84] added somefile
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 somefile
-$ git branch -v
-   master      0c0e5ff Adding a title
- * development b894b84 added somefile
-]]]
-
-!!!! Diverging history
-
-Now that we have done some work in a branch, we can make our branches diverge.
-We only need to checkout another branch, existing or new, and start working from there.
-
-[[[language=bash
-$ git checkout master
-Switched to branch 'master'
-$ touch someotherfile
-$ git add someotherfile
-$ git commit -m "added someotherfile"
-[master dc4a3e7] added someotherfile
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 someotherfile
-$ git branch -v
- * master      dc4a3e7 added someotherfile
-   development b894b84 added somefile
-]]]
-
-This change will create two diffent history lines, as shown in Figure *@Branches2*.
-One history line represented by the ==master== branch, and another history line represented by the ==development== branch.
-
-+Divergent history>figures/branches.pdf|width=65|label=Branches2+
 
 !!! Interacting with Remote Repositories
 
@@ -636,7 +646,7 @@ This could be, for example, in your company's or university's server, the cloud,
 
 In this section we will see how to interact with remotes, how to configure them, and how to synchronize our local repository with them.
 
-!!!! Update your repository: Fetching and Pulling
+!!!! Update your repository: Fetching and Pulling [Duplicated]
 @pulling
 
 Before being able to share our commits in some external server, we need before to update our repository to avoid them being out of synchronization.
@@ -690,7 +700,7 @@ $ git merge [remote_name]/master
 These both operations could have been replaced by a ==git pull [remote_name] [branch_name]== command.
 Pulling will fetch all commits from the branch named [branch_name] in the remote [remote_name] and then merge those commits with your current branch.
 
-!!!! Share your commits: Pushing
+!!!! Share your commits: Pushing [Duplicated]
 @pushing
 
 The final step in our ==git== journey is to share our changes to the world.
@@ -761,7 +771,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 As the error message says, the remote has changes that we do not have locally, so we need to update our repository first.
 This can be solved with a pull (Section *@pulling*) and a merge (*@merging*)
 
-!!! Exercises (Guille 100%)
+!!! Exercises
 
 # ""Exercise 1"". Get a repository with many commits and checkout the parent of the current commit. This will put you in "Detached HEAD" state. Solve it using a new branch.
 
