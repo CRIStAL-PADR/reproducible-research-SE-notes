@@ -3,8 +3,8 @@
 In this chapter we will show some ==git== features that can help you in your daily use of ==git==.
 
 
-!!! Little helpers for your working copy
-You may add to fast a file to your staging area or index. Or you may want to discard the changes you did to your working copy. The two problems can be handled as follows. 
+!!! Before commit little helpers
+You may add too fast a file to your staging area or index. Or you may want to discard the changes you did to your working copy to get back in the situation where no changes were made. The two problems can be handled as follows. 
 
 !!!! Remove Files from the Staging Area
 It may happen that you went too fast and added a file to your staging area (remember the groceries' list) and that you changed your mind and do not want to add it anymore. Your file is not committed so a simple ==reset== will do the job.

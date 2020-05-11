@@ -38,7 +38,7 @@ Following the form/wizard will eventually get you a running repository on-line.
 You will be most probably then redirected to your repository page.
 Figure *@repository_page* shows how such a page looks in GitHub.
 
-+A Repository Page for a project called ""test"" in GitHub>figures/GitHub_repository_page.png|width=650|label=repository_page+
++A Repository Page for a project called ""test"" in GitHub>figures/GitHub_repository_page.png|width=65|label=repository_page+
 
 We are almost set to work from the command line now.
 However, we need to set-up our mind around a couple of extra concepts.
