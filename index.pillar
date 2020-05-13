@@ -1,8 +1,4 @@
-${inputFile:introduction.pillar}$
-${inputFile:version_control.pillar}$
-${inputFile:project_management.pillar}$
-${inputFile:continuous_integration.pillar}$
-${inputFile:managing_external_dependencies.pillar}$
-${inputFile:project_documentation.pillar}$
-${inputFile:demos_and_deployment.pillar}$
-${inputFile:workflows.pillar}$
+${inputFile:git_basics.pillar}$
+${inputFile:git_advanced.pillar}$
+${inputFile:git_practical.pillar}$
+
